@@ -1,7 +1,7 @@
 # Joint Project: BookiernesSystem
 ## Summary
   - [Introduction](#introduction)
-  - [Project idea](#project idea)
+  - [Project idea](#project-idea)
   - [Requirements](#requirements)
   - [Authors](#authors)
   - [Teachers](#teachers)
@@ -31,7 +31,7 @@ This are the commands to save the requirements:
 ```
   freeze > requirements.txt
 ```
-##Teachers
+## Teachers
 The teachers who have guided this project are:
 - [Aitor Corchero Rodríguez](https://github.com/JordiLazo)
 - [Marta Oliva Sole](https://github.com/JordiLazo)
