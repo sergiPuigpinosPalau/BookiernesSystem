@@ -3,8 +3,8 @@
   - [Introduction](#introduction)
   - [Project idea](#project-idea)
   - [Requirements](#requirements)
-  - [Authors](#authors)
   - [Teachers](#teachers)
+  - [Authors](#authors)
 
 ## Introduction
 **Joint Project** is a joint project that is carried out with a group made up of 6 people.
@@ -33,16 +33,16 @@ This are the commands to save the requirements:
 ```
 ## Teachers
 The teachers who have guided this project are:
-- [Aitor Corchero Rodríguez](https://github.com/JordiLazo)
+- [Aitor Corchero Rodríguez](https://github.com/aolite)
 - [Marta Oliva Sole](https://github.com/JordiLazo)
 - [Juan Enrique Garrido Navarro](https://github.com/JordiLazo)
 - [Jordi Virgili Gomà](https://github.com/JordiLazo)
 
 ## Authors
 This project have been developed by:
-- [Tiberiu Paiu](https://github.com/JordiLazo)
-- [Roger Larriba Baudilio](https://github.com/JordiLazo)
-- [José Ramón Noguero de Llano](https://github.com/JordiLazo)
-- [Sergi Puigpinós Palau](https://github.com/JordiLazo)
-- [Xavier Loncà Sánchez](https://github.com/flormartinezm)
+- [Tiberiu Paiu](https://github.com/sergiPuigpinosPalau)
+- [Roger Larriba Baudilio](https://github.com/sergiPuigpinosPalau)
+- [José Ramón Noguero de Llano](https://github.com/sergiPuigpinosPalau)
+- [Sergi Puigpinós Palau](https://github.com/sergiPuigpinosPalau)
+- [Xavier Loncà Sánchez](https://github.com/sergiPuigpinosPalau)
 - [Jordi Lazo](https://github.com/JordiLazo)
