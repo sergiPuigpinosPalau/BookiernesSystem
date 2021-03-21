@@ -15,7 +15,7 @@ This project includes 3 subjects of the [Degree Computer Engineering](http://www
 - [PROCESS MODELS](https://guiadocent.udl.cat/pdf/en/102054)
 
 ## Project idea
-**Bokiernes,S.A. responsible for the editorial "Bookiernes" and whose activity focuses on publishing and supplying paper books. This company has seen its sales and customers reduced.
+**Bokiernes,S.A.** responsible for the editorial "Bookiernes" and whose activity focuses on publishing and supplying paper books. This company has seen its sales and customers reduced.
 
 Taking into account the current situation described, the company has decided to implement a system that allows computerization of the work flow avoiding economic losses, time and information between work processes. Likewise, it is intended that the system to be implemented centralize the work flow and communication of the
 involved/involved in publishing and supplying digital books.
