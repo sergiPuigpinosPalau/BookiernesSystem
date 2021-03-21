@@ -22,7 +22,7 @@ involved/involved in publishing and supplying digital books.
 
 Therefore, this project is based on digitizing the editorial so that it becomes an online bookstore.
 
-##Requirements
+## Requirements
 In the document named **requirements.txt** you will find the requirements to execute the web application.
 This are the commands to save the requirements:
 ```
