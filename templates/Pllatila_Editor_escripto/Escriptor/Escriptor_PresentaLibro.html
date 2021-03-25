@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href=".././css/all.min.css">
+  <!--  iconas fas --> 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href=".././css/adminlte.min.css">
+ 
+<!-- libreria para caja de texto  -->
+<script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> no ser que pasa   -->
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+  
+   
+  
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        
+        
+      </ul>
+  
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+  
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-danger navbar-badge"> 3 </span>  <!-- numero de las notifaciones -->
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!-- la notifacacio -->
+              <a href="./Escriptor_Chat.html" class="dropdown-item"> <!-- link cap al missage -->
+              <!-- Message Start -->
+              <div class="media">
+                <img src="./../img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Ana 
+                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>   <!-- la prioridad icona  -->
+                  </h3>
+                  <p class="text-sm">Tenes que cabiar ... </p>
+                  <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 22/03/2021</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="./Escriptor_Chat.html" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src="./../img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                      Ana 
+                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">Tenes que cabiar ...</p>
+                  <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 23/03/2021</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+           
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+             Pepito Ramón Noreña Salto
+           </a>
+           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-lg">
+             
+               <a href="#" class="dropdown-item"> 
+              
+               <div class="media">
+                 <img src="./../img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                 <div class="media-body">
+                   <h3 class="dropdown-item-title">
+                     Pepito Ramón Noreña Salto 
+                   </h3>
+                   <p class="text-sm">Escriptor </p>
+                 </div>
+               </div>
+               
+             </a>
+             <div class="dropdown-divider"></div>
+             <a href="#" class="dropdown-item dropdown"> 
+              
+               <div class="media ">
+                <i class="fas fa-user-edit mr-1"></i> 
+                 <div class="media-body ">
+                  <h3 class="dropdown-item-title ">
+                     Cabiar los datos de usuario
+                   </h3>
+                 </div>
+               </div>
+               
+             </a>
+   
+             <a href="#" class="dropdown-item"> 
+              
+               <div class="media">
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                 <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                     Cerrar sesión
+                   </h3>
+                 </div>
+               </div>
+               
+             </a>
+           
+           </div>
+         </li>
+        
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+  
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="../img/logo_Bookiernes.png" alt="Bookiernes Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Bookiernes</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../img/user2-128x128.jpg" class="img-circle elevation-2" alt="Imagen del usuario">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Pepito Ramón</a>
+        </div>
+      </div>
+
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          
+          
+               <li class="nav-item">
+                <a href="./Escriptor_PresentaLibro.html" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Presenta Libro
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./Escriptor_LibrosPresentados.html" class="nav-link">
+                    <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Libros Presentados
+                    <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
+                  </p>
+                </a>
+              </li>
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+          
+        <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item">Presenta Libro</li>
+
+        </ol>
+          
+       
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+</br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Presenta Libro</h3>
+                </div>
+                
+                <form>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="Titulo del libro">Titulo del libro</label>
+                      <input type="text" class="form-control" id="exampleInputFile">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Categoria del libro</label>
+                      <select class="custom-select">
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        <option>option 5</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Descripcio del libro</label>
+                        <div id="toolbar-container"></div>
+                        <textarea name="content" id="editor">
+                          &lt;p&gt;Descripcion.&lt;/p&gt;
+                      </textarea>
+                      </div>
+                    <div class="form-group">
+                      <label for="exampleInputFile">Subir el libro en formato PDF</label>
+                      <div class="input-group">
+                        
+                        <input type="file" name="imagensubida" accept=".pdf">
+                          
+                        
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+  
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Presentar</button>
+                  </div>
+                </form>
+              </div>
+
+  
+              
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Lorem Ipsum</strong>
+    is simply dummy text of the printing and typesetting industry. 
+    <div class="float-right d-none d-sm-inline-block">
+    <strong>Version</strong> 1.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<script>
+  ClassicEditor
+      .create( document.querySelector( '#editor' ) , {
+          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
+        } )
+      .catch( error => {
+          console.error( error );
+      } );
+</script>
+<!-- jQuery -->
+<script src=".././js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src=".././js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src=".././js/adminlte.min.js"></script>
+
+<!-- libreria para caja de texto  -->
+<script src="./js/summernote-bs4.min.js"></script>
+</body>
+</html>

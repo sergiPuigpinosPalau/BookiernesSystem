@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> 
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href=".././css/all.min.css">
+  <!--  iconas fas --> 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href=".././css/adminlte.min.css">
+<!-- libreria para caja de texto  -->
+<script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+  
+   
+  
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        
+        
+      </ul>
+  
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+  
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-danger navbar-badge"> 3 </span>  <!-- numero de las notifaciones -->
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!-- la notifacacio -->
+              <a href="#" class="dropdown-item"> <!-- link cap al missage -->
+              <!-- Message Start -->
+              <div class="media">
+                <img src="./../img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Pepito Ramón 
+                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>   <!-- la prioridad icona  -->
+                  </h3>
+                  <p class="text-sm"> A realizado la modifcaciones . </p>
+                  <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 22/03/2021</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src="./../img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Pepito Ramón 
+                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">Te envio un mesaje...</p>
+                  <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 23/03/2021</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+           
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+             Ana Rosa Morgade
+           </a>
+           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-lg">
+             
+               <a href="#" class="dropdown-item"> 
+              
+               <div class="media">
+                 <img src="./../img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                 <div class="media-body">
+                   <h3 class="dropdown-item-title">
+                    Ana Rosa Morgade
+                   </h3>
+                   <p class="text-sm">Editor Principal </p>
+                 </div>
+               </div>
+               
+             </a>
+             <div class="dropdown-divider"></div>
+             <a href="#" class="dropdown-item dropdown"> 
+              
+               <div class="media ">
+                <i class="fas fa-user-edit mr-1"></i> 
+                 <div class="media-body ">
+                  <h3 class="dropdown-item-title ">
+                     Cabiar los datos de usuario
+                   </h3>
+                 </div>
+               </div>
+               
+             </a>
+   
+             <a href="#" class="dropdown-item"> 
+              
+               <div class="media">
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                 <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                     Cerrar sesión
+                   </h3>
+                 </div>
+               </div>
+               
+             </a>
+           
+           </div>
+         </li>
+        
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+  
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img src="../img/logo_Bookiernes.png" alt="Bookiernes Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Bookiernes</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../img/user1-128x128.jpg" class="img-circle elevation-2" alt="Imagen del usuario">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Ana</a>
+        </div>
+      </div>
+
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          
+          
+          <li class="nav-item">
+            <a href="./Editor_LibrosPresentats.html" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+              <p>
+                Libros Presentados <br>
+                
+                a la editoral</p> <span class="badge badge-info right">2</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./Editor_LibrosARevisa.html" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+              <p>
+                Libros para revisar
+                <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
+              </p>
+            </a>
+          </li>
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+          
+        <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"> <a href="./Editor_LibrosPresentats.html">Libros Presentados a la editoral</a></li>
+              <li class="breadcrumb-item active">  Datos del libro Harry Potter </li>
+        </ol>
+          
+       
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+</br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Datos del libro Harry Potter</h3>
+                </div>
+                
+                <br>
+
+                
+                       <div class="row invoice-info p-3 mb-3">
+                          <div class="col-sm-2 invoice-col">
+                              <strong> Titulo:</strong><br><br>
+                              <strong> Categoria:</strong><br><br>
+                              <strong> Estado:</strong><br><br>
+                              <strong> Descripcion:</strong><br>
+                            </address>
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-10 invoice-col">
+                         
+                              Harry Potter I </br><br>
+                              ficción</br><br>
+                              <div class="row ">
+                                  <div class="col">
+                                  <div class="progress" >
+                                      <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                           aria-valuemax="100" style="width: 10%">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col">  
+                                      <strong> Libros presentado</strong>
+                                  </div>
+                              </div>
+                              
+                              
+                          </br>
+                              <div>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
+                              </div> <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->   
+                          
+                          
+                          </address>
+                          </div>
+                          <!-- /.col -->
+                      
+                        
+                        </div>
+    
+                    
+                     
+                   
+
+                <br>
+                
+                  <div class="d-flex justify-content-center mb-3"> 
+
+                    <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#modal-rechazar">
+                        <i class="fas fa-times-circle"></i> Rechazar
+                    </button> 
+                    
+                    <button type="button" class="btn btn-success float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#modal-passar-revisar">
+                            <i class="fas fa-check-circle"></i> Passar a revisar
+                    </button> 
+                     
+                      <a href="#">
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-download"></i> Bajarse el libro
+                        </button> 
+                    </a>
+
+                    
+                    
+                  </div>
+
+
+                  <!-- The Modal -->
+                    <div class="modal" id="modal-passar-revisar">
+                        <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                            <h4 class="modal-title">Passar a revisar</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <form action="/action_page.php">
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th></th>
+                                        <th>Editor</th>
+                                        <th>Libros Asignados</th>
+                                        <th>Disponibilitat</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radio1" checked>
+                                            </div>
+                                        </td>
+                                        <td> Yo </td>
+                                        <td> asdasd </td>
+                                        <td>asdasd</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radio1" checked>
+                                            </div>
+                                        </td>
+                                        <td> Marta </td>
+                                        <td> asdasd </td>
+                                        <td>asdasd</td>
+                                       
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radio1" checked>
+                                            </div>
+                                        </td>
+                                        <td> Pedro </td>
+                                        <td> asdasd </td>
+                                        <td>asdasd</td>
+                                       
+                                      </tr>
+                                    
+                                    </tbody>
+                                  </table>
+                                
+                                  <br><p> Comentarios o pautas que tene que segir el editor </p>
+                                  <div id="toolbar-container"></div>
+                                  <textarea name="content" id="editor_asigna" >
+                                      &lt;p&gt;This is some sample content.&lt;/p&gt;
+                                  </textarea>
+
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Asignar</button>
+                            </div>
+                    
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="modal-rechazar">
+                        <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                            <h4 class="modal-title">Motivo por que se rechazo </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <br>
+                                <div id="toolbar-container"></div>
+                                <textarea name="content" id="editor_recasar" >
+                                    &lt;p&gt;This is some sample content.&lt;/p&gt;
+                                </textarea>
+
+                                
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Si rechazar</button>
+                            </div>
+                    
+                        </div>
+                        </div>
+                    </div>
+
+
+              </div>
+
+  
+              
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Lorem Ipsum</strong>
+    is simply dummy text of the printing and typesetting industry. 
+    <div class="float-right d-none d-sm-inline-block">
+    <strong>Version</strong> 1.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor_asigna' ) , {
+            toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
+          } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+    ClassicEditor
+        .create( document.querySelector( '#editor_recasar' ) , {
+            toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
+          } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+<!-- jQuery -->
+<script src=".././js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src=".././js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src=".././js/adminlte.min.js"></script>
+
+<!-- libreria para caja de texto  -->
+<script src="./js/summernote-bs4.min.js"></script>
+</body>
+</html>
