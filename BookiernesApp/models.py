@@ -17,7 +17,6 @@ class Writer(models.Model):
         return str(self.name)
 
 
-
 class Book(models.Model):
     title = models.CharField(max_length=50)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT)
