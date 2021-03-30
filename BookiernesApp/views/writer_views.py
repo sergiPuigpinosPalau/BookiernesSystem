@@ -8,7 +8,7 @@ from django.template import loader
 def PublishedBooks(request):
     #article_list = Article.objects.order_by('-publish_date')
     #scientist_list = Scientist.objects.order_by('-name')
-    template = loader.get_template('Pllatila_Editor_escripto/Escriptor/Escriptor_LibrosPresentados.html')
+    template = loader.get_template('base.html')
     context = {}
     # context = {
     #     'article_list': article_list,
