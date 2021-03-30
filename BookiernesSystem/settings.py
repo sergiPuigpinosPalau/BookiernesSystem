@@ -56,7 +56,7 @@ ROOT_URLCONF = 'BookiernesSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'BookiernesApp/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
