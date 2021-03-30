@@ -15,6 +15,7 @@ class User(AbstractUser):
     def get_user_type(self):
         return str(self.user_type)
 
+
 class Writer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='writer_profile')
     name = models.CharField(max_length=50)

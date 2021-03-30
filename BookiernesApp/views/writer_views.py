@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, TemplateView
 
 
@@ -12,7 +14,9 @@ from django.views.generic import DetailView, TemplateView
 #     # }
 #     return HttpResponse(template.render(context, request))
 # from django.views.generic import DetailView
+from BookiernesApp.decorators import writer_required
 
 
+@method_decorator([login_required, writer_required], name='dispatch')
 class PublishedBooks(TemplateView):
     template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'

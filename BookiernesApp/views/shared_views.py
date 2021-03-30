@@ -18,7 +18,6 @@ def mainView(request):
         return redirect('BookiernesApp:editor_book_revision')
     elif user.user_type == 'main_editor':
         return redirect('BookiernesApp:maineditor_book_revision')
-    pass
 
 
 class SignUpView(CreateView):
