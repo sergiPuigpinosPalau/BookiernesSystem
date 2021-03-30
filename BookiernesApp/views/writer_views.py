@@ -1,9 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
-# Create your views here.
-from django.template import loader
 from django.views.generic import DetailView, TemplateView
+
 
 # def PublishedBooks(request):
 #     #article_list = Article.objects.order_by('-publish_date')
@@ -15,8 +11,7 @@ from django.views.generic import DetailView, TemplateView
 #     #     'scientist_list': scientist_list,
 #     # }
 #     return HttpResponse(template.render(context, request))
-#from django.views.generic import DetailView
-from BookiernesApp.models import Writer
+# from django.views.generic import DetailView
 
 
 class PublishedBooks(TemplateView):

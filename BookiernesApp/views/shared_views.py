@@ -1,11 +1,8 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.template import loader
-from django.views import View
 from django.views.generic import CreateView, TemplateView
 
 from BookiernesApp.forms import SignUpForm
@@ -18,7 +15,9 @@ def mainView(request):
     if user.user_type == 'writer':
         return redirect('BookiernesApp:writer_published_books')
     elif user.user_type == 'editor':
-        return redirect('BookiernesApp:signup')
+        return redirect('BookiernesApp:editor_book_revision')
+    elif user.user_type == 'main_editor':
+        return redirect('BookiernesApp:maineditor_book_revision')
     pass
 
 
