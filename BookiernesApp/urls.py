@@ -8,8 +8,8 @@ from BookiernesApp.views import *
 app_name = "BookiernesApp"
 
 urlpatterns = [
-    path('', mainView, name='home'),
+    path('', login_required(mainView), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    url(r'^writer_published/$', PublishedBooks.as_view(), name='writer_published_books'),
+    url(r'^writer_published/$', login_required(PublishedBooks.as_view()), name='writer_published_books'),
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
 ]
