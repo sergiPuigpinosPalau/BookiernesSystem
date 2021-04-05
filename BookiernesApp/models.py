@@ -52,19 +52,22 @@ class MainEditor(models.Model):
     def __str__(self):
         return str(self.name)
 
+# TODO mira como hacer que no se guarde todo en book si no que crea una carpeta por cada escritor
+def user_directory_path(instance, filename):
+    return 'book/user_{0}/{1}'.format(instance.user.id, filename)
 
 # TODO revisar nulls
 class Book(models.Model):
     BOOK_STATUSES = [('presented', 'Presentat'), ('revised', 'Revisat'), ('modifying', 'Modificant'),
                      ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat')]
-    title = models.CharField(null=False, max_length=255)
-    author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT)
-    assigned_to = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='books_assigned')
-    book_status = models.CharField(null=True, max_length=255, choices=BOOK_STATUSES)
-    description = models.TextField(null=True)
-    theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes')
-    path = models.FileField(null=True)
-    main_editor_comment = models.TextField(null=True)
+    title = models.CharField(null=False, max_length=255 ,blank=True)
+    author = models.ForeignKey(Writer, null=False, on_delete=models.PROTECT, blank=True)
+    assigned_to = models.ForeignKey(Editor, null=False, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
+    book_status = models.CharField(null=False, max_length=255, choices=BOOK_STATUSES,blank=True)
+    description = models.TextField(null=False,blank=True)
+    theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes',blank=True)
+    path = models.FileField(upload_to = 'book' ,null=True,blank=True)
+    main_editor_comment = models.TextField(null=True, blank=True)
     #latest_book = models.ForeignKey("self", null=True, on_delete=models.CASCADE, related_name='old_versions')#TODO test
 
     def __str__(self):
@@ -82,6 +85,7 @@ class Notification(models.Model):
 
 
 class NotificationTable(models.Model):
+    #actual_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
     destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
     date_received = models.DateField()
     notification = models.ForeignKey(Notification, null=True, on_delete=models.PROTECT, related_name='type_of_notification')

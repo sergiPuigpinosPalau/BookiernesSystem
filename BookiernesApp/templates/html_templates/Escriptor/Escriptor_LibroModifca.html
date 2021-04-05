@@ -211,35 +211,60 @@
                 <div class="card-header">
                   <h3 class="card-title">Modificar</h3>
                 </div>
-                
-                <form>
+
+                {% if messages %}
+
+                {% for message in messages %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-success ">
+                    <div class="card-header">
+                      <h3 class="card-title">Éxito</h3>
+      
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {{message}}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+
+                {% endif %}
+
+                <form method="POST"  enctype="multipart/form-data" novalidate>
+                  {% csrf_token %}
+                  {{form.author}} 
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="Titulo del libro">Titulo del libro</label>
-                      <input type="text" class="form-control" id="exampleInputFile" placeholder="Harry Potter">
+                      <label >Titulo del libro</label>
+                     <!--   <input type="text" class="form-control" id="exampleInputFile"> -->
+                     {{form.title}}
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Categoria del libro</label>
-                      <select class="custom-select">
-                        <option >option 1</option>
-                        <option>option 2</option>
-                        <option selected>ficción</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
+                      <label >Categoria del libro</label>
+                      {{form.theme}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Descripcio del libro</label>
+                        <label >Descripcio del libro</label>
                         <div id="toolbar-container"></div>
-                        <textarea name="content" id="editor">
-                          
-                        </textarea>
+                        {{form.description}}
                       </div>
                     <div class="form-group">
-                      <label for="exampleInputFile">Subir el libro en formato PDF : <a href="../../../static/BookiernesApp/img/6%20-%20User%20Stories.pdf" download="6 - User Stories.pdf" target="_blank" > 6 - User Stories.pdf </a> </label>
+                      <label >Subir el libro en formato Markdown:</label> <a href="/{{path}}" download> {{path}} </a>
                       <div class="input-group">
                         
-                        <input type="file" name="imagensubida" accept=".pdf">
+                        {{form.path}} 
                           
                         
                         
