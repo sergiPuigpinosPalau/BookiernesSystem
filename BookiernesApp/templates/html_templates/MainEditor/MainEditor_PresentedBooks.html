@@ -117,13 +117,13 @@
 
                     </a>
 
-                    <a href="#" class="dropdown-item">
+                    <a href="{% url 'BookiernesApp:logout' %}" class="dropdown-item">
 
                         <div class="media">
                             <i class="fas fa-sign-out-alt mr-1"></i>
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
-                                    Cerrar sesión
+                                    Log Out
                                 </h3>
                             </div>
                         </div>
@@ -252,20 +252,6 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr>
-                                <td>Harry Potter I</td>
-                                <td> Marta</td>
-                                <td> asdasd</td>
-                                <td><a href="MainEditor_DetailPresentedBook.html"><i class="nav-icon fas fa-cogs"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>Harry Potter II</td>
-                                <td> Marta</td>
-                                <td> asdasd</td>
-                                <td><a href="MainEditor_DetailPresentedBook.html"><i class="nav-icon fas fa-cogs"></i></a></td>
-
-                            </tr>
-
                             </tbody>
                         </table>
                     </div>
