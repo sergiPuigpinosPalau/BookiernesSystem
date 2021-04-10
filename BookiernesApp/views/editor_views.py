@@ -7,4 +7,4 @@ from BookiernesApp.decorators import editor_required
 
 @method_decorator([login_required, editor_required], name='dispatch')
 class EditorBookRevision(TemplateView):
-    template_name = 'html_templates/Editor/Editor_LibrosARevisa.html'
+    template_name = 'html_templates/Editor/Editor_BooksToRevise.html'

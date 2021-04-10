@@ -112,14 +112,14 @@
                
              </a>
    
-             <a href="#" class="dropdown-item"> 
+             <a href="{% url 'BookiernesApp:logout' %}" class="dropdown-item">
               
                <div class="media">
                 <i class="fas fa-sign-out-alt mr-1"></i>
                  <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                     Cerrar sesión
-                   </h3>
+                      <h3 class="dropdown-item-title">
+                         Log Out
+                       </h3>
                  </div>
                </div>
                
@@ -162,7 +162,7 @@
           
           
           <li class="nav-item">
-            <a href="./Editor_LibrosPresentats.html" class="nav-link">
+            <a href="../MainEditor/MainEditor_PresentedBooks.html" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
               <p>
                 Libros Presentados <br>
@@ -171,7 +171,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../Editor/Editor_LibrosARevisa.html" class="nav-link">
+            <a href="./Editor_BooksToRevise.html" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
               <p>
                 Libros para revisar
@@ -194,7 +194,7 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item">Libros Presentados a la editoral</li>
+              <li class="breadcrumb-item">Libros para revisar</li>
         </ol>
           
        
@@ -208,7 +208,7 @@
         
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Libros Presentados a la editoral</h3>
+                  <h3 class="card-title">Libros para revisar</h3>
                 </div>
                 <!-- /.card-header -->
               <div class="card-body">
@@ -237,16 +237,27 @@
                         <td>Harry Potter I</td>
                         <td> Marta </td>
                         <td> asdasd </td>
-                        <td><a href="../Editor/Editor_LibroConreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
+                        <td><a href="Editor_DetailBookToRevise.html"><i class="nav-icon fas fa-cogs"></i></a></td>
                       </tr>
                       <tr>
                         <td>Harry Potter II</td>
                         <td> Marta </td>
                         <td> asdasd </td>
-                        <td><a href="../Editor/Editor_LibroConreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
+                        <td><a href="Editor_DetailBookToRevise.html"><i class="nav-icon fas fa-cogs"></i></a></td>
                        
                       </tr>
-                    
+                      <tr>
+                        <td>Harry Potter III</td>
+                        <td> Marta </td>
+                        <td> asdadasd </td>
+                        <td><a href="Editor_DetailBookToRevise.html"><i class="nav-icon fas fa-cogs"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>Harry Potter IV</td>
+                        <td> Marta </td>
+                        <td> adasdas </td>
+                        <td><a href="Editor_DetailBookToRevise.html"><i class="nav-icon fas fa-cogs"></i></a></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

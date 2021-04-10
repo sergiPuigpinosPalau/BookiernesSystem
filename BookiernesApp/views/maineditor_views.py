@@ -10,12 +10,12 @@ from BookiernesApp.models import *
 #
 # @method_decorator([login_required, mainEditor_required], name='dispatch')
 # class MainEditorBookRevision(TemplateView):
-#     template_name = 'html_templates/MainEditor/MainEditor_LibrosARevisa.html'
+#     template_name = 'html_templates/MainEditor/MainEditor_BooksToRevise.html'
 
 
 def MainEditorBookRevision(request):
     book_list = Book.objects.filter(book_status="presented")
-    template = loader.get_template('html_templates/MainEditor/MainEditor_LibrosARevisa.html')
+    template = loader.get_template('html_templates/MainEditor/MainEditor_PresentedBooks.html')
     context = {
         'book_list': book_list,
     }
