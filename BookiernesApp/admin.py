@@ -7,3 +7,5 @@ from BookiernesApp.models import *
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Writer)
+admin.site.register(Book)
+admin.site.register(Theme)
