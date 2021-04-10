@@ -7,28 +7,15 @@ from django.views.generic import TemplateView, ListView
 from BookiernesApp.decorators import mainEditor_required
 from BookiernesApp.models import *
 
-#
-# @method_decorator([login_required, mainEditor_required], name='dispatch')
-# class MainEditorBookRevision(TemplateView):
-#     template_name = ''
 
-#
-# def MainEditorBookRevision(request):
-#     book_list = Book.objects.filter(book_status="presented")
-#     template = loader.get_template('html_templates/MainEditor/MainEditor_PresentedBooks.html')
-#     context = {
-#         'book_list': book_list,
-#     }
-#     return HttpResponse(template.render(context, request))
-
-class MainEditorBookRevision(ListView):
+@method_decorator([login_required, mainEditor_required], name='dispatch')
+class MainEditorBooksPresentedInEditorial(ListView):
 
     model = Book
-    template_name = ''
+    template_name = 'html_templates/MainEditor/MainEditor_PresentedBooks.html'
     #paginate_by = 100  # if pagination is desired
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = User.objects.get(username=self.request.user.username)
-        context['book_list'] = Book.objects.all().filter(book_status="revised", assigned_to__user=user)
+        context['book_list'] = Book.objects.all().filter(book_status="presented")
         return context

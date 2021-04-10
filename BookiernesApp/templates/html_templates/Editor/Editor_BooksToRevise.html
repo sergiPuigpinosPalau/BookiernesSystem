@@ -170,7 +170,7 @@
 
                     {% if user_type == 'main_editor' %}
                         <li class="nav-item">
-                            <a href="../MainEditor/MainEditor_PresentedBooks.html" class="nav-link">
+                            <a href="{% url 'BookiernesApp:maineditor_books_presented_editorial' %}" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
                                     Libros Presentados <br>
@@ -180,7 +180,7 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a href="./Editor_BooksToRevise.html" class="nav-link">
+                        <a href="{% url 'BookiernesApp:editor_book_revision' %}" class="nav-link">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Libros para revisar
@@ -248,7 +248,7 @@
                                     <td>{{ book.title }}</td>
                                     <td> {{ book.author }}</td>
                                     <td> {{ book.theme }}</td>
-                                    <td><a href="Editor_LibroConreto_Revisa.html"><i
+                                    <td><a href="{% url 'BookiernesApp:maineditor_book_presented_detail' book.id %}"><i
                                             class="nav-icon fas fa-cogs"></i></a>
                                     </td>
                                 </tr>
