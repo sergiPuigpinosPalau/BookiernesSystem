@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^maineditor__books_presented_in_editorial/$',
         MainEditorBooksPresentedInEditorial.as_view(), name='maineditor_books_presented_editorial'),
     url(r'^maineditor__books_presented_in_editorial/book_presented_detail/(?P<pk>\d+)/$',
-        EditorBookDetail.as_view(), name='maineditor_book_presented_detail'),
+        MainEditorBookPresentedDetail.as_view(), name='maineditor_book_presented_detail'),
+    url(r'^maineditor__books_presented_in_editorial/book_presented_detail/(?P<pk>\d+)/assign_or_reject$',
+        assign_or_reject, name='maineditor_assign_or_reject'),
 
 ]

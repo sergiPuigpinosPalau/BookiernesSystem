@@ -32,6 +32,7 @@ class Writer(models.Model):
         return str(self.name)
 
 
+#TODO delete availability --> books_assigned.length
 class Editor(models.Model):
     AVAILABILITY_TYPES = [('occupied', 'Ocupat'), ('available', 'Disponible')]
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='editor_profile')
@@ -43,6 +44,7 @@ class Editor(models.Model):
         return str(self.name)
 
 
+#TODO delete
 class MainEditor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='main_editor_profile')
     assigned_theme = models.ForeignKey(Theme, null=True, on_delete=models.CASCADE)

@@ -22,6 +22,7 @@ class EditorBookRevision(ListView):
         return context
 
 
+#TODO check if filter(,) is an AND or an OR
 @method_decorator([login_required, editor_required], name='dispatch')
 class EditorBookDetail(DetailView):
 
