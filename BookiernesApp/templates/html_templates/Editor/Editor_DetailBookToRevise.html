@@ -219,7 +219,7 @@
 
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Datos del libro {{ book.title }}</h3>
+                        <h3 class="card-title">Datos del libro {{ latest_book.title }}</h3>
                     </div>
 
                     <br>
@@ -230,9 +230,11 @@
                                 <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill"
                                    href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home"
                                    aria-selected="true">Version Actual</a>
+                                {% if book.new_book_version %}
                                 <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill"
                                    href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
                                    aria-selected="false">Primera Version</a>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-8 col-sm-10">
@@ -254,14 +256,21 @@
                                         <div class="col-sm-8 invoice-col">
                                             <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br>
                                             <!-- TODO modification date-->
-                                            {{ book.title }} <a href="#" data-toggle="popover"
-                                                                title="Titulo de la Primera Version"
-                                                                data-content="Harry Potter I "> <i
-                                                class="fas fa-exclamation-circle"></i></a>  </br><br>
-                                            {{ book.theme }} <a href="#" data-toggle="popover"
+                                            {{ latest_book.title }}
+                                            {% if latest_book.title != book.title %}
+                                                <a href="#" data-toggle="popover"
+                                                                    title="Titulo de la Primera Version"
+                                                                    data-content="Harry Potter I "> <i
+                                                    class="fas fa-exclamation-circle"></i></a>
+                                            {% endif %}
+                                            </br><br>
+                                            {{ latest_book.theme }}
+                                            {% if latest_book.theme != book.theme %}
+                                            <a href="#" data-toggle="popover"
                                                                 title="Categoria de la Primera Version"
                                                                 data-content=" No se hizo ningun cabio. "> <i
                                                 class="fas fa-exclamation-circle"></i> </a>
+                                            {% endif %}
                                             </br><br>
                                             <div class="row ">
                                                 <div class="col">
@@ -280,19 +289,19 @@
 
                                             </br>
 
-                                            <div>{{ book.description }} </div>
+                                            <div>{{ latest_book.description }} </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
-
+                                            {% if latest_book.description != book.description %}
                                             <a href="#" data-toggle="popover" title="Description de la Primera Version"
                                                data-content="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas Letraset, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. "
                                                data-placement="left"> <i class="fas fa-exclamation-circle"></i> </a>
-
+                                            {% endif %}
                                             </address>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- TODO old version-->
+                                {% if book.new_book_version %}
                                 <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel"
                                      aria-labelledby="vert-tabs-profile-tab">
                                     <div class="row invoice-info p-3 mb-3">
@@ -306,8 +315,8 @@
                                         <!-- /.col -->
                                         <div class="col-sm-8 invoice-col">
 
-                                            Harry Potter I </br><br>
-                                            ficción</br><br>
+                                            {{ book.title }} </br><br>
+                                            {{ book.theme }}</br><br>
                                             <div class="row ">
                                                 <div class="col">
                                                     <div class="progress">
@@ -324,17 +333,7 @@
 
 
                                             </br>
-                                            <div>Lorem Ipsum es simplemente el texto de relleno de las imprentas y
-                                                archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de
-                                                las industrias desde el año 1500, cuando un impresor (N. del T. persona
-                                                que se dedica a la imprenta) desconocido usó una galería de textos y los
-                                                mezcló de tal manera que logró hacer un libro de textos especimen. No
-                                                sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno
-                                                en documentos electrónicos, quedando esencialmente igual al original.
-                                                Fue popularizado en los 60s con la creación de las hojas "Letraset", las
-                                                cuales contenian pasajes de Lorem Ipsum, y más recientemente con
-                                                software de autoedición, como por ejemplo Aldus PageMaker, el cual
-                                                incluye versiones de Lorem Ipsum.
+                                            <div> {{ book.description }}
                                             </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
 
@@ -345,8 +344,9 @@
 
 
                                     </div>
-
                                 </div>
+                                {% endif %}
+
 
                             </div>
                         </div>

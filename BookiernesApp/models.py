@@ -67,7 +67,7 @@ class Book(models.Model):
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes')
     path = models.FileField(null=True)
     main_editor_comment = models.TextField(null=True)
-    #latest_book = models.ForeignKey("self", null=True, on_delete=models.CASCADE, related_name='old_versions')#TODO test
+    new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.title)
