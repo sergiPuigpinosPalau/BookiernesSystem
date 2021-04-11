@@ -200,26 +200,16 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
 
-                <ol class="breadcrumb float-sm-left">
-                    <li class="breadcrumb-item"><a href="Editor_BooksToRevise.html">Libros para revisar</a></li>
-                    <li class="breadcrumb-item active"> Datos del libro {{ book.title }} </li>
-                </ol>
-
-
-            </div><!-- /.container-fluid -->
-        </div>
         <!-- /.content-header -->
-        </br>
+        <br>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
 
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Datos del libro {{ latest_book.title }}</h3>
+                        <h3 class="card-title">Dades del llibre:  {{ latest_book.title }}</h3>
                     </div>
 
                     <br>
@@ -229,11 +219,11 @@
                                  aria-orientation="vertical">
                                 <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill"
                                    href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home"
-                                   aria-selected="true">Version Actual</a>
+                                   aria-selected="true">Versió actual</a>
                                 {% if book.new_book_version %}
                                 <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill"
                                    href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
-                                   aria-selected="false">Primera Version</a>
+                                   aria-selected="false">Versió original</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -245,17 +235,15 @@
 
                                     <div class="row invoice-info p-3 mb-3">
                                         <div class="col-sm-2 invoice-col">
-                                            <strong> Modificacio</strong><br><br>
-                                            <strong> Titulo:</strong><br><br>
-                                            <strong> Categoria:</strong><br><br>
-                                            <strong> Estado:</strong><br><br>
-                                            <strong> Descripcion:</strong><br>
-                                            </address>
+                                            <strong> Modificació:</strong><br><br>
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Tema:</strong><br><br>
+                                            <strong> Estat:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-sm-8 invoice-col">
-                                            <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br>
-                                            <!-- TODO modification date-->
+                                            <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br> <!-- TODO implementar-->
                                             {{ latest_book.title }}
                                             {% if latest_book.title != book.title %}
                                                 <a href="#" data-toggle="popover"
@@ -263,7 +251,7 @@
                                                                     data-content="Harry Potter I "> <i
                                                     class="fas fa-exclamation-circle"></i></a>
                                             {% endif %}
-                                            </br><br>
+                                            <br><br>
                                             {{ latest_book.theme }}
                                             {% if latest_book.theme != book.theme %}
                                             <a href="#" data-toggle="popover"
@@ -271,7 +259,7 @@
                                                                 data-content=" No se hizo ningun cabio. "> <i
                                                 class="fas fa-exclamation-circle"></i> </a>
                                             {% endif %}
-                                            </br><br>
+                                            <br><br>
                                             <div class="row ">
                                                 <div class="col">
                                                     <div class="progress">
@@ -282,12 +270,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <strong> Libro a Revisa</strong>
+                                                    <strong> {{ book.book_status }}</strong>
                                                 </div>
                                             </div>
 
 
-                                            </br>
+                                            <br>
 
                                             <div>{{ latest_book.description }} </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
@@ -296,7 +284,6 @@
                                                data-content="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas Letraset, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. "
                                                data-placement="left"> <i class="fas fa-exclamation-circle"></i> </a>
                                             {% endif %}
-                                            </address>
                                         </div>
                                     </div>
                                 </div>
@@ -306,17 +293,16 @@
                                      aria-labelledby="vert-tabs-profile-tab">
                                     <div class="row invoice-info p-3 mb-3">
                                         <div class="col-sm-2 invoice-col">
-                                            <strong> Titulo:</strong><br><br>
-                                            <strong> Categoria:</strong><br><br>
-                                            <strong> Estado:</strong><br><br>
-                                            <strong> Descripcion:</strong><br>
-                                            </address>
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Tema:</strong><br><br>
+                                            <strong> Estat:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-sm-8 invoice-col">
 
-                                            {{ book.title }} </br><br>
-                                            {{ book.theme }}</br><br>
+                                            {{ book.title }} <br><br>
+                                            {{ book.theme }}<br><br>
                                             <div class="row ">
                                                 <div class="col">
                                                     <div class="progress">
@@ -327,18 +313,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <strong> Libro a Revisa</strong>
+                                                    <strong> {{ book.book_status }}</strong>
                                                 </div>
                                             </div>
 
 
-                                            </br>
+                                            <br>
                                             <div> {{ book.description }}
                                             </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
 
 
-                                            </address>
                                         </div>
                                         <!-- /.col -->
 
@@ -358,13 +343,13 @@
 
                         <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
                                 data-toggle="modal" data-target="#modal-rechazar">
-                            <i class="fas fa-times-circle"></i> Rechazar
+                            <i class="fas fa-times-circle"></i> Rebutjar
                         </button>
 
                         <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" name="action" value="accept" class="btn btn-success float-right" style="margin-right: 5px;">
-                                <i class="fas fa-check-circle"></i> Aceptar
+                                <i class="fas fa-check-circle"></i> Acceptar
                             </button>
                         </form>
 
@@ -372,26 +357,26 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     style="margin-right: 5px;">
-                                <i class="fas fa-download"></i> Bajarse el libro <span class="caret"></span></button>
+                                <i class="fas fa-download"></i> Descarregar el llibre <span class="caret"></span></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" tabindex="-1" href="#">8 Versio Final-
                                     ER-Non-Functional-Requirements.pdf</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" tabindex="-1" href="#">versio1.pdf</a>
                                 <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
-
+                            <!--TODO implement -->
                             </div>
                         </div>
 
                         <a href="#">
                             <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                <i class="fas fa-envelope"></i> Enviar mesaje
+                                <i class="fas fa-envelope"></i> Enviar missatge
                             </button>
                         </a>
 
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
                                 data-toggle="modal" data-target="#modal-instruciones">
-                            <i class="fas fa-comment-dots"></i> Instruciones
+                            <i class="fas fa-comment-dots"></i> Comentari de l'editor principal
                         </button>
 
 
@@ -405,7 +390,7 @@
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Comentario del Editor Principal</h4>
+                                    <h4 class="modal-title">Comentari de l'editor principal</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
 
@@ -432,16 +417,15 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Motivo por que se rechazo </h4>
+                                        <h4 class="modal-title">Motiu pel rebuig </h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <br>
                                         <div id="toolbar-container"></div>
+                                        <label for="editor_recasar">Comentaris o motius pel qual s'ha rebutjat el llibre</label>
                                         <textarea name="editor_rejected_comment" id="editor_recasar">
-                                    &lt;p&gt;This is some sample content.&lt;/p&gt;
                                 </textarea>
 
 

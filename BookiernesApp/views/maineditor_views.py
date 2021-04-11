@@ -39,7 +39,7 @@ def assign_or_reject(request, pk):
         #Find editors with the same theme as the book
         possible_users = User.objects.all().filter(editor_profile__assigned_theme=book.theme)
         if not possible_users:
-            print("BRUH")#TODO print error message, no users found with this theme
+            print("BRUH")#TODO test print error message, no users found with this theme
             return
         #Find the least busy worker
         available_user = list(possible_users)[0]

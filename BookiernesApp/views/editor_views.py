@@ -20,6 +20,7 @@ class EditorBookRevision(ListView):
         user = User.objects.get(username=self.request.user.username)
         context['book_list'] = Book.objects.all().filter(book_status="revised", assigned_to__user=user)
         context['user_type'] = user.user_type
+        user.editor_profile.nam
         return context
 
 

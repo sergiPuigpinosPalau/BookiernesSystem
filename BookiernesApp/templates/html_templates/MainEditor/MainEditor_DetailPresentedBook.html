@@ -85,7 +85,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    Ana Rosa Morgade
+                    {{ user.editor_profile.name }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-lg">
 
@@ -96,9 +96,9 @@
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
-                                    Ana Rosa Morgade
+                                    {{ user.editor_profile.name }}
                                 </h3>
-                                <p class="text-sm">Editor Principal </p>
+                                <p class="text-sm">{{ user.user_type }} </p>
                             </div>
                         </div>
 
@@ -173,9 +173,9 @@
                         <a href="{% url 'BookiernesApp:maineditor_books_presented_editorial' %}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Libros Presentados <br>
+                                Llibres presentats <br>
 
-                                a la editoral</p> <span class="badge badge-info right">2</span>
+                                a l'editoral</p> <span class="badge badge-info right">2</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -198,18 +198,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
 
-                <ol class="breadcrumb float-sm-left">
-                    <li class="breadcrumb-item"><a href="MainEditor_PresentedBooks.html">Libros Presentados a la
-                        editoral</a></li>
-                    <li class="breadcrumb-item active"> Datos del libro {{ book.title }}</li>
-                </ol>
-
-
-            </div><!-- /.container-fluid -->
-        </div>
         <!-- /.content-header -->
         </br>
         <!-- Main content -->
@@ -218,7 +207,7 @@
 
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Datos del {{ book.title }}</h3>
+                        <h3 class="card-title">Dades del llibre:  {{ book.title }}</h3>
                     </div>
 
                     <br>
@@ -226,17 +215,16 @@
 
                     <div class="row invoice-info p-3 mb-3">
                         <div class="col-sm-2 invoice-col">
-                            <strong> Titulo:</strong><br><br>
-                            <strong> Categoria:</strong><br><br>
-                            <strong> Estado:</strong><br><br>
-                            <strong> Descripcion:</strong><br>
-                            </address>
+                            <strong> Títol:</strong><br><br>
+                            <strong> Tema:</strong><br><br>
+                            <strong> Estat:</strong><br><br>
+                            <strong> Descripció:</strong><br>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-10 invoice-col">
 
-                            {{ book.title }} </br><br>
-                            {{ book.theme }}</br><br>
+                            {{ book.title }} <br><br>
+                            {{ book.theme }}<br><br>
                             <div class="row ">
                                 <div class="col">
                                     <div class="progress">
@@ -252,12 +240,12 @@
                             </div>
 
 
-                            </br>
+                            <br>
                             <div> {{ book.description }}</div>
                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
 
 
-                            </address>
+
                         </div>
                         <!-- /.col -->
 
@@ -271,7 +259,7 @@
 
                         <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
                                 data-toggle="modal" data-target="#modal-rechazar">
-                            <i class="fas fa-times-circle"></i> Rechazar
+                            <i class="fas fa-times-circle"></i> Rebutjar
                         </button>
 
                         <button type="button" class="btn btn-success float-right" style="margin-right: 5px;"
@@ -281,7 +269,7 @@
 
                         <a href="#">
                             <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                <i class="fas fa-download"></i> Bajarse el libro
+                                <i class="fas fa-download"></i> Descarregar el llibre
                             </button>
                         </a>
 
@@ -301,7 +289,8 @@
                                 </div>
 
                                 <!-- Modal body -->
-                                <form action="{% url 'BookiernesApp:maineditor_assign_or_reject' book.id %}" method="post">
+                                <form action="{% url 'BookiernesApp:maineditor_assign_or_reject' book.id %}"
+                                      method="post">
                                     {% csrf_token %}
                                     <div class="modal-body">
                                         <!--
@@ -352,17 +341,20 @@
                                             </tr>
 
                                             </tbody>
-                                        </table> -->  <!-- #TODO moure als maquetadors, ja que la Marta a dit que la assignació no es fa manual als editors-->
+                                        </table> -->
+                                        <!-- #TODO moure als maquetadors, ja que la Marta a dit que la assignació no es fa manual als editors-->
                                         <!--&lt;p&gt;This is some sample content.&lt;/p&gt;-->
-                                        <p> Comentarios o pautas que tene que segir el editor </p>
                                         <div id="toolbar-container"></div>
+                                        <label for="editor_asigna">Comentaris o pautes que ha de seguir l'editor</label>
                                         <textarea name="maineditor_approved_comment" id="editor_asigna"></textarea>
 
                                     </div>
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="submit" name="action" value="assign" class="btn btn-success" >Assignar</button>
+                                        <button type="submit" name="action" value="assign" class="btn btn-success">
+                                            Assignar
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -378,16 +370,15 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Motivo por que se rechazo </h4>
+                                        <h4 class="modal-title">Motiu pel rebuig </h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <br>
                                         <div id="toolbar-container"></div>
+                                        <label for="editor_recasar">Comentaris o motius pel qual s'ha rebutjat el llibre</label>
                                         <textarea name="maineditor_rejected_comment" id="editor_recasar">
-                                    &lt;p&gt;This is some sample content.&lt;/p&gt;
                                 </textarea>
 
 
@@ -395,7 +386,9 @@
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="submit" name="action" value="reject" class="btn btn-danger">Rebutjar</button>
+                                        <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                            Rebutjar
+                                        </button>
                                     </div>
 
                                 </div>
@@ -403,7 +396,7 @@
                         </div>
                     </form>
 
-<!--TODO corregir texts i faltes d'ortografia-->
+                    <!--TODO separar en blocs-->
                 </div>
 
 
