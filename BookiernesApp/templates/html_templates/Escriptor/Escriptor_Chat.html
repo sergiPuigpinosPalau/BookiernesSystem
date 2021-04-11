@@ -90,10 +90,10 @@
                <div class="media">
                  <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                  <div class="media-body">
-                   <h3 class="dropdown-item-title">
-                     Pepito Ramón Noreña Salto 
+                  <h3 class="dropdown-item-title">
+                    {{user.first_name}} {{user.last_name}} 
                    </h3>
-                   <p class="text-sm">Escriptor </p>
+                   <p class="text-sm">{{user.user_type}} </p>
                  </div>
                </div>
                
@@ -112,7 +112,7 @@
                
              </a>
    
-             <a href="#" class="dropdown-item"> 
+             <a href="{% url 'BookiernesApp:logout' %}" class="dropdown-item">
               
                <div class="media">
                 <i class="fas fa-sign-out-alt mr-1"></i>
@@ -161,7 +161,7 @@
           
           
                <li class="nav-item">
-                <a href="Escriptor_PresentaLibro.html" class="nav-link">
+                <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                   <p>
                     Presenta Libro
@@ -169,11 +169,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="Escriptor_LibrosPresentados.html" class="nav-link">
+                <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
                     <i class="nav-icon fas fa-table"></i>
                   <p>
                     Libros Presentados
-                    <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
+                    <span class="badge badge-info right">{{book_numbers}}</span>  <!-- suma de todos los libros -->
                   </p>
                 </a>
               </li>

@@ -90,10 +90,10 @@
              <div class="media">
                <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                <div class="media-body">
-                 <h3 class="dropdown-item-title">
-                   Pepito Ramón Noreña Salto 
+                <h3 class="dropdown-item-title">
+                  {{user.first_name}} {{user.last_name}} 
                  </h3>
-                 <p class="text-sm">Escriptor </p>
+                 <p class="text-sm">{{user.user_type}} </p>
                </div>
              </div>
              
@@ -112,7 +112,7 @@
              
            </a>
  
-           <a href="#" class="dropdown-item"> 
+           <a href="{% url 'BookiernesApp:logout' %}" class="dropdown-item">
             
              <div class="media">
               <i class="fas fa-sign-out-alt mr-1"></i>
@@ -161,7 +161,7 @@
           
           
                <li class="nav-item">
-                <a href="Escriptor_PresentaLibro.html" class="nav-link">
+                <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                   <p>
                     Presenta Libro
@@ -169,11 +169,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="Escriptor_LibrosPresentados.html" class="nav-link">
+                <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
                     <i class="nav-icon fas fa-table"></i>
                   <p>
                     Libros Presentados
-                    <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
+                    <span class="badge badge-info right">{{book_numbers}}</span>  <!-- suma de todos los libros -->
                   </p>
                 </a>
               </li>
@@ -192,8 +192,8 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="Escriptor_LibrosPresentados.html">Libros Presentados</a></li>
-              <li class="breadcrumb-item active">  Datos del libro Harry Potter </li>
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li>
+              <li class="breadcrumb-item active">  {{book.title}} </li>
         </ol>
           
        
@@ -207,26 +207,19 @@
         
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Datos del libro Harry Potter</h3>
+                  <h3 class="card-title">{{book.title}}</h3>
                 </div>
                 
                 <br>
 
-                <div class="row">
-                  <div class="col-4 col-sm-2">
-                    <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                      <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">Version Actual</a>
-                      <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Primera Version</a>
-                    </div>
-                  </div>
-                  <div class="col-8 col-sm-10">
-                    <div class="tab-content" id="vert-tabs-tabContent">
-                      <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
-                        
+                
+                  
+                  
+                    
+                      
                       
                         <div class="row invoice-info p-3 mb-3">
                           <div class="col-sm-2 invoice-col">
-                              <strong> Modificacio</strong><br><br>
                               <strong> Titulo:</strong><br><br>
                               <strong> Categoria:</strong><br><br>
                               <strong> Estado:</strong><br><br>
@@ -235,110 +228,131 @@
                           </div>
                           <!-- /.col -->
                           <div class="col-sm-8 invoice-col">
-                            <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br>
-                              Barbie I <a href="#" data-toggle="popover" title="Titulo de la Primera Version" data-content="Harry Potter I "> <i class="fas fa-exclamation-circle"></i> </a></br><br> 
-                              ficción  <a href="#" data-toggle="popover" title="Categoria de la Primera Version" data-content=" No se hizo ningun cabio. "> <i class="fas fa-exclamation-circle"></i> </a>  
+                            {{book.title}}</br><br> 
+                            {{book.theme}} 
                             </br><br>
+
+                            {% if book.book_status == "presented" %}
                               <div class="row ">
                                   <div class="col">
                                   <div class="progress" >
                                       <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                           aria-valuemax="100" style="width: 10%">
+                                           aria-valuemax="100" style="width: 20%">
                                       </div>
                                     </div>
                                   </div>
                                   <div class="col">  
-                                      <strong> Libros presentado</strong>
+                                      <strong> Presentat </strong>
                                   </div>
                               </div>
-                              
-                              
-                          </br>
-                          
-                              <div>Barbie es una marca de muñecas fabricada por la empresa estadounidense de juguetes Mattel Inc., lanzada en marzo de 1959. </div> <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->   
-                          
-                           <a href="#" data-toggle="popover" title="Description de la Primera Version" data-content="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas Letraset, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. " data-placement="left"> <i class="fas fa-exclamation-circle"></i> </a>  
-                         
-                          </address>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      
-                      <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
-                        <div class="row invoice-info p-3 mb-3">
-                          <div class="col-sm-2 invoice-col">
-                              <strong> Titulo:</strong><br><br>
-                              <strong> Categoria:</strong><br><br>
-                              <strong> Estado:</strong><br><br>
-                              <strong> Descripcion:</strong><br>
-                            </address>
-                          </div>
-                          <!-- /.col -->
-                          <div class="col-sm-8 invoice-col">
-                         
-                              Harry Potter I </br><br>
-                              ficción</br><br>
+                              {% elif book.book_status == "rejected"  %}  
+
                               <div class="row ">
-                                  <div class="col">
-                                  <div class="progress" >
-                                      <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                           aria-valuemax="100" style="width: 10%">
-                                      </div>
+                                <div class="col">
+                                <div class="progress" >
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                         aria-valuemax="100" style="width: 10%">
                                     </div>
                                   </div>
-                                  <div class="col">  
-                                      <strong> Libros presentado</strong>
+                                </div>
+                                <div class="col">  
+                                    <strong> Rebutjat </strong>
+                                </div>
+                            </div>
+                            {% elif book.book_status == "revised"  %}  
+
+                            <div class="row ">
+                              <div class="col">
+                              <div class="progress" >
+                                  <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                       aria-valuemax="100" style="width: 60%">
                                   </div>
+                                </div>
                               </div>
-                              
-                              
-                          </br>
-                              <div>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
-                              </div> <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->   
-                          
-                          
-                          </address>
+                              <div class="col">  
+                                  <strong> Revisat </strong>
+                              </div>
                           </div>
-                          <!-- /.col -->
-                      
-                        
+
+                          {% elif book.book_status == "modifying"  %}  
+                          <div class="row ">
+                            <div class="col">
+                            <div class="progress" >
+                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                     aria-valuemax="100" style="width: 60%">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col">  
+                                <strong> Modificant </strong>
+                            </div>
                         </div>
-    
+                        {% elif book.book_status == "accepted"  %}  
+                        <div class="row ">
+                          <div class="col">
+                          <div class="progress" >
+                              <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                   aria-valuemax="100" style="width: 40%">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">  
+                              <strong> Aceptat </strong>
+                          </div>
                       </div>
-                     
+
+                      {% elif book.book_status == "published"  %}  
+                      <div class="row ">
+                        <div class="col">
+                        <div class="progress" >
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 100%">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">  
+                            <strong> Publicat </strong>
+                        </div>
                     </div>
-                  </div>
-                </div>
+
+                    {% endif %}
+                              
+                          </br>
+                          
+                          {{book.description}} 
+                          
+                          </address>
+                          </div>
+                        </div>
+                      
+          
+                
 
                 <br>
                 
                   <div class="d-flex justify-content-center mb-3"> 
 
-                   
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="margin-right: 5px;">
-                            <i class="fas fa-download"></i>  Bajarse el libro  <span class="caret"></span></button>
-                        <div class="dropdown-menu"> 
-                            <a class="dropdown-item" tabindex="-1" href="#">8 Versio Final- ER-Non-Functional-Requirements.pdf</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" tabindex="-1" href="#">versio1.pdf</a>
-                            <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
-                            
-                          </div>
-                      </div>  
+                    
+
+                      <a href="/media/{{book.path}}" download>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                          <i class="fas fa-download"></i>  Bajarse el libro 
+                        </button> 
+                    </a>
+                    {% if book.assigned_to != None %}
 
                     <a href="Escriptor_Chat.html">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                             <i class="fas fa-envelope"></i> Enviar mesaje
                         </button> 
                     </a>
-                    <a href="Escriptor_LibroModifca.html">
+                    <a href="{% url 'BookiernesApp:writer_modify_a_book' book.id  %}">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                             <i class="fas fa-edit"></i> Modifica
                         </button> 
                     </a>
                   </div>
+                  {% endif %}
 
 
               </div>

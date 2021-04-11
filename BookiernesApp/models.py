@@ -60,11 +60,11 @@ def user_directory_path(instance, filename):
 class Book(models.Model):
     BOOK_STATUSES = [('presented', 'Presentat'), ('revised', 'Revisat'), ('modifying', 'Modificant'),
                      ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat')]
-    title = models.CharField(null=False, max_length=255 ,blank=True)
-    author = models.ForeignKey(Writer, null=False, on_delete=models.PROTECT, blank=True)
-    assigned_to = models.ForeignKey(Editor, null=False, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
-    book_status = models.CharField(null=False, max_length=255, choices=BOOK_STATUSES,blank=True)
-    description = models.TextField(null=False,blank=True)
+    title = models.CharField(null=True, max_length=255 ,blank=True)
+    author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT, blank=True)
+    assigned_to = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
+    book_status = models.CharField(null=True, max_length=255, choices=BOOK_STATUSES,blank=True)
+    description = models.TextField(null=True,blank=True)
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes',blank=True)
     path = models.FileField(upload_to = 'book' ,null=True,blank=True)
     main_editor_comment = models.TextField(null=True, blank=True)
@@ -72,6 +72,9 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.title)
+    
+    def __unicode__(self):
+         return self.description
 
 
 class Notification(models.Model):
@@ -85,8 +88,8 @@ class Notification(models.Model):
 
 
 class NotificationTable(models.Model):
-    #actual_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
-    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
+    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
+    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='destination_user_notifications')
     date_received = models.DateField()
     notification = models.ForeignKey(Notification, null=True, on_delete=models.PROTECT, related_name='type_of_notification')
 
@@ -95,7 +98,10 @@ class NotificationTable(models.Model):
 
 
 class Message(models.Model):
-    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_messages')
+    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_messages')
+    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='destination_user_messages')
     book = models.ForeignKey(Book, null=True, on_delete=models.PROTECT, related_name='book_messages')
     content = models.CharField(max_length=255)
     date_received = models.DateField()
+
+

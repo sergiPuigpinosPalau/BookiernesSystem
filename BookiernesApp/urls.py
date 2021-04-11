@@ -14,7 +14,11 @@ urlpatterns = [
     path('', login_required(mainView), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
 
+    # http://127.0.0.1:8000/writer_published/
     url(r'^writer_published/$', login_required(PublishedBooks.as_view()), name='writer_published_books'),
+    # http://127.0.0.1:8000/writer_published/get_book/1
+    url(r'^writer_published/get_book/(?P<pk>\d+)/$', login_required(Get_Books.as_view()), name='books'),
+
     # http://127.0.0.1:8000/writer_published/add_book/
     url(r'^writer_published/add_book/$', login_required(PublishBook.as_view()), name='writer_publish_book'),
     # http://127.0.0.1:8000/writer_published/edit_book/1

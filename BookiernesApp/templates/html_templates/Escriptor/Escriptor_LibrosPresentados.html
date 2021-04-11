@@ -91,10 +91,10 @@
                <div class="media">
                  <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                  <div class="media-body">
-                   <h3 class="dropdown-item-title">
-                     Pepito Ramón Noreña Salto 
+                  <h3 class="dropdown-item-title">
+                    {{user.first_name}} {{user.last_name}} 
                    </h3>
-                   <p class="text-sm">Escriptor </p>
+                   <p class="text-sm">{{user.user_type}} </p>
                  </div>
                </div>
                
@@ -119,7 +119,7 @@
                 <i class="fas fa-sign-out-alt mr-1"></i>
                  <div class="media-body">
                   <h3 class="dropdown-item-title">
-                      Log Out
+                    Cerrar sesión
                    </h3>
                  </div>
                </div>
@@ -150,7 +150,7 @@
           <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" class="img-circle elevation-2" alt="Imagen del usuario">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Pepito Ramón</a>
+          <a href="#" class="d-block">{{user.user_type}}</a>
         </div>
       </div>
 
@@ -162,23 +162,23 @@
                with font-awesome or any other icon font library -->
           
           
-          <li class="nav-item">
-            <a href="Escriptor_PresentaLibro.html" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
-              <p>
-                Presenta Libro
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./Escriptor_LibrosPresentados.html" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
-              <p>
-                Libros Presentados
-                <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
-              </p>
-            </a>
-          </li>
+               <li class="nav-item">
+                <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Presenta Libro
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
+                    <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Libros Presentados
+                    <span class="badge badge-info right">{{book_numbers}}</span>  <!-- suma de todos los libros -->
+                  </p>
+                </a>
+              </li>
           
         </ul>
       </nav>
@@ -259,32 +259,27 @@
                     <thead>
                       <tr>
                         <th>Titulo</th>
-                        <th>Atributos</th>
+                        <th>Estado</th>
+                        <th>Editor</th>
                         <th>Opcio</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for b in books %}
                       <tr>
-                        <td>Harry Potter I</td>
-                        <td> atributo </td>
-                        <td><a href="Escriptor_LibroConcreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
+                        <td>{{b.title}}</td>
+                        <td>{{ b.book_status}}</td>
+                        {% if b.assigned_to == None %}
+                          <td> </td> 
+                        {% else %}
+                         <td> {{ b.assigned_to.name}}  </td> 
+                        {% endif %}
+                        <td><a href="{% url 'BookiernesApp:books' b.id %}"><i class="nav-icon fas fa-cogs"></i></a></td>
                       </tr>
-                      <tr>
-                        <td>Harry Potter II</td>
-                        <td> atributo </td>
-                        <td><a href="Escriptor_LibroConcreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
-                       
-                      </tr>
-                      <tr>
-                        <td>Harry Potter III</td>
-                        <td> atributo </td>
-                        <td><a href="Escriptor_LibroConcreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>Harry Potter IV</td>
-                        <td> atributo </td>
-                        <td><a href="Escriptor_LibroConcreto.html"><i class="nav-icon fas fa-cogs"></i></a></td>
-                      </tr>
+                     
+                     
+                     
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
