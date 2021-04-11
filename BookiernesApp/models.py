@@ -44,7 +44,7 @@ class Editor(models.Model):
         return str(self.name)
 
 
-#TODO delete
+#TODO delete and make main editor associate with an editor model so it can be assigned books
 class MainEditor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='main_editor_profile')
     assigned_theme = models.ForeignKey(Theme, null=True, on_delete=models.CASCADE)

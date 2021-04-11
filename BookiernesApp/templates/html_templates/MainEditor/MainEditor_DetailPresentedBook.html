@@ -170,7 +170,7 @@
 
 
                     <li class="nav-item">
-                        <a href="MainEditor_PresentedBooks.html" class="nav-link">
+                        <a href="{% url 'BookiernesApp:maineditor_books_presented_editorial' %}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Libros Presentados <br>
@@ -179,11 +179,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../Editor/Editor_BooksToRevise.html" class="nav-link">
+                        <a href="{% url 'BookiernesApp:editor_book_revision' %}" class="nav-link">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Libros para revisar
-                                <span class="badge badge-info right">4</span>  <!-- suma de todos los libros -->
+                                <span class="badge badge-info right">4</span>  <!--TODO suma de todos los libros -->
                             </p>
                         </a>
                     </li>
@@ -204,7 +204,7 @@
                 <ol class="breadcrumb float-sm-left">
                     <li class="breadcrumb-item"><a href="MainEditor_PresentedBooks.html">Libros Presentados a la
                         editoral</a></li>
-                    <li class="breadcrumb-item active"> Datos del libro Harry Potter</li>
+                    <li class="breadcrumb-item active"> Datos del libro {{ book.title }}</li>
                 </ol>
 
 
@@ -403,7 +403,7 @@
                         </div>
                     </form>
 
-
+<!--TODO corregir texts i faltes d'ortografia-->
                 </div>
 
 
