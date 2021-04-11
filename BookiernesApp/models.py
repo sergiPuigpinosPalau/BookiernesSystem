@@ -32,23 +32,9 @@ class Writer(models.Model):
         return str(self.name)
 
 
-#TODO delete availability --> books_assigned.length
 class Editor(models.Model):
-    AVAILABILITY_TYPES = [('occupied', 'Ocupat'), ('available', 'Disponible')]
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='editor_profile')
     assigned_theme = models.ForeignKey(Theme, null=True, on_delete=models.CASCADE)
-    availability = models.CharField(null=True, max_length=255, choices=AVAILABILITY_TYPES)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return str(self.name)
-
-
-#TODO delete and make main editor associate with an editor model so it can be assigned books
-class MainEditor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='main_editor_profile')
-    assigned_theme = models.ForeignKey(Theme, null=True, on_delete=models.CASCADE)
-    availability = models.CharField(null=True, max_length=255, choices=Editor.AVAILABILITY_TYPES)
     name = models.CharField(max_length=255)
 
     def __str__(self):
