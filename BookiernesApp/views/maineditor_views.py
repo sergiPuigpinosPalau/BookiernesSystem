@@ -16,20 +16,15 @@ class MainEditorBooksPresentedInEditorial(ListView):
     template_name = 'html_templates/MainEditor/MainEditor_PresentedBooks.html'
     #paginate_by = 100  # if pagination is desired
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['book_list'] = Book.objects.all().filter(book_status="presented")
-        return context
-
 
 @method_decorator([login_required, mainEditor_required], name='dispatch')
 class MainEditorBookPresentedDetail(DetailView):
 
     model = Book
     template_name = 'html_templates/MainEditor/MainEditor_DetailPresentedBook.html'
-    #paginate_by = 100  # if pagination is desired
 
 
+#TODO test
 #TODO mirar comentari queda guardat entre <p>??
 @login_required
 @mainEditor_required
@@ -44,7 +39,7 @@ def assign_or_reject(request, pk):
         #Find the least busy worker
         available_user = list(possible_users)[0]
         for user in possible_users:
-            if user.editor_profile.books_assigned.count() < available_user.editor_profile.books_assigned.count():
+            if user.editor_profile.get_availability() < available_user.editor_profile.get_availability():
                 available_user = user
         #Modify book attributes
         book.assigned_to = available_user.editor_profile

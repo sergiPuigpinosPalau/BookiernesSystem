@@ -40,6 +40,20 @@ class Editor(models.Model):
     def __str__(self):
         return str(self.name)
 
+    def get_availability(self):
+        counter = 0
+        for book in self.books_assigned.all():
+            if book.book_status != 'presented':
+                counter += 1
+        return counter
+
+    def get_presented_books(self):
+        if self.user.user_type == 'main_editor':
+            return Book.objects.all().filter(book_status="presented")
+
+    def get_books_to_revise(self):
+        return self.books_assigned.all().filter(book_status="revised")
+
 
 # TODO revisar nulls
 class Book(models.Model):
