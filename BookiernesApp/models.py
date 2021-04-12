@@ -31,6 +31,9 @@ class Writer(models.Model):
     def __str__(self):
         return str(self.name)
 
+    def get_user_id(self):
+        return self.user.pk
+
 
 class Editor(models.Model):
     AVAILABILITY_TYPES = [('occupied', 'Ocupat'), ('available', 'Disponible')]
@@ -62,7 +65,7 @@ class Book(models.Model):
                      ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat')]
     title = models.CharField(null=True, max_length=255 ,blank=True)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT, blank=True)
-    assigned_to = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
+    assigned_to = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
     book_status = models.CharField(null=True, max_length=255, choices=BOOK_STATUSES,blank=True)
     description = models.TextField(null=True,blank=True)
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes',blank=True)
@@ -96,6 +99,11 @@ class NotificationTable(models.Model):
     def __str__(self):
         return "Notification " + str(self.id) + "for: " + str(self.destination_user)
 
+    def get_user(self):
+        return self.user.first_name + " " + self.user.last_name
+    
+    def get_notification(self):
+        return self.notification.content
 
 class Message(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_messages')
@@ -103,5 +111,8 @@ class Message(models.Model):
     book = models.ForeignKey(Book, null=True, on_delete=models.PROTECT, related_name='book_messages')
     content = models.CharField(max_length=255)
     date_received = models.DateField()
+
+    def get_user_name(self):
+        return self.user.first_name + " " + self.user.last_name
 
 

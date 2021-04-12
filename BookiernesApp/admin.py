@@ -12,3 +12,7 @@ admin.site.register(Theme)
 
 
 admin.site.register(Book)
+
+admin.site.register(Message)
+
+

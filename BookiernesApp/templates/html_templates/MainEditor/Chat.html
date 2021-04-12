@@ -1,0 +1,134 @@
+{% extends "html_templates/Blocks/Base.html" %}
+
+{% block head %}
+   <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+          
+        <ol class="breadcrumb float-sm-left">
+             <!-- <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li> -->
+              <li class="breadcrumb-item active"> <a href="{% url 'BookiernesApp:books' book.id %}"> {{book.title}}</a> </li>
+              <li class="breadcrumb-item active">  Mensajes </li>
+        </ol>
+          
+       
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+</br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Mensajes </h3>
+                </div>
+                
+
+                <!-- DIRECT CHAT -->
+            <div class="card direct-chat direct-chat-primary">
+                <div class="card-header">
+
+                  <div class="card-tools">
+                    <span title="{{messages_numbers}} New Messages" class="badge badge-primary">{{messages_numbers}}</span>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <!-- Conversations are loaded here -->
+                  <div class="direct-chat-messages">
+                    <!-- Message. Default to the left -->
+                    {% for message in messages %}
+                    {% if message.user_id == user.id  %}
+                    <div class="direct-chat-msg">
+                      <div class="direct-chat-infos clearfix">
+                        <span class="direct-chat-name float-left">{{message.get_user_name}}</span>
+                        <span class="direct-chat-timestamp float-right">{{message.date_received}}</span>
+                      </div>
+                      <!-- /.direct-chat-infos -->
+                      <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="message user image">
+                      <!-- /.direct-chat-img -->
+                      <div class="direct-chat-text">
+                        {{message.content }}
+                      </div>
+                      <!-- /.direct-chat-text -->
+                    </div>
+                    {% else %}
+                              <!-- Message to the right -->
+                              <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                  <span class="direct-chat-name float-right">{{message.get_user_name}}</span>
+                                  <span class="direct-chat-timestamp float-left">{{message.date_received}}</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                  {{message.content }}
+                                </div>
+                                <!-- /.direct-chat-text -->
+                              </div>
+                              <!-- /.direct-chat-msg -->
+                    {% endif %}
+                    <!-- /.direct-chat-msg -->
+                    {% endfor %}
+                   
+  
+                   
+  
+                   
+  
+                  </div>
+                  <!--/.direct-chat-messages-->
+  
+                
+                  <!-- /.direct-chat-pane -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <form action="/maineditor_message/post_book/{{book.id}}/send/" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      <input type="text" name="content" placeholder="Escribir un mensaje" class="form-control">
+                      <span class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Eviar</button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+              <!--/.direct-chat -->
+            
+
+               
+
+
+              </div>
+
+  
+              
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {% endblock %}
