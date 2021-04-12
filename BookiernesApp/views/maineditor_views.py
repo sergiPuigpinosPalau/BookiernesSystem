@@ -5,7 +5,7 @@ from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView
 
-from BookiernesApp.decorators import mainEditor_required
+from BookiernesApp.decorators import mainEditor_required, book_presented
 from BookiernesApp.models import *
 
 
@@ -17,14 +17,13 @@ class MainEditorBooksPresentedInEditorial(ListView):
     #paginate_by = 100  # if pagination is desired
 
 
-@method_decorator([login_required, mainEditor_required], name='dispatch')
+@method_decorator([login_required, mainEditor_required, book_presented], name='dispatch')
 class MainEditorBookPresentedDetail(DetailView):
 
     model = Book
     template_name = 'html_templates/MainEditor/MainEditor_DetailPresentedBook.html'
 
 
-#TODO test
 #TODO mirar comentari queda guardat entre <p>??
 @login_required
 @mainEditor_required
@@ -34,12 +33,11 @@ def assign_or_reject(request, pk):
         #Find editors with the same theme as the book
         possible_users = User.objects.all().filter(editor_profile__assigned_theme=book.theme)
         if not possible_users:
-            print("BRUH")#TODO test print error message, no users found with this theme
-            return
+            return redirect('BookiernesApp:maineditor_books_presented_editorial')  #TODO test print error message, no users found with this theme
         #Find the least busy worker
         available_user = list(possible_users)[0]
         for user in possible_users:
-            if user.editor_profile.get_availability() < available_user.editor_profile.get_availability():
+            if available_user != user and user.editor_profile.get_availability() < available_user.editor_profile.get_availability():
                 available_user = user
         #Modify book attributes
         book.assigned_to = available_user.editor_profile

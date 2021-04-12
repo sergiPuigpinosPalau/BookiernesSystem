@@ -1,5 +1,35 @@
+from functools import wraps
+
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+
+from BookiernesApp.models import Book
+
+
+def book_in_revision(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        book = get_object_or_404(Book, pk=kwargs['pk'])
+        if book.book_status == 'revised' or book.book_status == 'modifying':
+            return function(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/')
+
+    return wrap
+
+
+def book_presented(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        book = get_object_or_404(Book, pk=kwargs['pk'])
+        if book.book_status == 'presented':
+            return function(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/')
+
+    return wrap
 
 
 def writer_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/'):

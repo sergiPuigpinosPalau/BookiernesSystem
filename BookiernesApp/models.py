@@ -43,7 +43,7 @@ class Editor(models.Model):
     def get_availability(self):
         counter = 0
         for book in self.books_assigned.all():
-            if book.book_status != 'presented':
+            if book.book_status != 'presented' or book.book_status != 'new_version':
                 counter += 1
         return counter
 
@@ -58,7 +58,7 @@ class Editor(models.Model):
 # TODO revisar nulls
 class Book(models.Model):
     BOOK_STATUSES = [('presented', 'Presentat'), ('revised', 'Revisat'), ('modifying', 'Modificant'),
-                     ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat')]
+                     ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat'), ('new_version', 'New Version')]
     title = models.CharField(null=False, max_length=255)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT)
     assigned_to = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='books_assigned')

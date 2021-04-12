@@ -1,9 +1,9 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView
 
-from BookiernesApp.decorators import editor_required
+from BookiernesApp.decorators import editor_required, book_in_revision
 
 from BookiernesApp.models import *
 
@@ -19,7 +19,7 @@ class EditorBookRevision(ListView):
 #TODO filepath to some folder
 #TODO check if filter(,) is an AND or an OR
 #TODO (extra) decorator to only show view if book.status matches
-@method_decorator([login_required, editor_required], name='dispatch')
+@method_decorator([login_required, editor_required, book_in_revision], name='dispatch')
 class EditorBookDetail(DetailView):
 
     model = Book
