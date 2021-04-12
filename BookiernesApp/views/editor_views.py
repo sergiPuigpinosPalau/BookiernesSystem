@@ -18,7 +18,6 @@ class EditorBookRevision(ListView):
 
 #TODO filepath to some folder
 #TODO check if filter(,) is an AND or an OR
-#TODO (extra) decorator to only show view if book.status matches
 @method_decorator([login_required, editor_required, book_in_revision], name='dispatch')
 class EditorBookDetail(DetailView):
 
@@ -27,13 +26,11 @@ class EditorBookDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = User.objects.get(username=self.request.user.username)
         book = self.object
         if book.new_book_version:
             context['latest_book'] = book.new_book_version
         else:
             context['latest_book'] = book
-        context['user_type'] = user.user_type  #TODO delete
         return context
 
 

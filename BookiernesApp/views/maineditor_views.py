@@ -24,7 +24,6 @@ class MainEditorBookPresentedDetail(DetailView):
     template_name = 'html_templates/MainEditor/MainEditor_DetailPresentedBook.html'
 
 
-#TODO mirar comentari queda guardat entre <p>??
 @login_required
 @mainEditor_required
 def assign_or_reject(request, pk):

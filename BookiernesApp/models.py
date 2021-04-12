@@ -6,15 +6,15 @@ from django.db import models
 
 #TODO anyadir foto perfil
 class User(AbstractUser):
-    USER_TYPE_CHOICES = [('writer', 'Writer'), ('editor', 'Editor'), ('main_editor', 'Main editor'), ]
+    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Escriptor principal'), ]
     user_type = models.CharField(
         max_length=255,
         choices=USER_TYPE_CHOICES,
         default='writer',
     )
 
-    def get_user_type(self):
-        return str(self.user_type)
+    def get_user_type_name(self):
+        return dict(self.USER_TYPE_CHOICES)[self.user_type]
 
 
 class Theme(models.Model):
