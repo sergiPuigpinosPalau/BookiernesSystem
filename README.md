@@ -34,9 +34,9 @@ This are the commands to save the requirements:
 ## Teachers
 The teachers who have guided this project are:
 - [Aitor Corchero Rodríguez](https://github.com/aolite)
-- [Marta Oliva Sole](https://github.com/JordiLazo)
-- [Juan Enrique Garrido Navarro](https://github.com/JordiLazo)
-- [Jordi Virgili Gomà](https://github.com/JordiLazo)
+- Marta Oliva Sole
+- Juan Enrique Garrido Navarro
+- [Jordi Virgili Gomà](https://github.com/JordiVirgili)
 
 ## Authors
 This project have been developed by:
