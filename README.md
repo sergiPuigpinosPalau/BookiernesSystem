@@ -40,9 +40,9 @@ The teachers who have guided this project are:
 
 ## Authors
 This project have been developed by:
-- [Tiberiu Paiu](https://github.com/sergiPuigpinosPalau)
-- [Roger Larriba Baudilio](https://github.com/sergiPuigpinosPalau)
-- [José Ramón Noguero de Llano](https://github.com/sergiPuigpinosPalau)
+- [Tiberiu Paiu](https://github.com/TiberiuPaiu)
+- [Roger Larriba Baudilio](https://github.com/rogerLarriba)
+- [José Ramón Noguero de Llano](https://github.com/jnoguero)
 - [Sergi Puigpinós Palau](https://github.com/sergiPuigpinosPalau)
-- [Xavier Loncà Sánchez](https://github.com/sergiPuigpinosPalau)
+- [Xavier Loncà Sánchez](https://github.com/Spiritusrevenge)
 - [Jordi Lazo](https://github.com/JordiLazo)
