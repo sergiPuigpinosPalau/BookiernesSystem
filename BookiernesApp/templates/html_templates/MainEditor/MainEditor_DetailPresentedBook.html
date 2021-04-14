@@ -1,0 +1,234 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+{% endblock %}
+{% block content %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+        <br>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Dades del llibre:  {{ book.title }}</h3>
+                    </div>
+
+                    <br>
+
+
+                    <div class="row invoice-info p-3 mb-3">
+                        <div class="col-sm-2 invoice-col">
+                            <strong> Títol:</strong><br><br>
+                            <strong> Tema:</strong><br><br>
+                            <strong> Estat:</strong><br><br>
+                            <strong> Descripció:</strong><br>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-10 invoice-col">
+
+                            {{ book.title }} <br><br>
+                            {{ book.theme }}<br><br>
+                            <div class="row ">
+                                <div class="col">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100" style="width: 20%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <strong> {{ book.book_status }}</strong>
+                                </div>
+                            </div>
+
+
+                            <br>
+                            <div> {{ book.description }}</div>
+                            <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
+
+
+
+                        </div>
+                        <!-- /.col -->
+
+
+                    </div>
+
+
+                    <br>
+
+                    <div class="d-flex justify-content-center mb-3">
+
+                        <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-rechazar">
+                            <i class="fas fa-times-circle"></i> Rebutjar
+                        </button>
+
+                        <button type="button" class="btn btn-success float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-passar-revisar">
+                            <i class="fas fa-check-circle"></i> Passar a revisar
+                        </button>
+
+                        <a href="#">
+                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                <i class="fas fa-download"></i> Descarregar el llibre
+                            </button>
+                        </a>
+
+
+                    </div>
+
+
+                    <!-- The Modal -->
+                    <div class="modal" id="modal-passar-revisar">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Passar a revisar</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <form action="{% url 'BookiernesApp:maineditor_assign_or_reject' book.id %}"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <!--
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Editor</th>
+                                                <th>Libros Asignados</th>
+                                                <th>Disponibilitat</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="radio1"
+                                                               checked>
+                                                    </div>
+                                                </td>
+                                                <td> Yo</td>
+                                                <td> asdasd</td>
+                                                <td>asdasd</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="radio1"
+                                                               checked>
+                                                    </div>
+                                                </td>
+                                                <td> Marta</td>
+                                                <td> asdasd</td>
+                                                <td>asdasd</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="radio1"
+                                                               checked>
+                                                    </div>
+                                                </td>
+                                                <td> Pedro</td>
+                                                <td> asdasd</td>
+                                                <td>asdasd</td>
+
+                                            </tr>
+
+                                            </tbody>
+                                        </table> -->
+                                        <!-- #TODO moure als maquetadors, ja que la Marta a dit que la assignació no es fa manual als editors-->
+                                        <!--&lt;p&gt;This is some sample content.&lt;/p&gt;-->
+                                        <div id="toolbar-container"></div>
+                                        <label for="editor_asigna">Comentaris o pautes que ha de seguir l'editor</label>
+                                        <textarea name="maineditor_approved_comment" id="editor_asigna"></textarea>
+
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="submit" name="action" value="assign" class="btn btn-success">
+                                            Assignar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <form action="{% url 'BookiernesApp:maineditor_assign_or_reject' book.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="modal" id="modal-rechazar">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Motiu pel rebuig </h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div id="toolbar-container"></div>
+                                        <label for="editor_recasar">Comentaris o motius pel qual s'ha rebutjat el llibre</label>
+                                        <textarea name="maineditor_rejected_comment" id="editor_recasar">
+                                </textarea>
+
+
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                            Rebutjar
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}
+

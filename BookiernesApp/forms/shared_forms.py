@@ -21,12 +21,8 @@ class SignUpForm(UserCreationForm):
             writer = Writer.objects.create(user=user)  # Create associated Model
             writer.name = self.cleaned_data.get('name')
             writer.save()
-        elif user.user_type == 'editor':
+        elif user.user_type == 'editor' or user.user_type == 'main_editor':
             editor = Editor.objects.create(user=user)  # Create associated Model
             editor.name = self.cleaned_data.get('name')
             editor.save()
-        elif user.user_type == 'main_editor':
-            main_editor = MainEditor.objects.create(user=user)  # Create associated Model
-            main_editor.name = self.cleaned_data.get('name')
-            main_editor.save()
         return user

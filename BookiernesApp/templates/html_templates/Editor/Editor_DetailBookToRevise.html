@@ -1,0 +1,275 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+        <br>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Dades del llibre:  {{ latest_book.title }}</h3>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <div class="col-4 col-sm-2">
+                            <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
+                                 aria-orientation="vertical">
+                                <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill"
+                                   href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home"
+                                   aria-selected="true">Versió actual</a>
+                                {% if book.new_book_version %}
+                                <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill"
+                                   href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
+                                   aria-selected="false">Versió original</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-8 col-sm-10">
+                            <div class="tab-content" id="vert-tabs-tabContent">
+                                <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel"
+                                     aria-labelledby="vert-tabs-home-tab">
+
+
+                                    <div class="row invoice-info p-3 mb-3">
+                                        <div class="col-sm-2 invoice-col">
+                                            <strong> Modificació:</strong><br><br>
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Tema:</strong><br><br>
+                                            <strong> Estat:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-8 invoice-col">
+                                            <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br> <!-- TODO implementar-->
+                                            {{ latest_book.title }}
+                                            {% if latest_book.title != book.title %}
+                                                <a href="#" data-toggle="popover"
+                                                                    title="Titulo de la Primera Version"
+                                                                    data-content="Harry Potter I "> <i
+                                                    class="fas fa-exclamation-circle"></i></a>
+                                            {% endif %}
+                                            <br><br>
+                                            {{ latest_book.theme }}
+                                            {% if latest_book.theme != book.theme %}
+                                            <a href="#" data-toggle="popover"
+                                                                title="Categoria de la Primera Version"
+                                                                data-content=" No se hizo ningun cabio. "> <i
+                                                class="fas fa-exclamation-circle"></i> </a>
+                                            {% endif %}
+                                            <br><br>
+                                            <div class="row ">
+                                                <div class="col">
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                             aria-valuenow="20" aria-valuemin="0"
+                                                             aria-valuemax="100" style="width: 20%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <strong> {{ book.book_status }}</strong>
+                                                </div>
+                                            </div>
+
+
+                                            <br>
+
+                                            <div>{{ latest_book.description }} </div>
+                                            <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
+                                            {% if latest_book.description != book.description %}
+                                            <a href="#" data-toggle="popover" title="Description de la Primera Version"
+                                               data-content="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas Letraset, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. "
+                                               data-placement="left"> <i class="fas fa-exclamation-circle"></i> </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if book.new_book_version %}
+                                <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel"
+                                     aria-labelledby="vert-tabs-profile-tab">
+                                    <div class="row invoice-info p-3 mb-3">
+                                        <div class="col-sm-2 invoice-col">
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Tema:</strong><br><br>
+                                            <strong> Estat:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-8 invoice-col">
+
+                                            {{ book.title }} <br><br>
+                                            {{ book.theme }}<br><br>
+                                            <div class="row ">
+                                                <div class="col">
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                             aria-valuenow="20" aria-valuemin="0"
+                                                             aria-valuemax="100" style="width: 40%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <strong> {{ book.book_status }}</strong>
+                                                </div>
+                                            </div>
+
+
+                                            <br>
+                                            <div> {{ book.description }}
+                                            </div>
+                                            <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
+
+
+                                        </div>
+                                        <!-- /.col -->
+
+
+                                    </div>
+                                </div>
+                                {% endif %}
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="d-flex justify-content-center mb-3">
+
+                        <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-rechazar">
+                            <i class="fas fa-times-circle"></i> Rebutjar
+                        </button>
+
+                        <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="accept" class="btn btn-success float-right" style="margin-right: 5px;">
+                                <i class="fas fa-check-circle"></i> Acceptar
+                            </button>
+                        </form>
+
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    style="margin-right: 5px;">
+                                <i class="fas fa-download"></i> Descarregar el llibre <span class="caret"></span></button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" tabindex="-1" href="#">8 Versio Final-
+                                    ER-Non-Functional-Requirements.pdf</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" tabindex="-1" href="#">versio1.pdf</a>
+                                <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
+                            <!--TODO implement -->
+                            </div>
+                        </div>
+
+                        <a href="#">
+                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                <i class="fas fa-envelope"></i> Enviar missatge
+                            </button>
+                        </a>
+
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-instruciones">
+                            <i class="fas fa-comment-dots"></i> Comentari de l'editor principal
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- The Modal -->
+                    <div class="modal" id="modal-instruciones">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Comentari de l'editor principal</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    {{ book.main_editor_comment | safe}}
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="modal" id="modal-rechazar">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Motiu pel rebuig </h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div id="toolbar-container"></div>
+                                        <label for="editor_recasar">Comentaris o motius pel qual s'ha rebutjat el llibre</label>
+                                        <textarea name="editor_rejected_comment" id="editor_recasar">
+                                </textarea>
+
+
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="submit" name="action" value="reject" class="btn btn-danger">Rebutjar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}
