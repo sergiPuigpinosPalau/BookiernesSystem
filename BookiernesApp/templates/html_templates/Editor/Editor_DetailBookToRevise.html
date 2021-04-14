@@ -100,7 +100,7 @@
 
                                             <br>
 
-                                            <div>{{ latest_book.description }} </div>
+                                            <div>{{ latest_book.description | safe }} </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
                                             {% if latest_book.description != book.description %}
                                             <a href="#" data-toggle="popover" title="Description de la Primera Version"
@@ -142,7 +142,7 @@
 
 
                                             <br>
-                                            <div> {{ book.description }}
+                                            <div> {{ book.description | safe }}
                                             </div>
                                             <!-- el pop upe nop supote que el texto tenga "" lo mirare abere como areglar . -->
 
@@ -177,6 +177,12 @@
                         </form>
 
 
+                        <a href="/media/{{book.path}}" download>
+                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                <i class="fas fa-download"></i> Descarregar el llibre
+                            </button>
+                        </a>
+                        <!--
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     style="margin-right: 5px;">
@@ -187,11 +193,13 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" tabindex="-1" href="#">versio1.pdf</a>
                                 <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
-                            <!--TODO implement -->
-                            </div>
-                        </div>
 
-                        <a href="#">
+                            </div>
+
+                        </div>
+                        -->
+
+                        <a href="{% url 'BookiernesApp:chat_book_editor' book.id %}">
                             <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                                 <i class="fas fa-envelope"></i> Enviar missatge
                             </button>

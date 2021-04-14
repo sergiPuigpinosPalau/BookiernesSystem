@@ -8,7 +8,6 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -27,49 +26,59 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell"></i>
-                    <span class="badge badge-danger navbar-badge"> 3 </span>  <!-- numero de las notifaciones -->
+                    {% if user.destination_user_notifications.count > 0 %}
+
+
+                        <span class="badge badge-danger navbar-badge"> {{ user.destination_user_notifications.count }} </span>
+                    {% endif %} <!-- numero de las notifaciones -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- la notifacacio -->
-                    <a href="#" class="dropdown-item"> <!-- link cap al missage -->
+                    {% if user.destination_user_notifications.count > 0 %}
+                        {% for notification in user.destination_user_notifications.all %}
+                            {% if user.user_type == 'main_editor' or user.user_type == 'editor' %}
+                                <a href="{% url 'BookiernesApp:notification_editor' notification.id %}"
+                                   class="dropdown-item"> <!-- link cap al missage -->
+                            {% elif user.user_type == 'writer' %}
+                                <a href="{% url 'BookiernesApp:notification' notification.id %}" class="dropdown-item">
+                                <!-- link cap al missage -->
+                            {% endif %}
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="User Avatar"
+                            <img src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="User Avatar"
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
-                                    Pepito Ramón
-                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    <!-- la prioridad icona  -->
+                                    {{ notification.get_user }}
+                                    {% if notification.notification_type == 'presented' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-book-medical"></i></span>
+                                    {% elif notification.notification_type == 'modification' %}
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-book"></i></span>
+                                    {% elif notification.notification_type == 'message' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-envelope"></i></span>
+                                    {% elif notification.notification_type == 'assigned' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-envelope"></i></span>
+                                    {% endif %}
                                 </h3>
-                                <p class="text-sm"> A realizado la modifcaciones . </p>
-                                <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 22/03/2021</p>
+                                <p class="text-sm">{{ notification.content }} </p>
+                                <p class="text-sm text-muted"><i
+                                        class="far fa-calendar-alt mr-1"></i>{{ notification.date_received }}</p>
                             </div>
                         </div>
                         <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                            <img src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="User Avatar"
-                                 class="img-size-50 img-circle mr-3">
-                            <div class="media-body">
-                                <h3 class="dropdown-item-title">
-                                    Pepito Ramón
-                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                </h3>
-                                <p class="text-sm">Te envio un mesaje...</p>
-                                <p class="text-sm text-muted"><i class="far fa-calendar-alt mr-1"></i> 23/03/2021</p>
-                            </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
+                        </a>
+
+
+                        {% endfor %}
+                    {% endif %}
 
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    {{ user.editor_profile.name }}
+                    {{ user.first_name }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-lg">
 
@@ -80,7 +89,7 @@
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
-                                    {{ user.editor_profile.name }}
+                                    {{ user.first_name }} {{ user.last_name }}
                                 </h3>
                                 <p class="text-sm">{{ user.get_user_type_name }} </p>
                             </div>
@@ -94,7 +103,7 @@
                             <i class="fas fa-user-edit mr-1"></i>
                             <div class="media-body ">
                                 <h3 class="dropdown-item-title ">
-                                    Cabiar los datos de usuario
+                                    Modificar les dades d'usuari
                                 </h3>
                             </div>
                         </div>
@@ -134,16 +143,6 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="../../../static/BookiernesApp/img/user1-128x128.jpg" class="img-circle elevation-2"
-                         alt="Imagen del usuario">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">Ana</a>
-                </div>
-            </div>
-
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
@@ -153,31 +152,52 @@
                          with font-awesome or any other icon font library -->
 
                     {% if user.user_type == 'main_editor' %}
-                    <li class="nav-item">
-                        <a href="{% url 'BookiernesApp:maineditor_books_presented_editorial' %}" class="nav-link">
-                            <i class="nav-icon fas fa-book"></i>
-                            <p>
-                                Llibres presentats <br>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:maineditor_books_presented_editorial' %}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Llibres presentats <br>
 
-                                a l'editoral</p>
-                            {% if user.editor_profile.get_presented_books.count > 0  %}
-                            <span class="badge badge-info right">{{ user.editor_profile.get_presented_books.count }}</span>
-                            {% endif %}
-                        </a>
-                    </li>
+                                    a l'editoral</p>
+                                {% if user.editor_profile.get_presented_books.count > 0 %}
+                                    <span class="badge badge-info right">{{ user.editor_profile.get_presented_books.count }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
                     {% endif %}
                     {% if user.user_type == 'main_editor' or user.user_type == 'editor' %}
-                    <li class="nav-item">
-                        <a href="{% url 'BookiernesApp:editor_book_revision' %}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
-                            <p>
-                                Llibres a revisar
-                                {% if user.editor_profile.get_books_to_revise.count > 0  %}
-                                <span class="badge badge-info right">{{ user.editor_profile.get_books_to_revise.count }}</span>
-                                {% endif %}
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:editor_book_revision' %}" class="nav-link">
+                                <i class="nav-icon fas fa-table"></i>
+                                <p>
+                                    Llibres a revisar
+                                    {% if user.editor_profile.get_books_to_revise.count > 0 %}
+                                        <span class="badge badge-info right">{{ user.editor_profile.get_books_to_revise.count }}</span>
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if  user.user_type == 'writer' %}
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Presentar Llibre
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
+                                <i class="nav-icon fas fa-table"></i>
+                                <p>
+                                    Libres Presentats
+                                    {% if user.writer_profile.get_presented_books.count > 0 %}
+                                        <span class="badge badge-info right">{{ user.writer_profile.get_presented_books.count }}</span>
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </li>
                     {% endif %}
 
                 </ul>
@@ -231,6 +251,6 @@
 <script src="../../../static/BookiernesApp/js/adminlte.min.js"></script>
 
 <!-- libreria para caja de texto  -->
-<script src="./js/summernote-bs4.min.js"></script>
+
 </body>
 </html>

@@ -38,12 +38,12 @@ urlpatterns = [
 
 
     # Main Editor
-    url(r'^maineditor_book_revision/$', login_required(MainEditorBookRevision.as_view()), name='maineditor_book_revision'),
+    #url(r'^maineditor_book_revision/$', login_required(MainEditorBookRevision.as_view()), name='maineditor_book_revision'),
 
 
-    url(r'^maineditor_message/get_book/(?P<pk>\d+)/$', login_required(Maineditor_Chat_Book.as_view()), name='chat_book_maineditor'),
-    url(r'^maineditor_message/post_book/(?P<pk>\d+)/send/$', login_required(maineditor_post_chat), name='send_message_maineditor'),
-    url(r'^maineditor_notification/(?P<pk>\d+)/$', login_required(maineditor_notification), name='notification_maineditor'),
+    #url(r'^maineditor_message/get_book/(?P<pk>\d+)/$', login_required(Maineditor_Chat_Book.as_view()), name='chat_book_maineditor'),
+    #url(r'^maineditor_message/post_book/(?P<pk>\d+)/send/$', login_required(maineditor_post_chat), name='send_message_maineditor'),
+    #url(r'^maineditor_notification/(?P<pk>\d+)/$', login_required(maineditor_notification), name='notification_maineditor'),
 
 
 
