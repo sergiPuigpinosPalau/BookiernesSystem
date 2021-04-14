@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bookiernes</title>
    <!-- Google Font: Source Sans Pro -->
-    <!-- libreria para caja de texto  -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -17,7 +15,7 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
-  
+    <!-- libreria para caja de texto  -->
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed">
@@ -221,7 +219,6 @@
       </div>
       <!-- /.sidebar -->
     </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -229,8 +226,9 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item">Presenta Libro</li>
-
+             <!-- <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li> -->
+              <li class="breadcrumb-item active"> <a href="{% url 'BookiernesApp:books' book.id %}"> {{book.title}}</a> </li>
+              <li class="breadcrumb-item active">  Mensajes </li>
         </ol>
           
        
@@ -244,46 +242,89 @@
         
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Presenta Libro</h3>
+                  <h3 class="card-title">Mensajes </h3>
                 </div>
-              
-                <form action=""  method="POST"  enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{form.author}} 
-                  
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label >Titulo del libro</label>
-                     <!--   <input type="text" class="form-control" id="exampleInputFile"> -->
-                     {{form.title}}
-                    </div>
-                    <div class="form-group">
-                      <label >Categoria del libro</label>
-                      {{form.theme}}
-                    </div>
-                    <div class="form-group">
-                        <label >Descripcio del libro</label>
-                        <div id="toolbar-container"></div>
-                        {{form.description}}
-                      </div>
-                    <div class="form-group">
-                      <label >Subir el libro en formato Markdown</label> 
-                      <div class="input-group">
-                        
-                        {{form.path}} 
-                          
-                        
-                        
-                      </div>
-                    </div>
-                    
+                
+
+                <!-- DIRECT CHAT -->
+            <div class="card direct-chat direct-chat-primary">
+                <div class="card-header">
+
+                  <div class="card-tools">
+                    <span title="{{messages_numbers}} New Messages" class="badge badge-primary">{{messages_numbers}}</span>
                   </div>
-                  
-                  {{form.book_status}} 
-                  <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Presentar</button>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <!-- Conversations are loaded here -->
+                  <div class="direct-chat-messages">
+                    <!-- Message. Default to the left -->
+                    {% for message in messages %}
+                    {% if message.user_id == user.id  %}
+                    <div class="direct-chat-msg">
+                      <div class="direct-chat-infos clearfix">
+                        <span class="direct-chat-name float-left">{{message.get_user_name}}</span>
+                        <span class="direct-chat-timestamp float-right">{{message.date_received}}</span>
+                      </div>
+                      <!-- /.direct-chat-infos -->
+                      <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="message user image">
+                      <!-- /.direct-chat-img -->
+                      <div class="direct-chat-text">
+                        {{message.content }}
+                      </div>
+                      <!-- /.direct-chat-text -->
+                    </div>
+                    {% else %}
+                              <!-- Message to the right -->
+                              <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                  <span class="direct-chat-name float-right">{{message.get_user_name}}</span>
+                                  <span class="direct-chat-timestamp float-left">{{message.date_received}}</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                  {{message.content }}
+                                </div>
+                                <!-- /.direct-chat-text -->
+                              </div>
+                              <!-- /.direct-chat-msg -->
+                    {% endif %}
+                    <!-- /.direct-chat-msg -->
+                    {% endfor %}
+                   
+  
+                   
+  
+                   
+  
                   </div>
-                </form>
+                  <!--/.direct-chat-messages-->
+  
+                
+                  <!-- /.direct-chat-pane -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <form action="/maineditor_message/post_book/{{book.id}}/send/" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      <input type="text" name="content" placeholder="Escribir un mensaje" class="form-control">
+                      <span class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Eviar</button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+              <!--/.direct-chat -->
+            
+
+               
+
+
               </div>
 
   
@@ -293,32 +334,24 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <strong>Lorem Ipsum</strong>
-      is simply dummy text of the printing and typesetting industry.
-      <div class="float-right d-none d-sm-inline-block">
-          <strong>Version</strong> 1.0
-      </div>
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+   <!-- /.content-wrapper -->
+   <footer class="main-footer">
+    <strong>Lorem Ipsum</strong>
+    is simply dummy text of the printing and typesetting industry.
+    <div class="float-right d-none d-sm-inline-block">
+        <strong>Version</strong> 1.0
+    </div>
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
-<script>
-  ClassicEditor
-      .create( document.querySelector( '#editor' ) , {
-          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
-        } )
-      .catch( error => {
-          console.error( error );
-      } );
-</script>
 
 <!-- jQuery -->
 <script src="../../../static/BookiernesApp/js/jquery.min.js"></script>
@@ -330,7 +363,3 @@
 </body>
 </html>
 
-
-
-
-  
