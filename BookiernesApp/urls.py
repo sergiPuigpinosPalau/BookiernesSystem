@@ -26,23 +26,27 @@ urlpatterns = [
     # http://127.0.0.1:8000/writer_published/edit_book/33
     url(r'^writer_message/get_book/(?P<pk>\d+)/$', login_required(Chat_Book.as_view()), name='chat_book'),
     url(r'^writer_message/post_book/(?P<pk>\d+)/send/$', login_required(post_chat), name='send_message'),
-    url(r'^writer_notification/(?P<pk_n>\d+)/(?P<id>\d+)/$', login_required(writer_notification), name='notification'),
+    url(r'^writer_notification/(?P<pk>\d+)/$', login_required(writer_notification), name='notification'),
 
     # Editor 
+    url(r'^editor_book_revision/$', login_required(EditorBookRevision.as_view()), name='editor_book_revision'),
+    
+    
     url(r'^editor_message/get_book/(?P<pk>\d+)/$', login_required(Editor_Chat_Book.as_view()), name='chat_book_editor'),
     url(r'^editor_message/post_book/(?P<pk>\d+)/send/$', login_required(editor_post_chat), name='send_message_editor'),
-    url(r'^editor_book_revision/$', login_required(EditorBookRevision.as_view()), name='editor_book_revision'),
-
+    url(r'^editor_notification/(?P<pk>\d+)/$', login_required(editor_notification), name='notification_editor'),
+    
 
     # Main Editor
-    url(r'^maineditor_message/get_book/(?P<pk>\d+)/$', login_required(Maineditor_Chat_Book.as_view()), name='chat_book_maineditor'),
-    url(r'^maineditor_message/post_book/(?P<pk>\d+)/send/$', login_required(maineditor_post_chat), name='send_message_maineditor'),
-    url(r'^maineditor_notification/(?P<pk_n>\d+)/(?P<id>\d+)/$', login_required(maineditor_notification), name='notification_maineditor'),
-    
-
     url(r'^maineditor_book_revision/$', login_required(MainEditorBookRevision.as_view()), name='maineditor_book_revision'),
     
+   
+    url(r'^maineditor_message/get_book/(?P<pk>\d+)/$', login_required(Maineditor_Chat_Book.as_view()), name='chat_book_maineditor'),
+    url(r'^maineditor_message/post_book/(?P<pk>\d+)/send/$', login_required(maineditor_post_chat), name='send_message_maineditor'),
+    url(r'^maineditor_notification/(?P<pk>\d+)/$', login_required(maineditor_notification), name='notification_maineditor'),
     
+
+  
     
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     

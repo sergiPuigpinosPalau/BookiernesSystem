@@ -12,7 +12,7 @@ class User(AbstractUser):
         choices=USER_TYPE_CHOICES,
         default='writer',
     )
-
+    path_profile_photo = models.FileField(upload_to = 'profile_photo' ,null=True,blank=True)
     def get_user_type(self):
         return str(self.user_type)
 
@@ -32,7 +32,7 @@ class Writer(models.Model):
         return str(self.name)
 
     def get_user_id(self):
-        return self.user.pk
+        return self.user.id
 
 
 class Editor(models.Model):
@@ -44,7 +44,9 @@ class Editor(models.Model):
 
     def __str__(self):
         return str(self.name)
-
+    
+    def get_user_id(self):
+        return self.user.id
 
 class MainEditor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='main_editor_profile')
@@ -65,7 +67,7 @@ class Book(models.Model):
                      ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat')]
     title = models.CharField(null=True, max_length=255 ,blank=True)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT, blank=True)
-    assigned_to = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
+    assigned_to = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='books_assigned', blank=True)
     book_status = models.CharField(null=True, max_length=255, choices=BOOK_STATUSES,blank=True)
     description = models.TextField(null=True,blank=True)
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes',blank=True)
@@ -80,30 +82,25 @@ class Book(models.Model):
          return self.description
 
 
+
 class Notification(models.Model):
+    
+    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
+    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='destination_user_notifications')
+    date_received = models.DateField()
     NOTIFICATION_CHOICES = [('modification', 'Modificacio'), ('message', 'Missatge'), ('presented', 'Presentat'),
                             ('assigned', 'Assignat')]
     content = models.CharField(max_length=255)
     notification_type = models.CharField(max_length=255, choices=NOTIFICATION_CHOICES)
-
-    def __str__(self):
-        return str(self.notification_type)
-
-
-class NotificationTable(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')
-    destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='destination_user_notifications')
-    date_received = models.DateField()
-    notification = models.ForeignKey(Notification, null=True, on_delete=models.PROTECT, related_name='type_of_notification')
-
+    url = models.CharField(max_length=255)
+    
     def __str__(self):
         return "Notification " + str(self.id) + "for: " + str(self.destination_user)
 
     def get_user(self):
         return self.user.first_name + " " + self.user.last_name
     
-    def get_notification(self):
-        return self.notification.content
+
 
 class Message(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_messages')

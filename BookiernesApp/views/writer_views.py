@@ -11,7 +11,7 @@ from django.http import Http404
 from datetime import datetime
 
 from BookiernesApp.decorators import writer_required
-from BookiernesApp.models import Book, User, Writer, Notification , Message , NotificationTable
+from BookiernesApp.models import Book, User, Writer, Notification , Message 
 from BookiernesApp.forms.book_forms import *
 
 
@@ -21,7 +21,7 @@ class PublishedBooks(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        notification=NotificationTable.objects.filter(destination_user_id = self.request.user.id )
+        notification=Notification.objects.filter(destination_user_id = self.request.user.id )
         context['notification_numbers'] = notification.count()
         context['notifications'] = notification
         context['book_numbers'] = Book.objects.count()
@@ -46,7 +46,7 @@ class PublishBook(SuccessMessageMixin, CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        notification=NotificationTable.objects.filter(destination_user_id = self.request.user.id )
+        notification=Notification.objects.filter(destination_user_id = self.request.user.id )
         context['notification_numbers'] = notification.count()
         context['notifications'] = notification
         context['book_numbers'] = Book.objects.count()
@@ -77,7 +77,7 @@ class Edit_Book(SuccessMessageMixin, UpdateView):
             context = super().get_context_data(**kwargs)
             author = Writer.objects.get(user_id=self.request.user.id )
             book = Book.objects.get(Q(author_id=author) & Q(pk=self.kwargs['pk']))
-            notification=NotificationTable.objects.filter(destination_user_id = self.request.user.id )
+            notification=Notification.objects.filter(destination_user_id = self.request.user.id )
             context['notification_numbers'] = notification.count()
             context['notifications'] = notification
             
@@ -103,7 +103,7 @@ class Get_Books(TemplateView):
         try:
             context = super().get_context_data(**kwargs)
             context['book_numbers'] = Book.objects.count()
-            notification=NotificationTable.objects.filter(destination_user_id = self.request.user.id )
+            notification=Notification.objects.filter(destination_user_id = self.request.user.id )
             context['notification_numbers'] = notification.count()
             context['notifications'] = notification
             author =Writer.objects.get(user_id=self.request.user.id ).id
@@ -121,7 +121,7 @@ class Chat_Book(TemplateView):
         try:
             context = super().get_context_data(**kwargs)
             context['book_numbers'] = Book.objects.count()
-            notification=NotificationTable.objects.filter(destination_user_id = self.request.user.id )
+            notification=Notification.objects.filter(destination_user_id = self.request.user.id )
             context['notification_numbers'] = notification.count()
             context['notifications'] = notification
             author =Writer.objects.get(user_id=self.request.user.id ).id
@@ -131,12 +131,13 @@ class Chat_Book(TemplateView):
 
             context['book'] = book
             #book.assigned_to
-            messages = Message.objects.filter(Q(book_id=book.id)  & Q( Q( Q(user_id =self.request.user.id ) &  Q(destination_user_id =book.assigned_to.id) )  | Q( Q(user_id = book.assigned_to.id ) &  Q(destination_user_id =self.request.user.id) ) ) )
+            messages = Message.objects.filter(Q(book_id=book.id)  & Q( Q( Q(user_id =self.request.user.id ) &  Q(destination_user_id = book.assigned_to.user.id) )  | Q( Q(user_id = book.assigned_to.user.id ) &  Q(destination_user_id =self.request.user.id) ) ) )
             context['messages']=messages
             context['messages_numbers']=messages.count()
             return context
         except:
             raise Http404("I can't access this page.")
+
 @login_required
 @writer_required
 def post_chat(request, pk):
@@ -146,7 +147,14 @@ def post_chat(request, pk):
         date_received = datetime.now()
         book_id = pk
         user_id = request.user.id
-        destination_user_id = Book.objects.get(id=pk).assigned_to.id 
+        destination_user_id = Book.objects.get(id=pk).assigned_to.user.id
+        
+        notification_type = 'message'
+        content_notification = 'Has recibido un mensaje.'
+        if User.objects.get(id=destination_user_id).user_type == "editor":
+            url = '/editor_message/get_book/'+book_id
+        elif User.objects.get(id=destination_user_id).user_type == "main_editor":
+            url = '/maineditor_message/get_book/'+book_id
 
         if destination_user_id == None:
             raise Http404("I can't access this page.")
@@ -154,7 +162,8 @@ def post_chat(request, pk):
             message=Message.objects.create(content= content,date_received=date_received,book_id=book_id,user_id=user_id,destination_user_id=destination_user_id )
             message.save()
             
-            notification=NotificationTable.objects.create(notification_id= 2 ,date_received=date_received,user_id=user_id,destination_user_id=destination_user_id)
+
+            notification=Notification.objects.create(notification_type = notification_type, content = content_notification, url = url ,date_received=date_received,user_id=user_id,destination_user_id=destination_user_id)
             notification.save()
         except:
             raise Http404("Sa producido un error a la bbdd.")
@@ -163,25 +172,21 @@ def post_chat(request, pk):
         return redirect(url)
     else:
         raise Http404("I can't access this page.")
+
 @login_required
 @writer_required
-def writer_notification(request, pk_n, id):
-    if pk_n != None:
+def writer_notification(request, pk):
+    if pk != None:
         #try:
-        n=NotificationTable.objects.filter( Q(id=pk_n ) & Q(destination_user_id=request.user.id) )
-        #type_url = n.notification.notification_type
-        n.delete()
-
-        #if type_url == 'message' and  request.user.user_type == 'writer':
-        url='/writer_message/get_book/'+id
-        return redirect(url)
-
-            #if type_url == 'message' and  request.user.user_type == 'editor':
-
-            #if type_url == 'message' and  request.user.user_type == 'main_editor':
+        notification=Notification.objects.get( Q(id=pk ) & Q(destination_user_id=request.user.id) )
+        url = notification.url
+        if  request.user.user_type == 'writer':
+            notification.delete()
+            return redirect(url)
+    
 
         #except:
-            #raise Http404("Sa producido un error a la bbdd.")
+        #    raise Http404("Sa producido un error a la bbdd.")
         
     else:
         raise Http404("I can't access this page.")
