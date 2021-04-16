@@ -4,10 +4,20 @@ from django.views.generic import DetailView, TemplateView, CreateView, UpdateVie
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
+
+from django.contrib import messages
+from django.contrib.messages import constants
+
 from django.urls import reverse
 from django.http import Http404 , HttpResponseRedirect
+from django.conf import settings
+
 
 from datetime import datetime
+import os
+from os import remove, rmdir
+from shutil import rmtree
+
 
 from BookiernesApp.decorators import writer_required
 from BookiernesApp.models import Book, User, Writer, Notification, Message
@@ -233,5 +243,26 @@ def writer_notification(request, pk):
 
 
 
-    
+def deleteBook(request, pk):
+    if pk != None:
+        try:
 
+            book=Book.objects.get(id = pk)
+            url = 'BookiernesApp:writer_published_books'
+            
+            # para elinar el achivo de la carpeta .
+
+            if book.path:
+                book.path.delete()
+            
+            book.delete()
+
+            message = "El libro %(title)s se borro corectamente. " % {'title': book.title}
+            messages.add_message(request, constants.SUCCESS, message)
+
+            return redirect(url )
+
+        except:
+           raise Http404("Sa producido un error a la bbdd.")
+    else:
+        raise Http404("I can't access this page.")
