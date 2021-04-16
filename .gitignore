@@ -1,0 +1,5 @@
+# Ignore the entire venv folder
+venv/
+
+#Ignore the Mac files
+.DS_Store
