@@ -31,10 +31,12 @@ urlpatterns = [
 
     url(r'^writer_notification/(?P<pk>\d+)/$', login_required(writer_notification), name='notification'),
 
+    url(r'^writer_published/serch/$', login_required(SerchBooks.as_view()), name='serch_book'),
+
     # Editor 
     url(r'^editor_book_revision/$', login_required(EditorBookRevision.as_view()), name='editor_book_revision'),
 
-    
+
     url(r'^editor_message/get_book/(?P<pk>\d+)/$', login_required(Editor_Chat_Book.as_view()), name='chat_book_editor'),
     url(r'^editor_message/post_book/(?P<pk>\d+)/send/$', login_required(editor_post_chat), name='send_message_editor'),
     url(r'^editor_notification/(?P<pk>\d+)/$', login_required(editor_notification), name='notification_editor'),

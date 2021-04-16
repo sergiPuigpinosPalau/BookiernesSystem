@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView, ListView
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
@@ -25,19 +25,30 @@ from BookiernesApp.forms.book_forms import *
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
-class PublishedBooks(TemplateView):
+class PublishedBooks(ListView):
     template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
+    paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-         context = super().get_context_data(**kwargs)
-         notification = Notification.objects.filter(destination_user_id=self.request.user.id)
-         self.request.user.writer_profile.get_presented_books()
-         context['notification_numbers'] = notification.count()
-         context['notifications'] = notification
-         context['book_numbers'] = Book.objects.count()
-         context['books'] = Book.objects.filter(author_id=Writer.objects.get(user_id=self.request.user.id).id)
-    #     # etc
-         return context
+    
+    def get_queryset(self):
+        try:
+            return Book.objects.filter( author_id= Writer.objects.get(user_id=self.request.user.id).id )
+        except:
+            return 0
+    
+
+class SerchBooks(ListView):
+    template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
+    model = Book
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains = self.form_class(self.request.GET['value_search']))
+     
+
+
+
+    
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -242,7 +253,8 @@ def writer_notification(request, pk):
         raise Http404("I can't access this page.")
 
 
-
+@login_required
+@writer_required
 def deleteBook(request, pk):
     if pk != None:
         try:
