@@ -221,11 +221,12 @@ def post_chat(request, pk):
                                              user_id=user_id, destination_user_id=destination_user_id)
             message.save()
 
-            notification = Notification.objects.create(notification_type=notification_type,
-                                                       content=content_notification, url=url,
-                                                       date_received=date_received, user_id=user_id,
-                                                       destination_user_id=destination_user_id)
-            notification.save()
+            if not Notification.objects.all().filter(notification_type=notification_type, destination_user_id__exact=destination_user_id, user_id__exact=user_id, url__exact=url):
+                notification = Notification.objects.create(notification_type=notification_type,
+                                                           content=content_notification, url=url,
+                                                           date_received=date_received, user_id=user_id,
+                                                           destination_user_id=destination_user_id)
+                notification.save()
         except:
             raise Http404("Sa producido un error a la bbdd.")
 

@@ -28,14 +28,14 @@ class EditorBookDetail(DetailView):
     model = Book
     template_name = 'html_templates/Editor/Editor_DetailBookToRevise.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        book = self.object
-        if book.new_book_version:
-            context['latest_book'] = book.new_book_version
-        else:
-            context['latest_book'] = book
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     book = self.object
+    #     if book.new_book_version:
+    #         context['latest_book'] = book.new_book_version
+    #     else:
+    #         context['latest_book'] = book
+    #     return context
 
 
 @login_required
@@ -94,21 +94,23 @@ def editor_post_chat(request, pk):
         notification_type = 'message'
         content_notification = 'Has recibido un mensaje.'
 
-
-        if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
-            url = '/writer_message/get_book/' + book_id
-        else:
-            raise Http404("I can't access this page.")
+        #if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
+        url = '/writer_message/get_book/' + book_id
+        #else:
+            #raise Http404("I can't access this page.")
         try:
             message = Message.objects.create(content=content, date_received=date_received, book_id=book_id,
                                              user_id=user_id, destination_user_id=destination_user_id)
             message.save()
 
-            notification = Notification.objects.create(notification_type=notification_type,
-                                                       content=content_notification, url=url,
-                                                       date_received=date_received, user_id=user_id,
-                                                       destination_user_id=destination_user_id)
-            notification.save()
+            if not Notification.objects.all().filter(notification_type=notification_type,
+                                                     destination_user_id__exact=destination_user_id,
+                                                     user_id__exact=user_id, url__exact=url):
+                notification = Notification.objects.create(notification_type=notification_type,
+                                                           content=content_notification, url=url,
+                                                           date_received=date_received, user_id=user_id,
+                                                           destination_user_id=destination_user_id)
+                notification.save()
         except:
             raise Http404("Sa producido un error a la bbdd.")
 
