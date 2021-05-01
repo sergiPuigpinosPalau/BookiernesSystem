@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
 # Create your models here.
 
 # TODO anyadir foto perfil
@@ -9,13 +8,16 @@ from django.db.models import Q
 
 
 class User(AbstractUser):
-    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Escriptor principal'), ]
+    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Escriptor principal'),
+                         ('main_graphic_designer', 'Main Graphic Designer'), ('graphic_designer', 'Graphic Designer'),
+                         ('it', 'IT'), ('subscribed_reader', 'Lector Subscrit')]
     user_type = models.CharField(
         max_length=255,
         choices=USER_TYPE_CHOICES,
         default='writer',
     )
     path_profile_photo = models.FileField(upload_to='profile_photo', null=True, blank=True)
+    activated = models.BooleanField(default=True)
 
     def get_user_type_name(self):
         return dict(self.USER_TYPE_CHOICES)[self.user_type]
@@ -29,6 +31,17 @@ class Theme(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class CreditCard(models.Model):
+    number = models.CharField(max_length=255)
+    secret_number = models.CharField(max_length=255)
+    date = models.CharField(max_length=255)
+
+
+class SubscribedReader(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Subscribed_reader_profile')
+    credit_card = models.OneToOneField(CreditCard, on_delete=models.CASCADE, null=True, related_name='credit_cards')
 
 
 class Writer(models.Model):
@@ -75,11 +88,30 @@ def user_directory_path(instance, filename):
     return 'book/user_{0}/{1}'.format(instance.user.id, filename)
 
 
+class GraphicDesigner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='graphic_designer_profile')
+
+
+class Image(models.Model):
+    path = models.FileField(upload_to='images', null=True, blank=True)
+
+
+class ImagePetition(models.Model):
+    editor = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='editor_petition')
+    graphic_designer = models.ForeignKey(GraphicDesigner, null=True, on_delete=models.PROTECT,
+                                         related_name='graphic_designer_petition')
+    title = models.CharField(null=True, max_length=255, blank=True)
+    description = models.TextField(null=True, blank=True)
+    images_attached = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True)
+    date_received = models.DateField()
+
+
 # TODO revisar nulls
 # TODO comprobar blanks
 class Book(models.Model):
     BOOK_STATUSES = [('presented', 'Presentat'), ('revised', 'Revisat'), ('modifying', 'Modificant'),
                      ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat'),
+                     ('designing', 'Maquetacio'),
                      ('new_version', 'New Version')]
     title = models.CharField(null=True, max_length=255, blank=True)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT, blank=True)
@@ -90,7 +122,18 @@ class Book(models.Model):
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes', blank=True)
     path = models.FileField(upload_to='book', null=True, blank=True)
     main_editor_comment = models.TextField(null=True, blank=True)
-    #new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE) 
+    designer_assigned_to = models.ForeignKey(GraphicDesigner, null=True, on_delete=models.PROTECT,
+                                             related_name='designer_books_assigned',
+                                             blank=True)
+    book_to_design = models.FileField(upload_to='book_to_design', null=True, blank=True)
+    book_designed = models.FileField(upload_to='book_designed', null=True, blank=True)
+    cover_image = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True)
+    language = models.CharField(null=True, max_length=255, blank=True)
+    number_of_pages = models.IntegerField(null=True, blank=True)
+    ISBN = models.CharField(null=True, max_length=13, blank=True)
+
+    # ed = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes', blank=True)
+    # new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.title)
