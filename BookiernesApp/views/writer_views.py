@@ -1,13 +1,23 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, TemplateView, CreateView, UpdateView
+from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView, ListView
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
+
+from django.contrib import messages
+from django.contrib.messages import constants
+
 from django.urls import reverse
-from django.http import Http404
+from django.http import Http404 , HttpResponseRedirect
+from django.conf import settings
+
 
 from datetime import datetime
+import os
+from os import remove, rmdir
+from shutil import rmtree
+
 
 from BookiernesApp.decorators import writer_required
 from BookiernesApp.models import Book, User, Writer, Notification, Message
@@ -15,19 +25,30 @@ from BookiernesApp.forms.book_forms import *
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
-class PublishedBooks(TemplateView):
+class PublishedBooks(ListView):
     template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
+    paginate_by = 3
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     notification = Notification.objects.filter(destination_user_id=self.request.user.id)
-    #     self.request.user.writer_profile.get_presented_books()
-    #     context['notification_numbers'] = notification.count()
-    #     context['notifications'] = notification
-    #     context['book_numbers'] = Book.objects.count()
-    #     context['books'] = Book.objects.filter(author_id=Writer.objects.get(user_id=self.request.user.id).id)
-    #     # etc
-    #     return context
+    
+    def get_queryset(self):
+        try:
+            return Book.objects.filter( author_id= Writer.objects.get(user_id=self.request.user.id).id )
+        except:
+            return 0
+    
+
+class SerchBooks(ListView):
+    template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
+    model = Book
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains = self.form_class(self.request.GET['value_search']))
+     
+
+
+
+    
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -55,8 +76,23 @@ class PublishBook(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "El libro %(title)s se presento corectamente. " % {'title': self.object.title}
 
-    # def form_valid(self, form):
-    # guardar en la taula noticias
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        notification_type = 'presented'
+        content_notification = 'Se ha presentado el libro %(title)s '  % {'title': self.object.title} 
+        url = '/maineditor__books_presented_in_editorial/book_presented_detail/' + str(self.object.id)
+        date_received = datetime.now()
+        user_id = self.request.user.id
+        destination_user_id =  User.objects.get(user_type='main_editor').id
+        
+        notification = Notification.objects.create(notification_type=notification_type,
+                                                       content=content_notification, url=url,
+                                                       date_received=date_received, user_id=user_id,
+                                                       destination_user_id=destination_user_id)
+        notification.save()
+       
+        return response
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -94,6 +130,23 @@ class Edit_Book(SuccessMessageMixin, UpdateView):
 
     def get_success_message(self, cleaned_data):
         return "El libro %(title)s se re-entrego corectamente. " % {'title': self.object.title}
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        notification_type = 'presented'
+        content_notification = 'El libro %(title)s se ha modifcado.'  % {'title': self.object.title} 
+        url = '/maineditor__books_presented_in_editorial/book_presented_detail/' + str(self.object.id)+ '/assign_or_reject/'
+        date_received = datetime.now()
+        user_id = self.request.user.id
+        destination_user_id =  Book.objects.get(id=self.object.id).assigned_to.user.id
+        
+        notification = Notification.objects.create(notification_type=notification_type,
+                                                       content=content_notification, url=url,
+                                                       date_received=date_received, user_id=user_id,
+                                                       destination_user_id=destination_user_id)
+        notification.save()
+       
+        return response
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -133,7 +186,6 @@ class Chat_Book(TemplateView):
                 raise Http404("I can't access this page.")
 
             context['book'] = book
-            # book.assigned_to
             messages = Message.objects.filter(Q(book_id=book.id) & Q(
                 Q(Q(user_id=self.request.user.id) & Q(destination_user_id=book.assigned_to.user.id)) | Q(
                     Q(user_id=book.assigned_to.user.id) & Q(destination_user_id=self.request.user.id))))
@@ -156,10 +208,11 @@ def post_chat(request, pk):
 
         notification_type = 'message'
         content_notification = 'Has recibido un mensaje.'
-        if User.objects.get(id=destination_user_id).user_type == "editor":
+
+        if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
             url = '/editor_message/get_book/' + book_id
-        elif User.objects.get(id=destination_user_id).user_type == "main_editor":
-            url = '/maineditor_message/get_book/' + book_id
+        else:
+            raise Http404("I can't access this page.")
 
         if destination_user_id == None:
             raise Http404("I can't access this page.")
@@ -186,16 +239,42 @@ def post_chat(request, pk):
 @writer_required
 def writer_notification(request, pk):
     if pk != None:
-        # try:
-        # notification=Notification.objects.get( Q(id=pk ) & Q(destination_user_id=request.user.id) )
-        notification = Notification.objects.all().filter(pk=pk, destination_user_id__exact=request.user.id)
-        url = notification.url
-        if request.user.user_type == 'writer':
+        try:
+
+            notification=Notification.objects.get( Q(id=pk ) & Q(destination_user_id=request.user.id) )
+            url = notification.url
             notification.delete()
             return redirect(url)
 
-        # except:
-        #    raise Http404("Sa producido un error a la bbdd.")
+        except:
+           raise Http404("Sa producido un error a la bbdd.")
 
+    else:
+        raise Http404("I can't access this page.")
+
+
+@login_required
+@writer_required
+def deleteBook(request, pk):
+    if pk != None:
+        try:
+
+            book=Book.objects.get(id = pk)
+            url = 'BookiernesApp:writer_published_books'
+            
+            # para elinar el achivo de la carpeta .
+
+            if book.path:
+                book.path.delete()
+            
+            book.delete()
+
+            message = "El libro %(title)s se borro corectamente. " % {'title': book.title}
+            messages.add_message(request, constants.SUCCESS, message)
+
+            return redirect(url )
+
+        except:
+           raise Http404("Sa producido un error a la bbdd.")
     else:
         raise Http404("I can't access this page.")

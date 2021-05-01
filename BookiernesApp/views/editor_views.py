@@ -93,9 +93,11 @@ def editor_post_chat(request, pk):
         destination_user_id = Book.objects.get(id=pk).author.user.pk
         notification_type = 'message'
         content_notification = 'Has recibido un mensaje.'
-        url = 'maineditor_message/get_book/' + book_id
 
-        if destination_user_id == None:
+
+        if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
+            url = '/writer_message/get_book/' + book_id
+        else:
             raise Http404("I can't access this page.")
         try:
             message = Message.objects.create(content=content, date_received=date_received, book_id=book_id,
@@ -123,9 +125,8 @@ def editor_notification(request, pk):
         try:
             notification = Notification.objects.get(Q(id=pk) & Q(destination_user_id=request.user.id))
             url = notification.url
-            if request.user.user_type == 'editor':
-                notification.delete()
-                return redirect(url)
+            notification.delete()
+            return redirect(url)
 
         except:
             raise Http404("Sa producido un error a la bbdd.")

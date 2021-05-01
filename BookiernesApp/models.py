@@ -90,7 +90,7 @@ class Book(models.Model):
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes', blank=True)
     path = models.FileField(upload_to='book', null=True, blank=True)
     main_editor_comment = models.TextField(null=True, blank=True)
-    new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE)
+    #new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE) 
 
     def __str__(self):
         return str(self.title)

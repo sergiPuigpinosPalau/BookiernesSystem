@@ -56,7 +56,10 @@
                               <strong> Títol:</strong><br><br>
                               <strong> Categoria:</strong><br><br>
                               <strong> Estat:</strong><br><br>
-                              <strong> Descripció:</strong><br>
+                              <strong> Descripció:</strong><br><br>
+                              {% if book.book_status == "rejected"  %}
+                              <strong> Motivo del rechazo:</strong><br>
+                              {% endif  %}
                           </div>
                           <!-- /.col -->
                           <div class="col-sm-8 invoice-col">
@@ -152,6 +155,10 @@
                           </br>
                           
                           {{book.description  | safe}} 
+
+                          {% if book.book_status == "rejected"  %}
+                            {{book.main_editor_comment | safe }}
+                          {% endif  %}
                           
                           </address>
                           </div>
@@ -171,25 +178,25 @@
                           <i class="fas fa-download"></i>  Descarregar el llibre
                         </button> 
                     </a>
-                    {% if book.assigned_to != None %}
+                    {% if book.assigned_to != None and book.book_status != "rejected" %}
                     
                     <a href="/writer_message/get_book/{{book.id}}/">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                             <i class="fas fa-envelope"></i> Enviar missatge
                         </button> 
                     </a>
-                      {% if book.book_status != "rejected"  %}
+                     
                           <a href="{% url 'BookiernesApp:writer_modify_a_book' book.id  %}">
                               <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                                   <i class="fas fa-edit"></i> Modificar
                               </button> 
                           </a>
-                      {% endif %}
+                    
                   </div>
                   {% endif %}
 
                   {% if book.book_status == "rejected"  %}
-                  <a href="#">
+                  <a href="{% url 'BookiernesApp:book_delete' book.id  %}"> 
                     <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;">
                         <i class="fas fa-edit"></i> Borrar Libro
                     </button> 

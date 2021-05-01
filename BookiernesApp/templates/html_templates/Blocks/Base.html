@@ -50,6 +50,7 @@
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     {{ notification.get_user }}
+                                    
                                     {% if notification.notification_type == 'presented' %}
                                         <span class="float-right text-sm text-danger"><i
                                                 class="fas fa-book-medical"></i></span>
@@ -64,6 +65,7 @@
                                     {% endif %}
                                 </h3>
                                 <p class="text-sm">{{ notification.content }} </p>
+                               
                                 <p class="text-sm text-muted"><i
                                         class="far fa-calendar-alt mr-1"></i>{{ notification.date_received }}</p>
                             </div>
@@ -241,6 +243,14 @@
         .catch(error => {
             console.error(error);
         });
+
+    ClassicEditor
+      .create( document.querySelector( '#editor' ) , {
+          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
+        } )
+      .catch( error => {
+          console.error( error );
+      } );
 </script>
 
 <!-- jQuery -->

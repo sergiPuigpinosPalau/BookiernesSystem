@@ -2,6 +2,9 @@
 testWriter
 bruhMomento2
 
+testWriter2
+bruhMomento2
+
 testEditor
 bruhMomento2
 
