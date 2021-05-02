@@ -1,0 +1,196 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookiernes</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/Personalised.css">
+{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+        <br>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Dades del llibre: {{ book.title }}</h3>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <div class="col-8 col-sm-10">
+                            <div class="tab-content" id="vert-tabs-tabContent">
+                                <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel"
+                                     aria-labelledby="vert-tabs-home-tab">
+
+
+                                    <div class="row invoice-info p-3 mb-3">
+                                        <div class="col-sm-2 invoice-col">
+                                            <strong> Modificació:</strong><br><br>
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Tema:</strong><br><br>
+                                            <strong> Estat:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-8 invoice-col">
+                                            <strong> La modificacio se hizo el dia 25/03/2021 </strong><br><br>
+                                            <!-- TODO implementar-->
+                                            {{ book.title }}
+                                            <br><br>
+                                            {{ book.theme }}
+                                            <br><br>
+                                            <div class="row ">
+                                                <div class="col">
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                             aria-valuenow="20" aria-valuemin="0"
+                                                             aria-valuemax="100" style="width: 20%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <strong> {{ book.book_status }}</strong>
+                                                </div>
+                                            </div>
+
+
+                                            <br>
+
+                                            <div>{{ book.description | safe }} </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="editor_design_options">
+                            <div class="editor_design_options_div1">
+                                <div class="d-flex justify-content-center">
+                                    {% if book.book_designed %}
+                                        <a href="/media/{{ book.path }}" download>
+                                            <button type="button" class="btn btn-primary float-right"
+                                                    style="margin-right: 5px;">
+                                                <i class="fas fa-download"></i> Descarregar versió final/maquetat del
+                                                llibre
+                                            </button>
+                                        </a>
+                                        <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" name="action" value="accept"
+                                                    class="btn btn-success float-right"
+                                                    style="margin-right: 5px;">
+                                                <i class="fas fa-check-circle"></i> Publicar
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <a href="/media/{{ book.book_designed }}" download>
+                                            <button type="button" class="btn btn-primary float-right"
+                                                    style="margin-right: 5px;" disabled>
+                                                <i class="fas fa-download"></i> Descarregar versió final/maquetat del
+                                                llibre
+                                            </button>
+                                        </a>
+                                        <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" name="action" value="accept"
+                                                    class="btn btn-success float-right"
+                                                    style="margin-right: 5px;" disabled>
+                                                <i class="fas fa-check-circle"></i> Publicar
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="editor_design_options_div3">
+                                <div class="d-flex justify-content-center">
+                                    <a href="{% url 'BookiernesApp:chat_book_editor' book.id %}">
+                                        <button type="button" class="btn btn-primary float-right"
+                                                style="margin-right: 5px;">
+                                            <i class="fas fa-envelope"></i> Enviar missatge
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="editor_design_options_div4">
+                                <div class="d-flex justify-content-center">
+                                    <a href="/media/{{ book.path }}" download>
+                                        <button type="button" class="btn btn-primary float-right"
+                                                style="margin-right: 5px;">
+                                            <i class="fas fa-download"></i> Descarregar versió original del llibre
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="editor_design_options_div5">
+                                <div class="d-flex justify-content-center">
+                                    <input type="file" style="margin-left: 10px"
+                                           id="avatar" name="avatar"
+                                           accept="image/png, image/jpeg">
+                                    <button type="button" class="btn btn-success float-right" style="margin-left: 0px;"
+                                            data-toggle="modal" data-target="#modal-rechazar">
+                                        Enviar a Maquetar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="editor_design_options_div6">
+                            <div class="d-flex justify-content-center">
+                                {% if book.book_to_design %}
+                                    <a href="/media/{{ book.book_to_design }}" download>
+                                        <button type="button" class="btn btn-primary float-right"
+                                                style="margin-right: 5px;">
+                                            <i class="fas fa-download"></i> Descarregar versió enviada a maquetar del
+                                            llibre
+                                        </button>
+                                    </a>
+                                {% else %}
+                                    <a href="/media/{{ book.book_to_design }}" download>
+                                        <button type="button" class="btn btn-primary float-right"
+                                                style="margin-right: 5px;" disabled>
+                                            <i class="fas fa-download"></i> Descarregar versió enviada a maquetar del
+                                            llibre
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}

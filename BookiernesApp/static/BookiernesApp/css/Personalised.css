@@ -1,0 +1,32 @@
+.editor_design_options {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 8px;
+}
+
+.editor_design_options_div1 {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.editor_design_options_div2 {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.editor_design_options_div3 {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.editor_design_options_div4 {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.editor_design_options_div5 {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.editor_design_options_div6 {
+    grid-area: 2 / 3 / 3 / 4;
+}

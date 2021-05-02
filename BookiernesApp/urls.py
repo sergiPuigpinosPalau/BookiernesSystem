@@ -62,6 +62,8 @@ urlpatterns = [
         EditorBookDetail.as_view(), name='editor_book_detail'),
     url(r'^editor_book_revision/book_revision_detail/(?P<pk>\d+)/accept_or_reject$',
         accept_or_reject, name='editor_accept_or_reject'),
+    url(r'^editor_book_design/book_design_detail/(?P<pk>\d+)/$',
+        EditorBookDesignDetail.as_view(), name='editor_design_detail'),
     # main editor urls
     # TODO create date_presented attribute to sort books
     url(r'^maineditor__books_presented_in_editorial/$',

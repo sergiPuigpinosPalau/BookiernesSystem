@@ -38,6 +38,13 @@ class EditorBookDetail(DetailView):
     #     return context
 
 
+@method_decorator([login_required, editor_required], name='dispatch') #TODO in design
+class EditorBookDesignDetail(DetailView):
+    model = Book
+    template_name = 'html_templates/Editor/Editor_DetailBookToDesign.html'
+
+
+
 @login_required
 @editor_required
 def accept_or_reject(request, pk):

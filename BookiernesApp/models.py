@@ -83,6 +83,9 @@ class Editor(models.Model):
     def get_books_to_revise(self):
         return self.books_assigned.all().filter(Q(book_status="revised") | Q(book_status='modifying'))
 
+    def get_books_to_design(self):
+        return self.books_assigned.all().filter(Q(book_status="accepted") | Q(book_status='designing'))
+
 
 def user_directory_path(instance, filename):
     return 'book/user_{0}/{1}'.format(instance.user.id, filename)
