@@ -1,15 +1,17 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, FormView
 from django.views.generic import TemplateView
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
 from datetime import datetime
 
 from BookiernesApp.decorators import editor_required, book_in_revision
+from BookiernesApp.forms import SendBookToDesign
 
 from BookiernesApp.models import *
 from BookiernesApp.decorators import editor_required
@@ -38,11 +40,39 @@ class EditorBookDetail(DetailView):
     #     return context
 
 
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorBooksToDesign(TemplateView):
+    model = Book
+    template_name = 'html_templates/Editor/Editor_BooksToDesign.html'
+
+
 @method_decorator([login_required, editor_required], name='dispatch') #TODO in design
-class EditorBookDesignDetail(DetailView):
+class EditorBookDesignDetail(SuccessMessageMixin, UpdateView):
     model = Book
     template_name = 'html_templates/Editor/Editor_DetailBookToDesign.html'
+    form_class = SendBookToDesign
 
+    def get_success_message(self, cleaned_data):
+        if self.request.POST['action'] == 'send_to_design':
+            return "El llibre %(title)s s'ha enviat a maquetar correctament. " % {'title': self.object.title}
+        elif self.request.POST['action'] == 'publish':
+            return "El llibre %(title)s s'ha publicat correctament. " % {'title': self.object.title}
+
+    def get_success_url(self, **kwargs):
+        if self.request.POST['action'] == 'send_to_design':
+            return reverse('BookiernesApp:editor_design_detail', kwargs={'pk': self.object.id})
+        elif self.request.POST['action'] == 'publish':
+            return reverse_lazy('BookiernesApp:editor_books_to_design')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        book = get_object_or_404(Book, pk=self.kwargs['pk'])
+        if self.request.POST['action'] == 'send_to_design':
+            book.book_status = 'designing'
+        elif self.request.POST['action'] == 'publish':
+            book.book_status = 'published'
+        book.save()
+        return response
 
 
 @login_required

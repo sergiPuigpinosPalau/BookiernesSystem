@@ -29,7 +29,14 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
+                {% if messages %}
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Èxit!</h4>
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Llibres a Maquetar</h3>
@@ -63,7 +70,7 @@
                                     <td>{{ book.title }}</td>
                                     <td> {{ book.author }}</td>
                                     <td> {{ book.theme }}</td>
-                                    <td><a href="{% url 'BookiernesApp:editor_book_detail' book.id %}"><i
+                                    <td><a href="{% url 'BookiernesApp:editor_design_detail' book.id %}"><i
                                             class="nav-icon fas fa-cogs"></i></a>
                                     </td>
                                 </tr>

@@ -24,13 +24,21 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-
         <!-- /.content-header -->
         <br>
         <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
 
+        <section class="content">
+
+            <div class="container-fluid">
+                {% if messages %}
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Èxit!</h4>
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Dades del llibre: {{ book.title }}</h3>
@@ -91,41 +99,22 @@
                         <div class="editor_design_options">
                             <div class="editor_design_options_div1">
                                 <div class="d-flex justify-content-center">
-                                    {% if book.book_designed %}
-                                        <a href="/media/{{ book.path }}" download>
-                                            <button type="button" class="btn btn-primary float-right"
-                                                    style="margin-right: 5px;">
-                                                <i class="fas fa-download"></i> Descarregar versió final/maquetat del
-                                                llibre
-                                            </button>
-                                        </a>
-                                        <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}"
-                                              method="post">
-                                            {% csrf_token %}
-                                            <button type="submit" name="action" value="accept"
-                                                    class="btn btn-success float-right"
-                                                    style="margin-right: 5px;">
-                                                <i class="fas fa-check-circle"></i> Publicar
-                                            </button>
-                                        </form>
-                                    {% else %}
-                                        <a href="/media/{{ book.book_designed }}" download>
-                                            <button type="button" class="btn btn-primary float-right"
-                                                    style="margin-right: 5px;" disabled>
-                                                <i class="fas fa-download"></i> Descarregar versió final/maquetat del
-                                                llibre
-                                            </button>
-                                        </a>
-                                        <form action="{% url 'BookiernesApp:editor_accept_or_reject' book.id %}"
-                                              method="post">
-                                            {% csrf_token %}
-                                            <button type="submit" name="action" value="accept"
-                                                    class="btn btn-success float-right"
-                                                    style="margin-right: 5px;" disabled>
-                                                <i class="fas fa-check-circle"></i> Publicar
-                                            </button>
-                                        </form>
-                                    {% endif %}
+                                    <a href="/media/{{ book.book_designed }}" download>
+                                        <button type="button" class="btn btn-primary float-right"
+                                                style="margin-right: 5px;" {% if not book.book_designed %}
+                                                disabled {% endif %}>
+                                            <i class="fas fa-download"></i> Descarregar versió final/maquetat del
+                                            llibre
+                                        </button>
+                                    </a>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <button type="submit" name="action" value="publish"
+                                                class="btn btn-success float-right"
+                                                style="margin-right: 5px;" {% if not book.book_designed %} disabled {% endif %}>
+                                            <i class="fas fa-check-circle"></i> Publicar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="editor_design_options_div3">
@@ -150,40 +139,38 @@
                             </div>
                             <div class="editor_design_options_div5">
                                 <div class="d-flex justify-content-center">
-                                    <input type="file" style="margin-left: 10px"
-                                           id="avatar" name="avatar"
-                                           accept="image/png, image/jpeg">
-                                    <button type="button" class="btn btn-success float-right" style="margin-left: 0px;"
-                                            data-toggle="modal" data-target="#modal-rechazar">
-                                        Enviar a Maquetar
-                                    </button>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" style="margin-left: 10px"
+                                               id="book_to_design" name="book_to_design"
+                                               accept=".md" required>
+
+                                        <button type="submit" class="btn btn-success float-right"
+                                                style="margin-left: 0px;"
+                                                data-toggle="modal" data-target="#modal-rechazar" value="send_to_design"
+                                                name="action">
+                                            Enviar a Maquetar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="editor_design_options_div6">
-                            <div class="d-flex justify-content-center">
-                                {% if book.book_to_design %}
+                                <div class="d-flex justify-content-center">
                                     <a href="/media/{{ book.book_to_design }}" download>
                                         <button type="button" class="btn btn-primary float-right"
-                                                style="margin-right: 5px;">
-                                            <i class="fas fa-download"></i> Descarregar versió enviada a maquetar del
+                                                style="margin-right: 5px;" {% if not book.book_to_design %}
+                                                disabled {% endif %}>
+                                            <i class="fas fa-download"></i> Descarregar versió enviada a maquetar
+                                            del
                                             llibre
                                         </button>
                                     </a>
-                                {% else %}
-                                    <a href="/media/{{ book.book_to_design }}" download>
-                                        <button type="button" class="btn btn-primary float-right"
-                                                style="margin-right: 5px;" disabled>
-                                            <i class="fas fa-download"></i> Descarregar versió enviada a maquetar del
-                                            llibre
-                                        </button>
-                                    </a>
-                                {% endif %}
+                                </div>
+
                             </div>
-                            </div>
+
                         </div>
                     </div>
-
-
 
 
                 </div>

@@ -6,6 +6,12 @@ from django.core.exceptions import ValidationError
 from BookiernesApp.models import Book
 
 
+class SendBookToDesign(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['book_to_design']
+
+
 class Present_Book(forms.ModelForm):
 
     class Meta:

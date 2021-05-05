@@ -33,7 +33,7 @@ urlpatterns = [
 
     url(r'^writer_published/serch/$', login_required(SerchBooks.as_view()), name='serch_book'),
 
-    # Editor 
+    # Editor
     url(r'^editor_book_revision/$', login_required(EditorBookRevision.as_view()), name='editor_book_revision'),
 
 
@@ -62,8 +62,11 @@ urlpatterns = [
         EditorBookDetail.as_view(), name='editor_book_detail'),
     url(r'^editor_book_revision/book_revision_detail/(?P<pk>\d+)/accept_or_reject$',
         accept_or_reject, name='editor_accept_or_reject'),
-    url(r'^editor_book_design/book_design_detail/(?P<pk>\d+)/$',
+
+    url(r'^editor_books_to_design/book_design_detail/(?P<pk>\d+)/$',
         EditorBookDesignDetail.as_view(), name='editor_design_detail'),
+
+    path('editor_books_to_design', EditorBooksToDesign.as_view(), name='editor_books_to_design'),
     # main editor urls
     # TODO create date_presented attribute to sort books
     url(r'^maineditor__books_presented_in_editorial/$',
