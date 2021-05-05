@@ -14,7 +14,7 @@ from BookiernesApp.decorators import editor_required, book_in_revision
 from BookiernesApp.forms import SendBookToDesign
 
 from BookiernesApp.models import *
-from BookiernesApp.decorators import editor_required
+from BookiernesApp.decorators import *
 from BookiernesApp.models import Book, User, Writer, Notification, Message
 
 
@@ -46,7 +46,7 @@ class EditorBooksToDesign(TemplateView):
     template_name = 'html_templates/Editor/Editor_BooksToDesign.html'
 
 
-@method_decorator([login_required, editor_required], name='dispatch') #TODO in design
+@method_decorator([login_required, editor_required, book_in_design], name='dispatch')
 class EditorBookDesignDetail(SuccessMessageMixin, UpdateView):
     model = Book
     template_name = 'html_templates/Editor/Editor_DetailBookToDesign.html'

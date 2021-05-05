@@ -32,6 +32,18 @@ def book_presented(function):
     return wrap
 
 
+def book_in_design(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        book = get_object_or_404(Book, pk=kwargs['pk'])
+        if book.book_status == 'accepted' or book.book_status == 'designing':
+            return function(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/')
+
+    return wrap
+
+
 def writer_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/'):
     """
     Decorator for views that checks that the logged in user is a writer,
