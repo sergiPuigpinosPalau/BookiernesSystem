@@ -71,4 +71,10 @@ urlpatterns = [
     url(r'^maineditor__books_presented_in_editorial/book_presented_detail/(?P<pk>\d+)/assign_or_reject$',
         assign_or_reject, name='maineditor_assign_or_reject'),
 
+
+    # it urls
+    url(r'^it_view/$', ItView.as_view(), name='user_list'),
+    url(r'^it_view/get_user/(?P<pk>\d+)/$', ItDetailUser.as_view(), name='user_view'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

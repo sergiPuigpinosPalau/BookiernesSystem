@@ -87,7 +87,7 @@
                     <a href="#" class="dropdown-item">
 
                         <div class="media">
-                            <img src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="User Avatar"
+                            <img src="{{ user.get_img }} " alt="User Avatar"
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
@@ -197,6 +197,31 @@
                                     {% if user.writer_profile.get_presented_books.count > 0 %}
                                         <span class="badge badge-info right">{{ user.writer_profile.get_presented_books.count }}</span>
                                     {% endif %}
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+
+
+                    {% if  user.user_type == 'it' %}
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
+                                <i class="nav-icon fas fa-user-plus"></i>
+                                <p>
+                                    Añadir Trabajador
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Listado de Trabajadores
+
+                                         {% if obj_user_count > 0 and obj_user_count != None %}
+                                        <span class="badge badge-info right">{{ obj_user_count }}</span>
+                                    {% endif %}
+
                                 </p>
                             </a>
                         </li>
