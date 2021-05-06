@@ -56,7 +56,28 @@ class ItDetailUser(TemplateView):
             raise Http404("I can't access this page.")
 
 
+def active_user(request, pk):
+    try:
+        obj_user=User.objects.get(id = pk)
+        message= ""
+        url="BookiernesApp:user_list"
 
+        if obj_user.is_active == 1:
+            obj_user.is_active=0
+            message = "El usuario %(nom)s se desactivado corectamente. " % {'nom': obj_user.username}
+        else:
+            obj_user.is_active = 1
+            message = "El usuario %(nom)s se activo corectamente. " % {'nom': obj_user.username}
+
+        obj_user.save()
+
+
+        messages.add_message(request, constants.SUCCESS, message)
+
+        return redirect(url)
+
+    except:
+        raise Http404("I can't access this page.")
 
 
 

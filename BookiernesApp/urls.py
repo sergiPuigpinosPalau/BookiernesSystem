@@ -75,6 +75,7 @@ urlpatterns = [
     # it urls
     url(r'^it_view/$', ItView.as_view(), name='user_list'),
     url(r'^it_view/get_user/(?P<pk>\d+)/$', ItDetailUser.as_view(), name='user_view'),
+    url(r'^it_view/active_user/(?P<pk>\d+)/$', active_user, name='active_user'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

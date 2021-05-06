@@ -108,9 +108,9 @@
                         <td><a href="{% url 'BookiernesApp:user_view' obj_user.id %}"><i class="nav-icon fas fa-eye"></i></a>
                             <a href="#"><i class="nav-icon fas fa-user-edit"></i></a>
                             {% if obj_user.is_active %}
-                            <a href="#"><i class="nav-icon fas fa-user-plus"></i></a>
+                            <a href="{% url 'BookiernesApp:active_user' obj_user.id %}"><i class="nav-icon nav-success fas fa-user-plus text-green"></i></a>
                             {% else %}
-                            <a href="#"><i class="nav-icon fas fa-user-times"></i></a>
+                            <a href="{% url 'BookiernesApp:active_user' obj_user.id %}"><i class="nav-icon fas fa-user-times text-red"></i></a>
                             {% endif %}
                         </td>
                     </tr>
