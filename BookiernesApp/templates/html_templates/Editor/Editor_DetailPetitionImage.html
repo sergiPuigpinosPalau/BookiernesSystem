@@ -69,10 +69,8 @@
                                             <strong> Descripció:</strong><br>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-8 invoice-col" style="padding-bottom: 10px">
-                                            <strong> La creació es va realitzar el
-                                                dia {{ imagepetition.date_received }} </strong><br><br>
-                                            <!-- TODO implementar-->
+                                        <div class="col-sm-8 invoice-col" >
+                                            <strong>  {{ imagepetition.date_received }} </strong><br><br>
                                             {{ imagepetition.title }}
                                             <br><br>
 
@@ -83,8 +81,7 @@
                                                 {% for image in imagepetition.attached_images.all %}
                                                     <div class="col-sm-12 col-md-4">
                                                         <a class="lightbox" href="/media/{{ image.path }}">
-                                                            <img src="/media/{{ image.path }}"
-                                                                 >
+                                                            <img src="/media/{{ image.path }}">
                                                         </a>
                                                     </div>
                                                 {% endfor %}

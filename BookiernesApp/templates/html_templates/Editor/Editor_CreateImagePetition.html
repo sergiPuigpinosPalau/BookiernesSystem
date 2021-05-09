@@ -45,16 +45,22 @@
                         <h3 class="card-title">Enviar Petició d'imatge</h3>
                     </div>
 
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            <br>
-                            {{ form.as_p }}
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="margin: 20px">
+                            <div class="form-group">
+                                <label for="title">Títol</label>
+                                <input type="text" class="form-control" id="title" name="title">
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <label for="description">Descripció</label>
+                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
