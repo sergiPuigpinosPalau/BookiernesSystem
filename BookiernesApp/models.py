@@ -95,19 +95,19 @@ class GraphicDesigner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='graphic_designer_profile')
 
 
-class Image(models.Model):
-    path = models.FileField(upload_to='images', null=True, blank=True)
-
-
 class ImagePetition(models.Model):
     editor = models.ForeignKey(Editor, null=True, on_delete=models.PROTECT, related_name='editor_petition')
     graphic_designer = models.ForeignKey(GraphicDesigner, null=True, on_delete=models.PROTECT,
                                          related_name='graphic_designer_petition')
     title = models.CharField(null=True, max_length=255, blank=True)
     description = models.TextField(null=True, blank=True)
-    images_attached = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True)
-    date_received = models.DateField()
+    #images_attached = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
+    date_received = models.DateField(null=True, blank=True)
 
+
+class Image(models.Model):
+    path = models.FileField(upload_to='images', null=True, blank=True)
+    petition = models.ForeignKey(ImagePetition, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
 
 # TODO revisar nulls
 # TODO comprobar blanks

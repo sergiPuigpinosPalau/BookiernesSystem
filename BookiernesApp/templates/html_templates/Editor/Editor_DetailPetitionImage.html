@@ -1,0 +1,114 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookiernes</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="../../../static/BookiernesApp/css/gallery.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/Personalised.css">
+
+
+    <script>
+        window.console = window.console || function (t) {
+        };
+    </script>
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://rawgit.com/LeshikJanz/libraries/master/Bootstrap/baguetteBox.min.css">
+
+{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <br>
+        <!-- Main content -->
+
+        <section class="content">
+
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Dades del llibre: {{ imagepetition.title }}</h3>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <div class="col-8 col-sm-10">
+                            <div class="tab-content" id="vert-tabs-tabContent">
+                                <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel"
+                                     aria-labelledby="vert-tabs-home-tab">
+
+
+                                    <div class="row invoice-info p-3 mb-3">
+                                        <div class="col-sm-2 invoice-col">
+                                            <strong> Modificació:</strong><br><br>
+                                            <strong> Títol:</strong><br><br>
+                                            <strong> Descripció:</strong><br>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-8 invoice-col" style="padding-bottom: 10px">
+                                            <strong> La creació es va realitzar el
+                                                dia {{ imagepetition.date_received }} </strong><br><br>
+                                            <!-- TODO implementar-->
+                                            {{ imagepetition.title }}
+                                            <br><br>
+
+                                            <div>{{ imagepetition.description | safe }} </div>
+                                        </div>
+                                        <div class="tz-gallery">
+                                            <div class="row">
+                                                {% for image in imagepetition.attached_images.all %}
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <a class="lightbox" href="/media/{{ image.path }}">
+                                                            <img src="/media/{{ image.path }}"
+                                                                 >
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+
+            </div>
+
+
+    </div>
+    </section>
+    <!-- /.content -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+    <script>
+        baguetteBox.run('.tz-gallery');
+    </script>
+{% endblock %}

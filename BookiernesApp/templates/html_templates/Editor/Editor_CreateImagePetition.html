@@ -1,0 +1,68 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookiernes</title>
+    <!-- Google Font: Source Sans Pro -->
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+
+{% endblock %}
+{% block content %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+
+                <ol class="breadcrumb float-sm-left">
+                    <li class="breadcrumb-item">Enviar Petició d'imatge</li>
+
+                </ol>
+
+
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        </br>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Enviar Petició d'imatge</h3>
+                    </div>
+
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <br>
+                            {{ form.as_p }}
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}
+
+
+
+
+  

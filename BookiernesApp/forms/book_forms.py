@@ -3,7 +3,13 @@ from django.core.exceptions import ValidationError
 
 
 
-from BookiernesApp.models import Book
+from BookiernesApp.models import *
+
+
+class SendImagePetition(forms.ModelForm):
+    class Meta:
+        model = ImagePetition
+        fields = ['title', 'description']
 
 
 class SendBookToDesign(forms.ModelForm):

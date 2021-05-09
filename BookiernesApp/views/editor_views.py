@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView, FormView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, FormView, CreateView
 from django.views.generic import TemplateView
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -11,11 +11,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from datetime import datetime
 
 from BookiernesApp.decorators import editor_required, book_in_revision
-from BookiernesApp.forms import SendBookToDesign
+from BookiernesApp.forms import SendBookToDesign, SendImagePetition
 
 from BookiernesApp.models import *
 from BookiernesApp.decorators import *
 from BookiernesApp.models import Book, User, Writer, Notification, Message
+import datetime
 
 
 @method_decorator([login_required, editor_required], name='dispatch')
@@ -44,6 +45,31 @@ class EditorBookDetail(DetailView):
 class EditorBooksToDesign(TemplateView):
     model = Book
     template_name = 'html_templates/Editor/Editor_BooksToDesign.html'
+
+
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorImagePetitions(TemplateView):
+    model = ImagePetition
+    template_name = 'html_templates/Editor/Editor_ImagePetitions.html'
+
+
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorImagePetitionDetail(DetailView):
+    model = ImagePetition
+    template_name = 'html_templates/Editor/Editor_DetailPetitionImage.html'
+
+
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorImagePetitionsCreate(SuccessMessageMixin, CreateView):
+    model = ImagePetition
+    template_name = 'html_templates/Editor/Editor_CreateImagePetition.html'
+    form_class = SendImagePetition
+    success_url = '/editor_image_petitions'
+
+    def form_valid(self, form):
+        form.instance.editor = self.request.user.editor_profile
+        form.instance.date_received = datetime.datetime.now()
+        return super(EditorImagePetitionsCreate, self).form_valid(form)
 
 
 @method_decorator([login_required, editor_required, book_in_design], name='dispatch')

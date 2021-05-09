@@ -67,6 +67,10 @@ urlpatterns = [
         EditorBookDesignDetail.as_view(), name='editor_design_detail'),
 
     path('editor_books_to_design', EditorBooksToDesign.as_view(), name='editor_books_to_design'),
+    path('editor_image_petitions', EditorImagePetitions.as_view(), name='editor_image_petitions'),
+    path('editor_image_petitions/image_petition_detail/<int:pk>/', EditorImagePetitionDetail.as_view(), name='image_petition_detail'),
+    path('editor_image_petitions/new_petiton', EditorImagePetitionsCreate.as_view(), name='editor_image_petition_create'),
+
     # main editor urls
     # TODO create date_presented attribute to sort books
     url(r'^maineditor__books_presented_in_editorial/$',
