@@ -8,18 +8,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.messages import constants
 
-from django.urls import reverse
+from django.urls import  reverse_lazy
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-from datetime import datetime
-import os
-from os import remove, rmdir
-from shutil import rmtree
 
-from BookiernesApp.decorators import it_required
 
-from BookiernesApp.models import User , AbstractUser
+
+from BookiernesApp.forms import FormularioUsuario
+
+from BookiernesApp.models import User
 
 
 
@@ -57,8 +55,14 @@ class ItDetailUser(TemplateView):
         except:
             raise Http404("I can't access this page.")
 
-class ITCrateUser(CreateView):
+class ITCrateUser(SuccessMessageMixin, CreateView):
     model = User
+    template_name = 'html_templates/IT/It_CreateUser.html'
+    form_class = FormularioUsuario
+    success_url = reverse_lazy('BookiernesApp:user_list')
+
+    def get_success_message(self, cleaned_data):
+        return "El usuario %(name)s se creo corectamente. " % {'name': self.object.username}
 
 
 class ItPassword(TemplateView):

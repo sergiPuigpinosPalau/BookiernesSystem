@@ -205,7 +205,7 @@
 
                     {% if  user.user_type == 'it' %}
                         <li class="nav-item">
-                            <a href="{% url 'BookiernesApp:writer_publish_book' %}" class="nav-link">
+                            <a href="{% url 'BookiernesApp:create_user' %}" class="nav-link">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
                                     Añadir Trabajador
@@ -213,7 +213,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'BookiernesApp:writer_published_books' %}" class="nav-link">
+                            <a href="{% url 'BookiernesApp:user_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Listado de Trabajadores
