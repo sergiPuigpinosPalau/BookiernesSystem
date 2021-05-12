@@ -76,6 +76,11 @@ urlpatterns = [
     url(r'^it_view/$', ItView.as_view(), name='user_list'),
     url(r'^it_view/get_user/(?P<pk>\d+)/$', ItDetailUser.as_view(), name='user_view'),
     url(r'^it_view/active_user/(?P<pk>\d+)/$', active_user, name='active_user'),
+    url(r'^it_view/edit_pass/(?P<pk>\d+)/$', ItPassword.as_view(), name='user_edit_pass'),
+    url(r'^it_view/edit_pass_post/$', postEditPass, name='user_edit_pass_post'),
+    url(r'^reset/password/$', ViewResetPass.as_view(), name='reset_password_view'),
+    url(r'^post/reset/password/$', resetPass, name='reset_password'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -106,7 +106,7 @@
                         <td>{{obj_user.get_user_type_name}}</td>
                         <td>{{obj_user.get_activated}}</td>
                         <td><a href="{% url 'BookiernesApp:user_view' obj_user.id %}"><i class="nav-icon fas fa-eye"></i></a>
-                            <a href="#"><i class="nav-icon fas fa-user-edit"></i></a>
+                            <a href="{% url 'BookiernesApp:user_edit_pass' obj_user.id %}"><i class="nav-icon fas fa-user-edit"></i></a>
                             {% if obj_user.is_active %}
                             <a href="{% url 'BookiernesApp:active_user' obj_user.id %}"><i class="nav-icon nav-success fas fa-user-plus text-green"></i></a>
                             {% else %}
