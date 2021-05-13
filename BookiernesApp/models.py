@@ -51,6 +51,7 @@ class Theme(models.Model):
         return str(self.name)
 
 
+
 class CreditCard(models.Model):
     number = models.CharField(max_length=255)
     secret_number = models.CharField(max_length=255)

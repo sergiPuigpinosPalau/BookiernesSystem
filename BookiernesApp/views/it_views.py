@@ -12,16 +12,13 @@ from django.urls import  reverse_lazy
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-
-
-
+from BookiernesApp.decorators import it_required
 from BookiernesApp.forms import FormularioUsuario
 
-from BookiernesApp.models import User
+from BookiernesApp.models import User, Theme
 
 
-
-#@method_decorator([login_required, it_required], name='dispatch')
+@method_decorator([login_required, it_required], name='dispatch')
 class ItView(ListView):
     template_name = 'html_templates/IT/It_UserList.html'
     model = User
@@ -40,7 +37,7 @@ class ItView(ListView):
         return context
 
 
-#@method_decorator([login_required, it_required], name='dispatch')
+@method_decorator([login_required, it_required], name='dispatch')
 class ItDetailUser(TemplateView):
     model = User
     template_name = 'html_templates/IT/It_DadesUser.html'
@@ -55,6 +52,7 @@ class ItDetailUser(TemplateView):
         except:
             raise Http404("I can't access this page.")
 
+@method_decorator([login_required, it_required], name='dispatch')
 class ITCrateUser(SuccessMessageMixin, CreateView):
     model = User
     template_name = 'html_templates/IT/It_CreateUser.html'
@@ -64,7 +62,14 @@ class ITCrateUser(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "El usuario %(name)s se creo corectamente. " % {'name': self.object.username}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['obj_user_count'] = User.objects.exclude(user_type="subscribed_reader").exclude(
+            username="admin").count()
+        context['Theme'] = Theme.objects.all()
+        return context
 
+@method_decorator([login_required, it_required], name='dispatch')
 class ItPassword(TemplateView):
     template_name = 'html_templates/IT/ItEditPassword.html'
 
@@ -78,6 +83,9 @@ class ItPassword(TemplateView):
         except:
             raise Http404("I can't access this page.")
 
+
+@login_required
+@it_required
 def postEditPass(request):
     if request.method == "POST":
 
@@ -110,14 +118,17 @@ def postEditPass(request):
         raise Http404("I can't access this page.")
 
 
-
+@method_decorator([login_required, it_required], name='dispatch')
 class ViewResetPass(TemplateView):
     template_name = 'html_templates/IT/It_PeticonCabio.html'
 
+@login_required
+@it_required
 def resetPass(request):
     return redirect("/")
 
-
+@login_required
+@it_required
 def active_user(request, pk):
     try:
         obj_user=User.objects.get(id = pk)

@@ -252,7 +252,10 @@
 </div>
 <!-- ./wrapper -->
 
+
+
 <script>
+
     ClassicEditor
         .create(document.querySelector('#editor_asigna'), {
             toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
@@ -276,7 +279,10 @@
       .catch( error => {
           console.error( error );
       } );
+
 </script>
+
+
 
 <!-- jQuery -->
 <script src="../../../static/BookiernesApp/js/jquery.min.js"></script>
@@ -286,6 +292,10 @@
 <script src="../../../static/BookiernesApp/js/adminlte.min.js"></script>
 
 <!-- libreria para caja de texto  -->
+
+{% block script %}
+{% endblock %}
+
 
 </body>
 </html>
