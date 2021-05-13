@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../static/BookiernesApp/css/all.min.css">
+  <!-- iconas fas -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../static/BookiernesApp/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+
+    <div class="text-center">
+        <samp class="fas fa-book" height="90" alt="Logo Bookiernes"></samp>
+
+    <h2>Bookiernes</h2>
+    </div>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+
+
+      <p class="login-box-msg">Enviar solictut para poder volver a entrar.</p>
+      <form action="{% url 'BookiernesApp:reset_password' %}" method="post">
+        {% csrf_token %}
+       <div class="form-group">
+                      <label >Nombre de usuario:</label>
+ <input type="text" name="username" class="form-control" id="username" maxlength="140" required="">
+                    </div>
+                    <div class="form-group">
+                      <label >Nombre de email:</label>
+ <input type="email" name="email" class="form-control" id="email" maxlength="255" required="">
+                    </div>
+        <div class="form-group">
+                      <label >Mesaje corto:</label>
+<textarea id="w3review" name="mesaje" rows="4" cols="43">
+ Hola, he olvidado la contraseña me puedes poner la contraseña por defecto.
+</textarea>
+                    </div>
+          <!-- /.col -->
+
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+
+          <!-- /.col -->
+        </div>
+      </form>
+
+
+
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="../../static/BookiernesApp/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../static/BookiernesApp/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../static/BookiernesApp/js/adminlte.min.js"></script>
+
+</body>
+</html>

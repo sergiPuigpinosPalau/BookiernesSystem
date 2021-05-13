@@ -20,6 +20,10 @@ def mainView(request):
         return redirect('BookiernesApp:maineditor_books_presented_editorial')
     elif user.user_type == 'it':
         return redirect('BookiernesApp:user_list')
+    elif user.user_type == 'main_graphic_designer':
+        return redirect('BookiernesApp:main_petitionview_list')
+    elif user.user_type == 'graphic_designer':
+        return redirect('BookiernesApp:petitionview_list')
 
 
 class SignUpView(CreateView):

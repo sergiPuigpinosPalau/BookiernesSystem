@@ -227,6 +227,33 @@
                         </li>
                     {% endif %}
 
+                     {% if  user.user_type == 'main_graphic_designer' or user.user_type == 'graphic_designer'  %}
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:main_bockmaquetat_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Libros para asignar una maquetacio
+                                     {% if assignment_img_count > 0 and assignment_img_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_img_count }}</span>
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:main_petitionview_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-camera-retro"></i>
+                                <p>
+                                    Solictudes de Imágenes para asignar
+
+                                         {% if assignment_BockMaquetat_count > 0 and assignment_BockMaquetat_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_BockMaquetat_count }}</span>
+                                    {% endif %}
+
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

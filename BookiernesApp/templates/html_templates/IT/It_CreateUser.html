@@ -1,0 +1,158 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+   <!-- Google Font: Source Sans Pro -->
+    <!-- libreria para caja de texto  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+
+{% endblock %}
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+
+            <li class="breadcrumb-item">Crear usuario</li>
+
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+</br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Dar de alta a un trabajador</h3>
+                </div>
+
+
+
+                    {% if form.errors %}
+
+                {% for message in form.errors %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-danger ">
+                    <div class="card-header">
+                      <h3 class="card-title">Èxit</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {{message}}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+
+                {% endif %}
+
+
+
+                <form action=""  method="POST"  >
+                  {% csrf_token %}
+
+
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label >Ingrese el nombre de usuario</label>
+                        <input type="text" name="username" class="form-control" id="username"  required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingrese el nombre</label>
+                        <input type="text" name="first_name" class="form-control" id="first_name" required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingrese el apelido</label>
+                        <input type="text" name="last_name" class="form-control" id="last_name"  required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingrese el correo electrónico</label>
+                        <input type="text" name="email" class="form-control" id="email" required="">
+                    </div>
+                    <div class="form-group">
+                      <label >Ingrese  el password</label>
+                        <input type="password" name="password" class="form-control" id="password" required="">
+                    </div>
+
+                      <div class="form-group">
+                      <label >Elegir el rol </label>
+                        <select name="user_type" id="user_type">
+                              <option value="writer">Escritor</option>
+                              <option value="editor">Editor</option>
+                              <option value="main_editor">Editor principal</option>
+                              <option value="graphic_designer">Graphic Designer</option>
+                             <option value="main_graphic_designer">Main Graphic Designer</option>
+                             <option value="it">IT</option>
+                        </select>
+                    </div>
+
+                     <div id="editor-input-div"></div>
+
+
+
+                  </div>
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                  </div>
+                </form>
+              </div>
+
+
+
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+$('#user_type').change(function(){
+  $( "#editor-input" ).remove("");
+  if(($(this).val() == 'editor')  || ($(this).val() == 'main_editor') ){
+    $("#editor-input-div").append(" <div class='form-group' id='editor-input'><label >Elegir el tema</label><select name='theme' id='theme'><option value='0'>Ninguno</option>{% for t in Theme %}<option value='{{t.id}}'>{{t.name}}</option>{% endfor %}</select></div>");
+  }else{
+  	$( "#editor-input" ).remove("");
+  }
+});
+
+</script>
+{% endblock %}

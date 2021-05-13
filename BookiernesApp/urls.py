@@ -83,5 +83,16 @@ urlpatterns = [
     url(r'^post/reset/password/$', resetPass, name='reset_password'),
 
 
+    # Graphic Designer
+    url(r'^main_graphic_designer/petitionview/$', AssignmentListImg.as_view(), name='main_petitionview_list'),
+    url(r'^main_graphic_designer/get_petitionview/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='main_petitionview_view'),
+    url(r'^main_graphic_designer/bockmaquetat/$', AssignmentListBockMaquetat.as_view(), name='main_bockmaquetat_list'),
+    url(r'^main_graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', AssignmentDetaliBockMaquetat.as_view(), name='main_bockmaquetat_view'),
+
+
+
+    #url(r'^graphic_designer_view/$', AssignmentListImg.as_view(), name='user_list'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
