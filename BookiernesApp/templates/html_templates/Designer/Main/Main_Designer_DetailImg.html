@@ -71,8 +71,10 @@
               </div>
 
 
-                <from action="#" method="post">
+                <from action="{% url 'BookiernesApp:main_to_assign_graphicdesigner'  %}" method="POST"  enctype="multipart/form-data" >
                         {% csrf_token %}
+                    <input id="type" name="type" type="hidden" value="{{type}}">
+                    <input id="pk" name="pk" type="hidden" value="{{book.id}}">
 <div class="row invoice-info p-3 ">
                           <div class="col-sm-5 invoice-col">
     <div class="form-group">

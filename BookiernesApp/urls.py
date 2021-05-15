@@ -86,8 +86,11 @@ urlpatterns = [
     # Graphic Designer
     url(r'^main_graphic_designer/petitionview/$', AssignmentListImg.as_view(), name='main_petitionview_list'),
     url(r'^main_graphic_designer/get_petitionview/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='main_petitionview_view'),
+
     url(r'^main_graphic_designer/bockmaquetat/$', AssignmentListBockMaquetat.as_view(), name='main_bockmaquetat_list'),
     url(r'^main_graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', AssignmentDetaliBockMaquetat.as_view(), name='main_bockmaquetat_view'),
+
+    url(r'^main_graphic_designer/post_to_assign_GraphicDesigner/$', asignarGraphicDesigner,name='main_to_assign_graphicdesigner'),
 
 
     url(r'^graphic_designer/petitionview/$', ListImg.as_view(), name='petitionview_list'),
