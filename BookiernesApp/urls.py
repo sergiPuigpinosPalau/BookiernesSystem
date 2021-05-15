@@ -71,4 +71,28 @@ urlpatterns = [
     url(r'^maineditor__books_presented_in_editorial/book_presented_detail/(?P<pk>\d+)/assign_or_reject$',
         assign_or_reject, name='maineditor_assign_or_reject'),
 
+
+    # it urls
+    url(r'^it_view/$', ItView.as_view(), name='user_list'),
+    url(r'^it_view/get_user/(?P<pk>\d+)/$', ItDetailUser.as_view(), name='user_view'),
+    url(r'^it_view/active_user/(?P<pk>\d+)/$', active_user, name='active_user'),
+    url(r'^it_view/add_user/$', ITCrateUser.as_view(), name='create_user'),
+    url(r'^it_view/edit_pass/(?P<pk>\d+)/$', ItPassword.as_view(), name='user_edit_pass'),
+    url(r'^it_view/edit_pass_post/$', postEditPass, name='user_edit_pass_post'),
+    url(r'^reset/password/$', ViewResetPass.as_view(), name='reset_password_view'),
+    url(r'^post/reset/password/$', resetPass, name='reset_password'),
+
+
+    # Graphic Designer
+    url(r'^main_graphic_designer/petitionview/$', AssignmentListImg.as_view(), name='main_petitionview_list'),
+    url(r'^main_graphic_designer/get_petitionview/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='main_petitionview_view'),
+    url(r'^main_graphic_designer/bockmaquetat/$', AssignmentListBockMaquetat.as_view(), name='main_bockmaquetat_list'),
+    url(r'^main_graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', AssignmentDetaliBockMaquetat.as_view(), name='main_bockmaquetat_view'),
+
+
+
+    #url(r'^graphic_designer_view/$', AssignmentListImg.as_view(), name='user_list'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

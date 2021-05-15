@@ -5,10 +5,13 @@ from django.db import models
 
 # TODO anyadir foto perfil
 from django.db.models import Q
+from django.forms import model_to_dict
+
+from BookiernesSystem.settings import STATIC_URL, MEDIA_URL
 
 
 class User(AbstractUser):
-    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Escriptor principal'),
+    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Editor principal'),
                          ('main_graphic_designer', 'Main Graphic Designer'), ('graphic_designer', 'Graphic Designer'),
                          ('it', 'IT'), ('subscribed_reader', 'Lector Subscrit')]
     user_type = models.CharField(
@@ -17,7 +20,8 @@ class User(AbstractUser):
         default='writer',
     )
     path_profile_photo = models.FileField(upload_to='profile_photo', null=True, blank=True)
-    activated = models.BooleanField(default=True)
+
+
 
     def get_user_type_name(self):
         return dict(self.USER_TYPE_CHOICES)[self.user_type]
@@ -25,12 +29,27 @@ class User(AbstractUser):
     def get_user_type(self):
         return str(self.user_type)
 
+    def get_activated(self):
+        if self.is_active == True:
+            return "Activado"
+        else:
+            return "Desactivado"
+
+    def get_img(self):
+        if self.path_profile_photo == "NULL":
+            return "../../../static/BookiernesApp/img/user-150x150.png"
+        else:
+            return self.path_profile_photo
+
+
+
 
 class Theme(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return str(self.name)
+
 
 
 class CreditCard(models.Model):
