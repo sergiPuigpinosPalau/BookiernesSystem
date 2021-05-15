@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
 
 #@method_decorator([login_required, designer_required], name='dispatch')
-from BookiernesApp.models import ImagePetition, User, Book
+from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner
 
 
 class AssignmentListImg(ListView):
@@ -18,25 +18,11 @@ class AssignmentListImg(ListView):
         except:
             return 0
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['assignment_img_count'] = ImagePetition.objects.filter(graphic_designer_id__isnull=True).count()
-        context['assignment_BockMaquetat_count'] = Book.objects.filter(designer_assigned_to_id__isnull=True).filter(
-            book_status='designing').count()
-        return context
 
 class AssignmentDetaliImg(DetailView):
     model = ImagePetition
     template_name = 'html_templates/Designer/Main/Main_Designer_DetailImg.html'
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['assignment_img_count'] = ImagePetition.objects.filter(graphic_designer_id__isnull=True).count()
-        context['assignment_BockMaquetat_count'] = Book.objects.filter(designer_assigned_to_id__isnull=True).filter(
-            book_status='designing').count()
-        context['users'] = User.objects.filter(Q(user_type = "graphic_designer") | Q(user_type = "main_graphic_designer")  )
-        return context
 
 
 class AssignmentListBockMaquetat(ListView):
@@ -50,20 +36,48 @@ class AssignmentListBockMaquetat(ListView):
         except:
             return 0
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['assignment_img_count'] = ImagePetition.objects.filter(graphic_designer_id__isnull=True).count()
-        context['assignment_BockMaquetat_count'] = Book.objects.filter(designer_assigned_to_id__isnull=True).filter(book_status='designing').count()
-        return context
 
 class AssignmentDetaliBockMaquetat(DetailView):
     model = Book
     template_name = 'html_templates/Designer/Main/Main_Designer_DetailBockMaquetat.html'
 
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['assignment_img_count'] = ImagePetition.objects.filter(graphic_designer_id__isnull=True).count()
-        context['assignment_BockMaquetat_count'] = Book.objects.filter(designer_assigned_to_id__isnull=True).filter(book_status='designing').count()
-        context['users'] = User.objects.filter(Q(user_type = "graphic_designer") | Q(user_type = "main_graphic_designer")  )
-        return context
+
+# disenador
+
+
+
+class ListImg(ListView):
+    template_name = 'html_templates/Designer/Designer_ListImg.html'
+    model = ImagePetition
+    paginate_by = 10
+
+    def get_queryset(self):
+        try:
+            return ImagePetition.objects.filter(graphic_designer_id=GraphicDesigner.objects.get(user_id=self.request.user.id).id)
+        except:
+            return 0
+
+
+class DetaliImg(DetailView):
+    model = ImagePetition
+    template_name = 'html_templates/Designer/Designer_DetailImg.html'
+
+
+
+class ListBockMaquetat(ListView):
+    template_name = 'html_templates/Designer/Designer_ListBockMaquetat.html'
+    model = Book
+    paginate_by = 10
+
+    def get_queryset(self):
+        try:
+            return Book.objects.filter(designer_assigned_to_id=GraphicDesigner.objects.get(user_id=self.request.user.id).id).filter(book_status='designing')
+        except:
+            return 0
+
+
+class DetaliBockMaquetat(DetailView):
+    model = Book
+    template_name = 'html_templates/Designer/Designer_DetailBockMaquetat.html'
+

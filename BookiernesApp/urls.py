@@ -90,8 +90,13 @@ urlpatterns = [
     url(r'^main_graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', AssignmentDetaliBockMaquetat.as_view(), name='main_bockmaquetat_view'),
 
 
+    url(r'^graphic_designer/petitionview/$', ListImg.as_view(), name='petitionview_list'),
+    url(r'^graphic_designer/get_petitionview/(?P<pk>\d+)/$', DetaliImg.as_view(), name='petitionview_view'),
+    url(r'^graphic_designer/bockmaquetat/$', ListBockMaquetat.as_view(), name='bockmaquetat_list'),
+    url(r'^graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', DetaliBockMaquetat.as_view(), name='bockmaquetat_view'),
 
-    #url(r'^graphic_designer_view/$', AssignmentListImg.as_view(), name='user_list'),
+
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
