@@ -159,9 +159,7 @@
 
                           {{book.description  | safe}}
 
-                          {% if book.book_status == "rejected"  %}
-                            {{book.main_editor_comment | safe }}
-                          {% endif  %}
+
 
                           </address>
                           </div>
@@ -177,11 +175,21 @@
                         </button>
                     </a>
 
-                      <a href="/media/{{book.path}}" download>
+<form action="{% url 'BookiernesApp:uploadbook_post' book.id %}" method="POST"  enctype="multipart/form-data">
+     {% csrf_token %}
+        <label class="btn btn-primary  float-right  " style="margin-right: 5px;">
+           <i class="fas fa-upload"></i>  Subir el llibre  maquetat
+          <input type="file" style="display: none;" name="book_designed" onchange="form.submit()" >
+        </label>
+</form>
+
+                      {% if book.book_designed != None  %}
+                           <a href="/media/{{book.book_designed}}" download>
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                          <i class="fas fa-upload"></i>  Subir el llibre  maquetat
+                          <i class="fas fa-download"></i>  Descarregar el llibre  maquetat
                         </button>
                     </a>
+                          {% endif  %}
 
                        <a href="/writer_message/get_book/{{book.id}}/">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
@@ -229,5 +237,23 @@
 </section>
  </div>
    {% endblock %}
+
+{% block script %}
+<script>
+function getFile() {
+  document.getElementById("upfile").click();
+}
+
+function sub(obj) {
+  var file = obj.value;
+  var fileName = file.split("\\");
+  document.getElementById("yourBtn").innerHTML = fileName[fileName.length - 1];
+  document.myForm.submit();
+  event.preventDefault();
+}
+
+
+</script>
+{% endblock %}
 
 

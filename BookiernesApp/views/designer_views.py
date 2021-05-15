@@ -1,10 +1,18 @@
+from datetime import datetime
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
+from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.core.files.storage import FileSystemStorage
+
+from django.contrib import messages
+from django.contrib.messages import constants
 
 
 #@method_decorator([login_required, designer_required], name='dispatch')
-from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner
+from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner, Notification
 
 
 class AssignmentListImg(ListView):
@@ -80,4 +88,51 @@ class ListBockMaquetat(ListView):
 class DetaliBockMaquetat(DetailView):
     model = Book
     template_name = 'html_templates/Designer/Designer_DetailBockMaquetat.html'
+
+
+def uploadbook(request, pk):
+    if pk != None:
+        if request.method == 'POST':
+
+            book_designed = request.FILES["book_designed"]
+            book = Book.objects.get(id=pk)
+
+            date_received = datetime.now()
+            user_id = request.user.id
+            destination_user_id = Book.objects.get(id=pk).assigned_to.user.id
+
+            notification_type = 'presented_book_designed'
+            content_notification = 'He realizado la maquetacion del libro  %(title)s .'% {'title': book.title}
+            url='#' #TODO poner la url del destino.
+
+            if book.book_designed == None:
+                fs = FileSystemStorage()
+                book.book_designed = book_designed.name
+                path = 'book_designed/' + str(book_designed.name)
+                fs.save(path, book_designed)
+                book.save()
+            else:
+                fs = FileSystemStorage()
+                path = 'book_designed/' + str(book.book_designed)
+                fs.delete(path)
+                book.book_designed = book_designed.name
+                path = 'book_designed/' + str(book_designed.name)
+                fs.save(path, book_designed)
+                book.save()
+
+            message = "El libro maquetado %(title)s se subio corectamente. " % {'title': book.title}
+            messages.add_message(request, constants.SUCCESS, message)
+
+            if not Notification.objects.all().filter(notification_type=notification_type, destination_user_id__exact=destination_user_id, user_id__exact=user_id, url__exact=url):
+                notification = Notification.objects.create(notification_type=notification_type,
+                                                           content=content_notification, url=url,
+                                                           date_received=date_received, user_id=user_id,
+                                                           destination_user_id=destination_user_id)
+                notification.save()
+
+            return redirect('BookiernesApp:bockmaquetat_list')
+
+    else:
+        raise Http404("I can't access this page.")
+
 

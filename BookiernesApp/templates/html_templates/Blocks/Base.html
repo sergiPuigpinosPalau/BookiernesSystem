@@ -62,6 +62,16 @@
                                     {% elif notification.notification_type == 'assigned' %}
                                         <span class="float-right text-sm text-danger"><i
                                                 class="fas fa-envelope"></i></span>
+
+
+                                    {% elif notification.notification_type == 'presented_book_designed' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-address-book"></i></span>
+
+
+                                    {% elif notification.notification_type == 'presented_img' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-images"></i></span>
                                     {% endif %}
                                 </h3>
                                 <p class="text-sm">{{ notification.content }} </p>

@@ -167,7 +167,7 @@ class Notification(models.Model):
                                          related_name='destination_user_notifications')
     date_received = models.DateField()
     NOTIFICATION_CHOICES = [('modification', 'Modificacio'), ('message', 'Missatge'), ('presented', 'Presentat'),
-                            ('assigned', 'Assignat')]
+                            ('assigned', 'Assignat'),('presented_img', 'Imagen '),('presented_book_designed', 'Maquetat')]
     content = models.CharField(max_length=255)
     notification_type = models.CharField(max_length=255, choices=NOTIFICATION_CHOICES)
     url = models.CharField(max_length=255)
