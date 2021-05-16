@@ -339,3 +339,40 @@ def graphic_designer_post_chat(request, pk):
         raise Http404("I can't access this page.")
 
 
+
+class GalleryImg(ListView):
+    template_name = 'html_templates/Designer/Designer_DetailListImg.html'
+    model = Image
+    paginate_by = 3
+
+    def get_queryset(self):
+        try:
+            return Image.objects.filter(petition_id=ImagePetition.objects.get(Q(graphic_designer_id=GraphicDesigner.objects.get(user_id=self.request.user.id).id) & Q(id=self.kwargs['pk'])).id)
+        except:
+            return 0
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['imagepetition'] = ImagePetition.objects.get(Q(graphic_designer_id=GraphicDesigner.objects.get(user_id=self.request.user.id).id) & Q(id=self.kwargs['pk']))
+        return context
+
+
+def delete_img(request, pk):
+    if pk != None:
+        try:
+
+            img = Image.objects.get(Q(id=pk))
+            fs = FileSystemStorage()
+            path = 'images/' + str(img.path)
+            fs.delete(path)
+            img.delete()
+            message = "La imagen se borro. "
+            messages.add_message(request, constants.SUCCESS, message)
+            url='/graphic_designer/uploadimg/viewimg/'+pk
+            return redirect(url)
+
+        except:
+            raise Http404("Sa producido un error a la bbdd.")
+
+    else:
+        raise Http404("I can't access this page.")

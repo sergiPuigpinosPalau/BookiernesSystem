@@ -124,6 +124,8 @@ class Image(models.Model):
     path = models.FileField(upload_to='images', null=True, blank=True)
     petition = models.ForeignKey(ImagePetition, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
 
+    def get_img_path(self):
+        return "../../../../media/images/" + str(self.path)
 
 # TODO revisar nulls
 # TODO comprobar blanks

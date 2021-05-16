@@ -101,6 +101,8 @@ urlpatterns = [
     url(r'^graphic_designer/post_bockmaquetat/uploadbook/(?P<pk>\d+)/$', uploadbook, name='uploadbook_post'),
     url(r'^graphic_designer/post_bockmaquetat/uploadimg/$', uploadimg, name='uploadimg_post'),
 
+    url(r'^graphic_designer/uploadimg/viewimg/(?P<pk>\d+)/$', GalleryImg.as_view(), name='get_uploadimg_view'),
+    url(r'^graphic_designer/post_bockmaquetat/deleteimg/(?P<pk>\d+)/$', delete_img, name='get_deleteimg'),
 
     url(r'^graphic_designer_notification/(?P<pk>\d+)/$', designer_notification, name='notification_graphic_designer'),
 
