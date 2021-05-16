@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.core.files.storage import FileSystemStorage
@@ -12,7 +12,7 @@ from django.contrib.messages import constants
 
 
 #@method_decorator([login_required, designer_required], name='dispatch')
-from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner, Notification
+from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner, Notification, Image
 
 
 class AssignmentListImg(ListView):
@@ -152,6 +152,49 @@ class DetaliImg(DetailView):
     model = ImagePetition
     template_name = 'html_templates/Designer/Designer_DetailImg.html'
 
+def uploadimg(request):
+
+    if request.method == 'POST':
+
+        files = [request.FILES.get('file[%d]' % i)
+                 for i in range(0, len(request.FILES))]
+
+        id = request.POST['id']
+        obj_imagePetition=ImagePetition.objects.get(id=id).title
+        date_received = datetime.now()
+        user_id = request.user.id
+        destination_user_id = Book.objects.get(id=id).assigned_to.user.id
+
+        notification_type = 'presented_img'
+        content_notification = 'He subido las fotos de la solicitut de imagenes   %(title)s .' % {'title': obj_imagePetition}
+        url = '#'  # TODO poner la url del destino.
+
+        fs = FileSystemStorage()
+        for f in files:
+            path = 'images/' + str(f.name)
+            fs.save(path, f)
+            image = Image(path=f.name, petition_id = id )
+            image.save()
+
+        message = "La Fotos de la Solictudes de Imágenes %(title)s se subio todas corectamente. " % {'title': obj_imagePetition}
+        messages.add_message(request, constants.SUCCESS, message)
+
+        if not Notification.objects.all().filter(notification_type=notification_type,
+                                                 destination_user_id__exact=destination_user_id, user_id__exact=user_id,
+                                                 url__exact=url):
+            notification = Notification.objects.create(notification_type=notification_type,
+                                                       content=content_notification, url=url,
+                                                       date_received=date_received, user_id=user_id,
+                                                       destination_user_id=destination_user_id)
+            notification.save()
+
+        return redirect('BookiernesApp:bockmaquetat_list')
+
+        data = {'status': 'success'}
+        response = JsonResponse(data)
+        return response
+    else:
+        raise Http404("I can't access this page.")
 
 
 class ListBockMaquetat(ListView):

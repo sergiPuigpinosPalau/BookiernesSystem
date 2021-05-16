@@ -99,6 +99,8 @@ urlpatterns = [
     url(r'^graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', DetaliBockMaquetat.as_view(), name='bockmaquetat_view'),
 
     url(r'^graphic_designer/post_bockmaquetat/uploadbook/(?P<pk>\d+)/$', uploadbook, name='uploadbook_post'),
+    url(r'^graphic_designer/post_bockmaquetat/uploadimg/$', uploadimg, name='uploadimg_post'),
+
 
 
 
