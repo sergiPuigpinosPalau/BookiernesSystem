@@ -102,6 +102,8 @@ urlpatterns = [
     url(r'^graphic_designer/post_bockmaquetat/uploadimg/$', uploadimg, name='uploadimg_post'),
 
 
+    url(r'^graphic_designer_notification/(?P<pk>\d+)/$', designer_notification, name='notification_graphic_designer'),
+
 
 
 

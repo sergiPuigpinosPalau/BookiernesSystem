@@ -42,6 +42,10 @@
                             {% elif user.user_type == 'writer' %}
                                 <a href="{% url 'BookiernesApp:notification' notification.id %}" class="dropdown-item">
                                 <!-- link cap al missage -->
+
+                            {% elif user.user_type == 'main_graphic_designer' or user.user_type == 'graphic_designer' %}
+                                <a href="{% url 'BookiernesApp:notification_graphic_designer' notification.id %}" class="dropdown-item">
+
                             {% endif %}
                         <!-- Message Start -->
                         <div class="media">

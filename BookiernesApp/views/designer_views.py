@@ -261,4 +261,19 @@ def uploadbook(request, pk):
         raise Http404("I can't access this page.")
 
 
+def designer_notification(request, pk):
+    if pk != None:
+        try:
+
+            notification=Notification.objects.get( Q(id=pk ) & Q(destination_user_id=request.user.id) )
+            url = notification.url
+            notification.delete()
+            return redirect(url)
+
+        except:
+           raise Http404("Sa producido un error a la bbdd.")
+
+    else:
+        raise Http404("I can't access this page.")
+
 
