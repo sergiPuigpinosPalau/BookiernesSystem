@@ -83,7 +83,7 @@ urlpatterns = [
     url(r'^post/reset/password/$', resetPass, name='reset_password'),
 
 
-    # Graphic Designer
+    # Graphic Designer main
     url(r'^main_graphic_designer/petitionview/$', AssignmentListImg.as_view(), name='main_petitionview_list'),
     url(r'^main_graphic_designer/get_petitionview/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='main_petitionview_view'),
 
@@ -92,7 +92,7 @@ urlpatterns = [
 
     url(r'^main_graphic_designer/post_to_assign_GraphicDesigner/$', asignarGraphicDesigner,name='main_to_assign_graphicdesigner'),
 
-
+    # Graphic Designer
     url(r'^graphic_designer/petitionview/$', ListImg.as_view(), name='petitionview_list'),
     url(r'^graphic_designer/get_petitionview/(?P<pk>\d+)/$', DetaliImg.as_view(), name='petitionview_view'),
     url(r'^graphic_designer/bockmaquetat/$', ListBockMaquetat.as_view(), name='bockmaquetat_list'),
@@ -104,6 +104,8 @@ urlpatterns = [
 
     url(r'^graphic_designer_notification/(?P<pk>\d+)/$', designer_notification, name='notification_graphic_designer'),
 
+    url(r'^graphic_designer_message/get_book/(?P<pk>\d+)/$', Graphic_designer_Chat_Book.as_view(), name='chat_book_graphic_designer'),
+    url(r'^graphic_designer_message/post_book/(?P<pk>\d+)/send/$', graphic_designer_post_chat, name='send_message_graphic_designer'),
 
 
 

@@ -25,9 +25,9 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-             <!-- <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li> -->
-              <li class="breadcrumb-item active"> <a href="{% url 'BookiernesApp:books' book.id %}"> {{book.title}}</a> </li>
-              <li class="breadcrumb-item active">  Mensajes </li>
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Libros para asignar una maquetacio</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'BookiernesApp:bockmaquetat_view' book.id %}"> Libro maquetado {{book.title}}</a>  </li>
+            <li class="breadcrumb-item active">  Mensajes </li>
         </ol>
           
        
@@ -66,7 +66,7 @@
                         <span class="direct-chat-timestamp float-right">{{message.date_received}}</span>
                       </div>
                       <!-- /.direct-chat-infos -->
-                      <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="message user image">
+                      <img class="direct-chat-img" src="{{message.user.get_img }}" alt="message user image">
                       <!-- /.direct-chat-img -->
                       <div class="direct-chat-text">
                         {{message.content }}
@@ -78,10 +78,10 @@
                               <div class="direct-chat-msg right">
                                 <div class="direct-chat-infos clearfix">
                                   <span class="direct-chat-name float-right">{{message.get_user_name}}</span>
-                                  <span class="direct-chat-timestamp float-left">{{message.date_received}}</span>
+                                  <span class="direct-chat-timestamp float-left">{{message.date_received}} </span>
                                 </div>
                                 <!-- /.direct-chat-infos -->
-                                <img class="direct-chat-img" src="../../../static/BookiernesApp/img/user2-128x128.jpg" alt="message user image">
+                                <img class="direct-chat-img" src="{{message.user.get_img }}" alt="message user image">
                                 <!-- /.direct-chat-img -->
                                 <div class="direct-chat-text">
                                   {{message.content }}
@@ -106,7 +106,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <form action="{% url 'BookiernesApp:send_message' book.id %}" method="post">
+                  <form action="{% url 'BookiernesApp:send_message_graphic_designer' book.id %}" method="post">
                     {% csrf_token %}
                     <div class="input-group">
                       <input type="text" name="content" placeholder="Escribir un mensaje" class="form-control">

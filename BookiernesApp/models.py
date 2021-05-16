@@ -36,10 +36,10 @@ class User(AbstractUser):
             return "Desactivado"
 
     def get_img(self):
-        if self.path_profile_photo == "NULL":
+        if self.path_profile_photo == None:
             return "../../../static/BookiernesApp/img/user-150x150.png"
         else:
-            return self.path_profile_photo
+            return "../../../../media/profile_photo/" + str(self.path_profile_photo)
 
 
 
@@ -190,3 +190,6 @@ class Message(models.Model):
 
     def get_user_name(self):
         return self.user.first_name + " " + self.user.last_name
+
+    def get_user_profile(self):
+        return self.user.get_img

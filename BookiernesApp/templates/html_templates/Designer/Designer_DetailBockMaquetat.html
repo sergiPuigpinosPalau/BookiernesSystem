@@ -191,7 +191,7 @@
                     </a>
                           {% endif  %}
 
-                       <a href="/writer_message/get_book/{{book.id}}/">
+                       <a href="{% url 'BookiernesApp:chat_book_graphic_designer' book.id %}">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                             <i class="fas fa-envelope"></i> Enviar missatge
                         </button>

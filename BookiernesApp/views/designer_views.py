@@ -12,7 +12,7 @@ from django.contrib.messages import constants
 
 
 #@method_decorator([login_required, designer_required], name='dispatch')
-from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner, Notification, Image
+from BookiernesApp.models import ImagePetition, User, Book, GraphicDesigner, Notification, Image, Message
 
 
 class AssignmentListImg(ListView):
@@ -273,6 +273,68 @@ def designer_notification(request, pk):
         except:
            raise Http404("Sa producido un error a la bbdd.")
 
+    else:
+        raise Http404("I can't access this page.")
+
+
+
+class Graphic_designer_Chat_Book(TemplateView):
+    model = Book
+    template_name = 'html_templates/Designer/Chat.html'
+
+    def get_context_data(self, **kwargs):
+        try:
+            context = super().get_context_data(**kwargs)
+            graphicdesigne = GraphicDesigner.objects.get(user_id=self.request.user.id).id
+            book = Book.objects.get(Q(designer_assigned_to_id=graphicdesigne) & Q(pk=self.kwargs['pk']))
+            if book.designer_assigned_to == None :
+                raise Http404("I can't access this page.")
+
+            context['book'] = book
+            messages = Message.objects.filter(Q(book_id=book.id) & Q(
+                Q(Q(user_id=self.request.user.id) & Q(destination_user_id=book.assigned_to.user.id)) | Q(
+                    Q(user_id=book.assigned_to.user.id) & Q(destination_user_id=self.request.user.id))))
+            context['messages'] = messages
+            context['messages_numbers'] = messages.count()
+            return context
+        except:
+            raise Http404("I can't access this page.")
+
+
+def graphic_designer_post_chat(request, pk):
+    if request.method == "POST":
+        content = request.POST['content']
+        date_received = datetime.now()
+        book_id = pk
+        user_id = request.user.id
+        destination_user_id = Book.objects.get(id=pk).assigned_to.user.id
+
+        notification_type = 'message'
+        content_notification = 'Has recibido un mensaje.'
+
+        if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
+            url = '#'  #TODO aqui poner la ruta de destino + book_id
+        else:
+            raise Http404("I can't access this page.")
+
+        if destination_user_id == None:
+            raise Http404("I can't access this page.")
+        try:
+            message = Message.objects.create(content=content, date_received=date_received, book_id=book_id,
+                                             user_id=user_id, destination_user_id=destination_user_id)
+            message.save()
+
+            if not Notification.objects.all().filter(notification_type=notification_type, destination_user_id__exact=destination_user_id, user_id__exact=user_id, url__exact=url):
+                notification = Notification.objects.create(notification_type=notification_type,
+                                                           content=content_notification, url=url,
+                                                           date_received=date_received, user_id=user_id,
+                                                           destination_user_id=destination_user_id)
+                notification.save()
+        except:
+            raise Http404("Sa producido un error a la bbdd.")
+
+        url = '/graphic_designer_message/get_book/' + pk
+        return redirect(url)
     else:
         raise Http404("I can't access this page.")
 
