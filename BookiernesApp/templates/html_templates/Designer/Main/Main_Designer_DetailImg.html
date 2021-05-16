@@ -1,8 +1,8 @@
 {% extends "html_templates/Blocks/Base.html" %}
 {% block head %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bookiernes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookiernes</title>
     <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -18,134 +18,133 @@
 {% endblock %}
 {% block content %}
 
- <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
 
-        <ol class="breadcrumb float-sm-left">
+                <ol class="breadcrumb float-sm-left">
 
-          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:main_petitionview_list' %}">Solictudes de Imágenes para asignar</a></li>
-              <li class="breadcrumb-item active"> Solictut {{imagepetition.title}} </li>
-        </ol>
+                    <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:main_petitionview_list' %}">Solictudes de
+                        Imágenes para asignar</a></li>
+                    <li class="breadcrumb-item active"> Solictut {{ imagepetition.title }} </li>
+                </ol>
 
 
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-<br>
-<section class="content">
-<div class="row">
-          <div class="col-md-6">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <br>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-6">
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Solictut {{imagepetition.title}}</h3>
-              </div>
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Solictut {{ imagepetition.title }}</h3>
+                        </div>
 
-              <div class="row invoice-info p-3 mb-3">
-                          <div class="col-sm-2 invoice-col">
-                              <strong> Editor:</strong><br><br>
-                              <strong> Títol:</strong><br><br>
-                              <strong> Data:</strong><br><br>
-                              <strong> Descripció:</strong><br><br>
-                          </div>
-                          <!-- /.col -->
-                          <div class="col-sm-8 invoice-col">
-                            {{imagepetition.editor.user.first_name}} {{imagepetition.editor.user.last_name}}<br><br>
-                            {{imagepetition.title}}</br><br>
-                              {{imagepetition.date_received}}</br><br>
-                            {{imagepetition.description | safe }}</br><br>
+                        <div class="row invoice-info p-3 mb-3">
+                            <div class="col-sm-2 invoice-col">
+                                <strong> Editor:</strong><br><br>
+                                <strong> Títol:</strong><br><br>
+                                <strong> Data:</strong><br><br>
+                                <strong> Descripció:</strong><br><br>
                             </div>
-              </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+                            <!-- /.col -->
+                            <div class="col-sm-8 invoice-col">
+                                {{ imagepetition.editor.user.first_name }} {{ imagepetition.editor.user.last_name }}<br><br>
+                                {{ imagepetition.title }}</br><br>
+                                {{ imagepetition.date_received }}</br><br>
+                                {{ imagepetition.description | safe }}</br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
 
-            <div class="col-md-6">
+                <div class="col-md-6">
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Asignar la solictut {{imagepetition.title}}</h3>
-              </div>
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Asignar la solictut {{ imagepetition.title }}</h3>
+                        </div>
 
 
-                <from action="{% url 'BookiernesApp:main_to_assign_graphicdesigner'  %}" method="POST"  enctype="multipart/form-data" >
-                        {% csrf_token %}
-                    <input id="type" name="type" type="hidden" value="{{type}}">
-                    <input id="pk" name="pk" type="hidden" value="{{book.id}}">
-<div class="row invoice-info p-3 ">
-                          <div class="col-sm-5 invoice-col">
-    <div class="form-group">
-                      <label >Comentario:</label>
-                      <div class="input-group">
+                        <form action="{% url 'BookiernesApp:main_to_assign_graphicdesigner' %}" method="POST"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input id="type" name="type" type="hidden" value="{{ type }}">
+                            <input id="pk" name="pk" type="hidden" value="{{ book.id }}">
+                            <div class="row invoice-info p-3 ">
+                                <div class="col-sm-5 invoice-col">
+                                    <div class="form-group">
+                                        <label>Comentario:</label>
+                                        <div class="input-group">
 
-                          <textarea name="comment" id="disenador_coment" >
+                          <textarea name="comment" id="disenador_coment">
                                 </textarea>
 
 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-7 invoice-col">
 
 
-                      </div>
+                                    <div class="form-group">
+                                        <label>Asignar:</label>
+                                        {% for u in  users %}
+                                            <div class="input-group">
+
+                                                <div class="form-check">
+
+
+                                                    <input class="form-check-input" type="radio" name="graphic_designer"
+                                                           value="{{ u.id }}">
+                                                    <label class="form-check-label">{{ u.first_name }} {{ u.last_name }} </label>
+
+                                                </div>
+
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Asignar</button>
+                            </div>
+
+
+                        </form>
+
                     </div>
+                    <!-- /.card-body -->
+                </div>
 
-                              </div>
-                          <!-- /.col -->
-                          <div class="col-sm-7 invoice-col">
-
-
-
-
-        <div class="form-group">
-                      <label >Asignar:</label>
-            {% for u in  users %}
-                      <div class="input-group">
-
-                       <div class="form-check">
-
-
-                          <input class="form-check-input" type="radio" name="graphic_designer" value="{{u.id}}">
-                          <label class="form-check-label">{{u.first_name}} {{u.last_name}} </label>
-
-                        </div>
-
-                      </div>
-{% endfor %}
-
-                    </div>
-    </div>
-              </div>
-
-<div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Asignar</button>
-                  </div>
-
-
-                </from>
-
-              </div>
-              <!-- /.card-body -->
             </div>
-
-</div>
-</div>
-</section>
- </div>
-   {% endblock %}
+    </div>
+    </section>
+    </div>
+{% endblock %}
 
 
 {% block script %}
-<script>
+    <script>
 
- ClassicEditor
-      .create( document.querySelector( '#disenador_coment' ) , {
-          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
-        } )
-      .catch( error => {
-          console.error( error );
-      } );
+        ClassicEditor
+            .create(document.querySelector('#disenador_coment'), {
+                toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
 
-</script>
+    </script>
 {% endblock %}
