@@ -42,6 +42,10 @@
                             {% elif user.user_type == 'writer' %}
                                 <a href="{% url 'BookiernesApp:notification' notification.id %}" class="dropdown-item">
                                 <!-- link cap al missage -->
+
+                            {% elif user.user_type == 'main_graphic_designer' or user.user_type == 'graphic_designer' %}
+                                <a href="{% url 'BookiernesApp:notification_graphic_designer' notification.id %}" class="dropdown-item">
+
                             {% endif %}
                         <!-- Message Start -->
                         <div class="media">
@@ -62,6 +66,16 @@
                                     {% elif notification.notification_type == 'assigned' %}
                                         <span class="float-right text-sm text-danger"><i
                                                 class="fas fa-envelope"></i></span>
+
+
+                                    {% elif notification.notification_type == 'presented_book_designed' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-address-book"></i></span>
+
+
+                                    {% elif notification.notification_type == 'presented_img' %}
+                                        <span class="float-right text-sm text-danger"><i
+                                                class="fas fa-images"></i></span>
                                     {% endif %}
                                 </h3>
                                 <p class="text-sm">{{ notification.content }} </p>
@@ -87,7 +101,7 @@
                     <a href="#" class="dropdown-item">
 
                         <div class="media">
-                            <img src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="User Avatar"
+                            <img src="{{ user.get_img }} " alt="User Avatar"
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
@@ -221,6 +235,85 @@
                         </li>
                     {% endif %}
 
+
+                    {% if  user.user_type == 'it' %}
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:create_user' %}" class="nav-link">
+                                <i class="nav-icon fas fa-user-plus"></i>
+                                <p>
+                                    Añadir Trabajador
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:user_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Listado de Trabajadores
+
+                                         {% if obj_user_count > 0 and obj_user_count != None %}
+                                        <span class="badge badge-info right">{{ obj_user_count }}</span>
+                                    {% endif %}
+
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                     {% if  user.user_type == 'main_graphic_designer'   %}
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:main_bockmaquetat_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Libros para asignar una maquetacio
+                                     {% if assignment_img_count > 0 and assignment_img_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_img_count }}</span>
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:main_petitionview_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-camera-retro"></i>
+                                <p>
+                                    Solictudes de Imágenes para asignar
+
+                                         {% if assignment_BockMaquetat_count > 0 and assignment_BockMaquetat_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_BockMaquetat_count }}</span>
+                                    {% endif %}
+
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                     {% if  user.user_type == 'main_graphic_designer' or user.user_type == 'graphic_designer'  %}
+                     <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:bockmaquetat_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Libros para maquetar
+                                     {% if assignment_img_count > 0 and assignment_img_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_img_count }}</span>
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:petitionview_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-camera-retro"></i>
+                                <p>
+                                    Solictudes de Imágenes
+
+                                         {% if assignment_BockMaquetat_count > 0 and assignment_BockMaquetat_count != None %}
+                                        <span class="badge badge-info right">{{ assignment_BockMaquetat_count }}</span>
+                                    {% endif %}
+
+                                </p>
+                            </a>
+                        </li>
+                     {% endif %}
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -246,7 +339,10 @@
 </div>
 <!-- ./wrapper -->
 
+
+
 <script>
+
     ClassicEditor
         .create(document.querySelector('#editor_asigna'), {
             toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
@@ -270,16 +366,23 @@
       .catch( error => {
           console.error( error );
       } );
+
 </script>
 
+{% load static %}
+
 <!-- jQuery -->
-<script src="../../../static/BookiernesApp/js/jquery.min.js"></script>
+<script src="{% static 'BookiernesApp/js/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
-<script src="../../../static/BookiernesApp/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'BookiernesApp/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
-<script src="../../../static/BookiernesApp/js/adminlte.min.js"></script>
+<script src="{% static 'BookiernesApp/js/adminlte.min.js' %}"></script>
 
 <!-- libreria para caja de texto  -->
+
+{% block script %}
+{% endblock %}
+
 
 </body>
 </html>

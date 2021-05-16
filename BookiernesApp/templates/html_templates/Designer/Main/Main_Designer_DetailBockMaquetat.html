@@ -1,0 +1,255 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+{% block content %}
+
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+
+          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:main_bockmaquetat_list' %}">Libros para asignar una maquetacio</a></li>
+              <li class="breadcrumb-item active"> Libro maquetado {{book.title}} </li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<br>
+<section class="content">
+<div class="row">
+          <div class="col-md-6">
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Libro maquetado {{book.title}}</h3>
+              </div>
+   <div class="row invoice-info p-3 mb-3">
+                          <div class="col-sm-2 invoice-col">
+                              <strong> Títol:</strong><br><br>
+                              <strong> Categoria:</strong><br><br>
+                              <strong> Estat:</strong><br><br>
+                              <strong> Descripció:</strong><br><br>
+                              {% if book.book_status == "rejected"  %}
+                              <strong> Motivo del rechazo:</strong><br>
+                              {% endif  %}
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-8 invoice-col">
+                            {{book.title}}<br><br>
+                            {{book.theme}}
+                            </br><br>
+
+                            {% if book.book_status == "presented" %}
+                              <div class="row ">
+                                  <div class="col">
+                                  <div class="progress" >
+                                      <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                           aria-valuemax="100" style="width: 20%">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                      <strong> Presentat </strong>
+                                  </div>
+                              </div>
+                              {% elif book.book_status == "rejected"  %}
+
+                              <div class="row ">
+                                <div class="col">
+                                <div class="progress" >
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                         aria-valuemax="100" style="width: 10%">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col">
+                                    <strong> Rebutjat </strong>
+                                </div>
+                            </div>
+                            {% elif book.book_status == "revised"  %}
+
+                            <div class="row ">
+                              <div class="col">
+                              <div class="progress" >
+                                  <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                       aria-valuemax="100" style="width: 60%">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                  <strong> Revisat </strong>
+                              </div>
+                          </div>
+
+                          {% elif book.book_status == "modifying"  %}
+                          <div class="row ">
+                            <div class="col">
+                            <div class="progress" >
+                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                     aria-valuemax="100" style="width: 60%">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col">
+                                <strong> Modificant </strong>
+                            </div>
+                        </div>
+                        {% elif book.book_status == "accepted"  %}
+                        <div class="row ">
+                          <div class="col">
+                          <div class="progress" >
+                              <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                   aria-valuemax="100" style="width: 40%">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                              <strong> Aceptat </strong>
+                          </div>
+                      </div>
+
+                      {% elif book.book_status == "published"  %}
+                      <div class="row ">
+                        <div class="col">
+                        <div class="progress" >
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 100%">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                            <strong> Publicat </strong>
+                        </div>
+                    </div>
+                              {% elif book.book_status == "designing"  %}
+                      <div class="row ">
+                        <div class="col">
+                        <div class="progress" >
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 80%">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                            <strong> Maquetacio </strong>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                          </br>
+
+                          {{book.description  | safe}}
+
+
+
+                          </address>
+                          </div>
+                        </div>
+
+                 <div class="d-flex justify-content-center mb-3">
+
+
+
+                      <a href="/media/{{book.path}}" download>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                          <i class="fas fa-download"></i>  Descarregar el llibre
+                        </button>
+                    </a>
+</div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <div class="col-md-6">
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Asignar la solictut {{book.title}}</h3>
+              </div>
+
+
+                <from action="{% url 'BookiernesApp:main_to_assign_graphicdesigner' %}" method="POST"  enctype="multipart/form-data" >
+                        {% csrf_token %}
+                    <input id="type" name="type" type="hidden" value="{{type}}">
+                    <input id="pk" name="pk" type="hidden" value="{{book.id}}">
+<div class="row invoice-info p-3 ">
+                          <div class="col-sm-5 invoice-col">
+    <div class="form-group">
+                      <label >Comentario:</label>
+                      <div class="input-group">
+
+                          <textarea name="comment" id="disenador_coment" >
+                                </textarea>
+
+
+
+
+                      </div>
+                    </div>
+
+                              </div>
+                          <!-- /.col -->
+                          <div class="col-sm-7 invoice-col">
+
+
+
+
+        <div class="form-group">
+                      <label >Asignar:</label>
+            {% for u in  users %}
+                      <div class="input-group">
+
+                       <div class="form-check">
+
+
+                          <input class="form-check-input" type="radio" name="graphic_designer" value="{{u.id}}">
+                          <label class="form-check-label">{{u.first_name}} {{u.last_name}} </label>
+
+                        </div>
+
+                      </div>
+{% endfor %}
+
+                    </div>
+    </div>
+              </div>
+
+                    <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Asignar</button>
+                  </div>
+
+
+                </from>
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+</div>
+</div>
+</section>
+ </div>
+   {% endblock %}
+
+

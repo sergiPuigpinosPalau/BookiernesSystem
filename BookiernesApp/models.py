@@ -5,10 +5,13 @@ from django.db import models
 
 # TODO anyadir foto perfil
 from django.db.models import Q
+from django.forms import model_to_dict
+
+from BookiernesSystem.settings import STATIC_URL, MEDIA_URL
 
 
 class User(AbstractUser):
-    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Escriptor principal'),
+    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Editor principal'),
                          ('main_graphic_designer', 'Main Graphic Designer'), ('graphic_designer', 'Graphic Designer'),
                          ('it', 'IT'), ('subscribed_reader', 'Lector Subscrit')]
     user_type = models.CharField(
@@ -17,7 +20,8 @@ class User(AbstractUser):
         default='writer',
     )
     path_profile_photo = models.FileField(upload_to='profile_photo', null=True, blank=True)
-    activated = models.BooleanField(default=True)
+
+
 
     def get_user_type_name(self):
         return dict(self.USER_TYPE_CHOICES)[self.user_type]
@@ -25,12 +29,27 @@ class User(AbstractUser):
     def get_user_type(self):
         return str(self.user_type)
 
+    def get_activated(self):
+        if self.is_active == True:
+            return "Activado"
+        else:
+            return "Desactivado"
+
+    def get_img(self):
+        if self.path_profile_photo == None:
+            return "../../../static/BookiernesApp/img/user-150x150.png"
+        else:
+            return "../../../../media/profile_photo/" + str(self.path_profile_photo)
+
+
+
 
 class Theme(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return str(self.name)
+
 
 
 class CreditCard(models.Model):
@@ -103,11 +122,16 @@ class ImagePetition(models.Model):
     description = models.TextField(null=True, blank=True)
     #images_attached = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
     date_received = models.DateField(null=True, blank=True)
+    main_graphic_designer_comment=models.TextField(null=True, blank=True)
+    date_received = models.DateField()
 
 
 class Image(models.Model):
     path = models.FileField(upload_to='images', null=True, blank=True)
     petition = models.ForeignKey(ImagePetition, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
+
+    def get_img_path(self):
+        return "../../../../media/images/" + str(self.path)
 
 # TODO revisar nulls
 # TODO comprobar blanks
@@ -125,6 +149,7 @@ class Book(models.Model):
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes', blank=True)
     path = models.FileField(upload_to='book', null=True, blank=True)
     main_editor_comment = models.TextField(null=True, blank=True)
+    main_graphic_designer_comment =models.TextField(null=True, blank=True)
     designer_assigned_to = models.ForeignKey(GraphicDesigner, null=True, on_delete=models.PROTECT,
                                              related_name='designer_books_assigned',
                                              blank=True)
@@ -151,7 +176,7 @@ class Notification(models.Model):
                                          related_name='destination_user_notifications')
     date_received = models.DateField()
     NOTIFICATION_CHOICES = [('modification', 'Modificacio'), ('message', 'Missatge'), ('presented', 'Presentat'),
-                            ('assigned', 'Assignat')]
+                            ('assigned', 'Assignat'),('presented_img', 'Imagen '),('presented_book_designed', 'Maquetat')]
     content = models.CharField(max_length=255)
     notification_type = models.CharField(max_length=255, choices=NOTIFICATION_CHOICES)
     url = models.CharField(max_length=255)
@@ -173,3 +198,6 @@ class Message(models.Model):
 
     def get_user_name(self):
         return self.user.first_name + " " + self.user.last_name
+
+    def get_user_profile(self):
+        return self.user.get_img

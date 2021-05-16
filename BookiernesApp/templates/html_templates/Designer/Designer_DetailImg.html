@@ -1,0 +1,186 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+
+<link rel="stylesheet" href="../../../static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone.css">
+
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+{% block content %}
+
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+
+          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Solictudes de Imágenes para asignar</a></li>
+              <li class="breadcrumb-item active"> Solictut {{imagepetition.title}} </li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<br>
+<section class="content">
+
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Solictut {{imagepetition.title}}</h3>
+              </div>
+
+              <div class="row invoice-info p-3 mb-3">
+                          <div class="col-sm-2 invoice-col">
+                              <strong> Editor:</strong><br><br>
+                              <strong> Títol:</strong><br><br>
+                              <strong> Data:</strong><br><br>
+                              <strong> Descripció:</strong><br><br>
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-8 invoice-col">
+                            {{imagepetition.editor.user.first_name}} {{imagepetition.editor.user.last_name}}<br><br>
+                            {{imagepetition.title}}</br><br>
+                              {{imagepetition.date_received}}</br><br>
+                            {{imagepetition.description | safe }}</br><br>
+                            </div>
+
+              </div>
+              <!-- /.card-body -->
+
+                 <div class="d-flex justify-content-center">
+
+
+                     <a href="{% url 'BookiernesApp:get_uploadimg_view' imagepetition.id %}">
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-eye"></i> Imagenes subidas
+                        </button>
+                    </a>
+
+                       <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-comet-dg">
+                            <i class="fas fa-comment-dots"></i> Comentari del diseñador grafico principal
+                        </button>
+</div>
+
+                  <div class="p-3 mb-3">
+                     <form id="dropZoneForm" class="dropzone needsclick dz-clickable" action="#" method="post"
+          enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{imagepetition.id}}">
+             <div class="fallback">
+            <input name="file" type="file" multiple/>
+        </div>
+
+
+    <button type="submit" id="submit-all"  class="btn btn-primary float-right" style="float: right">
+
+         <i class="fas fa-upload"></i> Upload
+                        </button>
+        </form>
+                  </div>
+              </div>
+
+
+            </div>
+            <!-- /.card -->
+
+
+<!-- The Modal -->
+                    <div class="modal" id="modal-comet-dg">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Comentari del diseñador grafico principal</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    {{ book.main_graphic_designer_comment | safe}}
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+</section>
+ </div>
+   {% endblock %}
+
+
+{% block script %}
+<script src="../../../static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone.js"></script>
+<script>
+
+ final_url = "http://127.0.0.1:8000/graphic_designer/post_bockmaquetat/uploadimg/";
+    Dropzone.options.dropZoneForm = {
+        url: final_url,
+        addRemoveLinks: true,
+        method: "POST",
+        params: 'file_upload',
+        dictFileTooBig: "El archivo es demasiado grande.",
+        autoProcessQueue: false,
+        acceptedFiles: '.png, .jpg, .jpeg',
+        uploadMultiple: true,
+        dictDefaultMessage: "Arrastra y suelta la imagen aquí para subirlos",
+        clickable: true,
+        headers: {
+            'Access-Control-Request-Headers':'authorization,cache-control,x-requested-with',
+            'Access-Control-Allow-Origin':'*'
+            // remove Cache-Control and X-Requested-With
+            // to be sent along with the request
+        },
+        init: function () {
+            mydropzone = this;
+
+            $("#submit-all").click(function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                var paymentNotes = $("#paymentNotes").val();
+                mydropzone.autoProcessQueue = true;
+                mydropzone.processQueue();
+
+            });
+            mydropzone.on('sending', function (file, xhr, formData) {
+
+                var notes = $("#paymentNotes").val();
+                var outgoingManualPaymentID = $("#outgoingManualPaymentID").val();
+                console.log('notes from sending' + notes);
+                console.log('notes from sending' + notes);
+                formData.append('paymentNotes', notes);
+                formData.append('outgoingManualPaymentID', outgoingManualPaymentID);
+            });
+        },
+        success: function f(response) {
+            console.log('response' + response);
+            $('.dz-remove').hide();
+        },
+    };
+
+</script>
+{% endblock %}

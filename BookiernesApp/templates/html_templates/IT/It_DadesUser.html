@@ -1,0 +1,103 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+   <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:user_list' %}">Listado de Trabajadores</a></li>
+              <li class="breadcrumb-item active">  {{obj_user.username}} </li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+</br>
+    <!-- Main content -->
+    <section class="content"></br></br>
+       <div class="row justify-content-center">
+          <div class="col-md-8 ">
+            <!-- Widget: user widget style 2 -->
+              <div class="card card-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header text-white"
+                   style="background: #66bdff">
+                <h3 class="widget-user-username text-center">{{obj_user.username}}</h3>
+                <h5 class="widget-user-desc text-center">{{obj_user.get_user_type_name}}</h5>
+              </div>
+              <div class="widget-user-image">
+                <img class="img-circle" src="{{obj_user.get_img}}" alt="{obj_user.username}} Avatar">
+              </div>
+
+              <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                         &nbsp;
+                        </a>
+
+                  </li>
+                    {% if obj_user.first_name != None and obj_user.first_name != ""  %}
+                  <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Nombre : {{obj_user.first_name}}
+                        </a>
+
+                  </li>
+                    {% endif %}
+
+                    {% if obj_user.last_name != None and obj_user.last_name != "" %}
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                            Apellidos : {{obj_user.last_name}}
+                        </a>
+                  </li>
+                    {% endif %}
+                    {% if obj_user.email != None and obj_user.email != "" %}
+                  <li class="nav-item">
+                      <a href="mailto:{{obj_user.email}}" class="nav-link">
+                          Correo Electrónico  : {{obj_user.email}}
+                        </a>
+                  </li>
+                    {% endif %}
+                    {% if obj_user.last_login != None and obj_user.last_login != ""  %}
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      Conectado el dia : {{obj_user.last_login}}
+
+                    </a>
+                  </li>
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+       </div>
+    </section>
+
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}

@@ -80,4 +80,46 @@ urlpatterns = [
     url(r'^maineditor__books_presented_in_editorial/book_presented_detail/(?P<pk>\d+)/assign_or_reject$',
         assign_or_reject, name='maineditor_assign_or_reject'),
 
+
+    # it urls
+    url(r'^it_view/$', ItView.as_view(), name='user_list'),
+    url(r'^it_view/get_user/(?P<pk>\d+)/$', ItDetailUser.as_view(), name='user_view'),
+    url(r'^it_view/active_user/(?P<pk>\d+)/$', active_user, name='active_user'),
+    url(r'^it_view/add_user/$', ITCrateUser.as_view(), name='create_user'),
+    url(r'^it_view/edit_pass/(?P<pk>\d+)/$', ItPassword.as_view(), name='user_edit_pass'),
+    url(r'^it_view/edit_pass_post/$', postEditPass, name='user_edit_pass_post'),
+    url(r'^reset/password/$', ViewResetPass.as_view(), name='reset_password_view'),
+    url(r'^post/reset/password/$', resetPass, name='reset_password'),
+
+
+    # Graphic Designer main
+    url(r'^main_graphic_designer/petitionview/$', AssignmentListImg.as_view(), name='main_petitionview_list'),
+    url(r'^main_graphic_designer/get_petitionview/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='main_petitionview_view'),
+
+    url(r'^main_graphic_designer/bockmaquetat/$', AssignmentListBockMaquetat.as_view(), name='main_bockmaquetat_list'),
+    url(r'^main_graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', AssignmentDetaliBockMaquetat.as_view(), name='main_bockmaquetat_view'),
+
+    url(r'^main_graphic_designer/post_to_assign_GraphicDesigner/$', asignarGraphicDesigner,name='main_to_assign_graphicdesigner'),
+
+    # Graphic Designer
+    url(r'^graphic_designer/petitionview/$', ListImg.as_view(), name='petitionview_list'),
+    url(r'^graphic_designer/get_petitionview/(?P<pk>\d+)/$', DetaliImg.as_view(), name='petitionview_view'),
+    url(r'^graphic_designer/bockmaquetat/$', ListBockMaquetat.as_view(), name='bockmaquetat_list'),
+    url(r'^graphic_designer/get_bockmaquetat/(?P<pk>\d+)/$', DetaliBockMaquetat.as_view(), name='bockmaquetat_view'),
+
+    url(r'^graphic_designer/post_bockmaquetat/uploadbook/(?P<pk>\d+)/$', uploadbook, name='uploadbook_post'),
+    url(r'^graphic_designer/post_bockmaquetat/uploadimg/$', uploadimg, name='uploadimg_post'),
+
+    url(r'^graphic_designer/uploadimg/viewimg/(?P<pk>\d+)/$', GalleryImg.as_view(), name='get_uploadimg_view'),
+    url(r'^graphic_designer/post_bockmaquetat/deleteimg/(?P<pk>\d+)/$', delete_img, name='get_deleteimg'),
+
+    url(r'^graphic_designer_notification/(?P<pk>\d+)/$', designer_notification, name='notification_graphic_designer'),
+
+    url(r'^graphic_designer_message/get_book/(?P<pk>\d+)/$', Graphic_designer_Chat_Book.as_view(), name='chat_book_graphic_designer'),
+    url(r'^graphic_designer_message/post_book/(?P<pk>\d+)/send/$', graphic_designer_post_chat, name='send_message_graphic_designer'),
+
+
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

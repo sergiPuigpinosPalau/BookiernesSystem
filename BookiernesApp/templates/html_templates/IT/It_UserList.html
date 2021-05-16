@@ -1,0 +1,172 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+   <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+
+ {% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item">Listado de Trabajadores</li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Listado de Trabajadores</h3>
+                </div>
+                <!-- /.card-header -->
+              <div class="card-body">
+                {% if messages %}
+
+                {% for message in messages %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-success ">
+                    <div class="card-header">
+                      <h3 class="card-title">Èxit</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {{message}}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+
+                {% endif %}
+
+                <div class="input-group input-group-sm" style="width: 250px;">
+
+                    <input type="text" name="value_search" class="form-control float-right" placeholder="Buscar por nombre de usuario">
+
+
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default" value="Submit">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                </br>
+
+                {% if page_obj.paginator.count >  0 %}
+               <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Nombre usuario</th>
+                        <th>Rol </th>
+                        <th>Usuarios activos</th>
+                        <th>Opcions</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj_user in  page_obj %}
+                    <tr>
+                        <td>{{obj_user.username}}</td>
+                        <td>{{obj_user.get_user_type_name}}</td>
+                        <td>{{obj_user.get_activated}}</td>
+                        <td><a href="{% url 'BookiernesApp:user_view' obj_user.id %}"><i class="nav-icon fas fa-eye"></i></a>
+                            <a href="{% url 'BookiernesApp:user_edit_pass' obj_user.id %}"><i class="nav-icon fas fa-user-edit"></i></a>
+                            {% if obj_user.is_active %}
+                            <a href="{% url 'BookiernesApp:active_user' obj_user.id %}"><i class="nav-icon nav-success fas fa-user-plus text-green"></i></a>
+                            {% else %}
+                            <a href="{% url 'BookiernesApp:active_user' obj_user.id %}"><i class="nav-icon fas fa-user-times text-red"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+                  <br>
+                  <br>
+            {% if is_paginated %}
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                    </li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
+
+            {% else %}
+              <br>  <br>
+            <p class="text-center"> No hay nigul trabajor creado en este momento </p>
+            <br>  <br>
+            {% endif %}
+
+                </div>
+              </div>
+
+
+
+        </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}

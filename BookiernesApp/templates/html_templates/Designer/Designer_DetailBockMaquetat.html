@@ -1,0 +1,259 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+{% block content %}
+
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+
+          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Libros para asignar una maquetacio</a></li>
+              <li class="breadcrumb-item active"> Libro maquetado {{book.title}} </li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<br>
+<section class="content">
+
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Libro maquetado {{book.title}}</h3>
+              </div>
+   <div class="row invoice-info p-3 mb-3">
+                          <div class="col-sm-2 invoice-col">
+                              <strong> Títol:</strong><br><br>
+                              <strong> Categoria:</strong><br><br>
+                              <strong> Estat:</strong><br><br>
+                              <strong> Descripció:</strong><br><br>
+                              {% if book.book_status == "rejected"  %}
+                              <strong> Motivo del rechazo:</strong><br>
+                              {% endif  %}
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-8 invoice-col">
+                            {{book.title}}<br><br>
+                            {{book.theme}}
+                            </br><br>
+
+                            {% if book.book_status == "presented" %}
+                              <div class="row ">
+                                  <div class="col">
+                                  <div class="progress" >
+                                      <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                           aria-valuemax="100" style="width: 20%">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                      <strong> Presentat </strong>
+                                  </div>
+                              </div>
+                              {% elif book.book_status == "rejected"  %}
+
+                              <div class="row ">
+                                <div class="col">
+                                <div class="progress" >
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                         aria-valuemax="100" style="width: 10%">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col">
+                                    <strong> Rebutjat </strong>
+                                </div>
+                            </div>
+                            {% elif book.book_status == "revised"  %}
+
+                            <div class="row ">
+                              <div class="col">
+                              <div class="progress" >
+                                  <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                       aria-valuemax="100" style="width: 60%">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                  <strong> Revisat </strong>
+                              </div>
+                          </div>
+
+                          {% elif book.book_status == "modifying"  %}
+                          <div class="row ">
+                            <div class="col">
+                            <div class="progress" >
+                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                     aria-valuemax="100" style="width: 60%">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col">
+                                <strong> Modificant </strong>
+                            </div>
+                        </div>
+                        {% elif book.book_status == "accepted"  %}
+                        <div class="row ">
+                          <div class="col">
+                          <div class="progress" >
+                              <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                   aria-valuemax="100" style="width: 40%">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                              <strong> Aceptat </strong>
+                          </div>
+                      </div>
+
+                      {% elif book.book_status == "published"  %}
+                      <div class="row ">
+                        <div class="col">
+                        <div class="progress" >
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 100%">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                            <strong> Publicat </strong>
+                        </div>
+                    </div>
+                              {% elif book.book_status == "designing"  %}
+                      <div class="row ">
+                        <div class="col">
+                        <div class="progress" >
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 80%">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                            <strong> Maquetacio </strong>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                          </br>
+
+                          {{book.description  | safe}}
+
+
+
+                          </address>
+                          </div>
+                        </div>
+
+                 <div class="d-flex justify-content-center mb-3">
+
+
+
+                      <a href="/media/{{book.path}}" download>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                          <i class="fas fa-download"></i>  Descarregar el llibro
+                        </button>
+                    </a>
+
+<form action="{% url 'BookiernesApp:uploadbook_post' book.id %}" method="POST"  enctype="multipart/form-data">
+     {% csrf_token %}
+        <label class="btn btn-primary  float-right  " style="margin-right: 5px;">
+           <i class="fas fa-upload"></i>  Subir el llibre  maquetat
+          <input type="file" style="display: none;" name="book_designed" onchange="form.submit()" >
+        </label>
+</form>
+
+                      {% if book.book_designed != None  %}
+                           <a href="/media/{{book.book_designed}}" download>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                          <i class="fas fa-download"></i>  Descarregar el llibre  maquetat
+                        </button>
+                    </a>
+                          {% endif  %}
+
+                       <a href="{% url 'BookiernesApp:chat_book_graphic_designer' book.id %}">
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-envelope"></i> Enviar missatge
+                        </button>
+                    </a>
+
+                       <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#modal-comet-dg">
+                            <i class="fas fa-comment-dots"></i> Comentari del diseñador grafico principal
+                        </button>
+</div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+<!-- The Modal -->
+                    <div class="modal" id="modal-comet-dg">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Comentari del diseñador grafico principal</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    {{ book.main_graphic_designer_comment | safe}}
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+</section>
+ </div>
+   {% endblock %}
+
+{% block script %}
+<script>
+function getFile() {
+  document.getElementById("upfile").click();
+}
+
+function sub(obj) {
+  var file = obj.value;
+  var fileName = file.split("\\");
+  document.getElementById("yourBtn").innerHTML = fileName[fileName.length - 1];
+  document.myForm.submit();
+  event.preventDefault();
+}
+
+
+</script>
+{% endblock %}
+
+

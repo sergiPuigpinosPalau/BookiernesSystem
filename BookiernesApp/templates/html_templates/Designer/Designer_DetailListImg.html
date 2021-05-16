@@ -1,0 +1,170 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% load static %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookiernes</title>
+   <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static '/BookiernesApp/css/all.min.css' %}">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'BookiernesApp/css/adminlte.min.css' %}">
+    <!-- libreria para caja de texto  -->
+{% endblock %}
+
+ {% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+
+        <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Solictudes de Imágenes para asignar</a></li>
+              <li class="breadcrumb-item active"><a href="/graphic_designer/get_petitionview/{{imagepetition.id}}"> Solictut {{imagepetition.title}} </a> </li>
+            <li class="breadcrumb-item active"> Les images de la solictut {{imagepetition.title}} </li>
+        </ol>
+
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<br>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title"> Imágenes</h3>
+                </div>
+                <!-- /.card-header -->
+              <div class="card-body">
+
+                   {% if messages %}
+
+                {% for message in messages %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-success ">
+                    <div class="card-header">
+                      <h3 class="card-title">Èxit</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {{message}}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+
+                {% endif %}
+
+
+                {% if page_obj.paginator.count >  0 %}
+
+ <div class="carousel-inner py-4">
+    <!-- Single item -->
+    <div class="carousel-item active">
+      <div class="container">
+<div class="row">
+                    {% for obj in  page_obj %}
+
+<div class="col-lg-4 d-none d-lg-block">
+            <div class="card">
+              <img
+                src="{{obj.get_img_path}}"
+                class="card-img-top"
+                alt="{{obj.path}}"
+                width="250px" height="250px"
+              />
+              <div class="card-body">
+                <a href="{{obj.get_img_path}}" class="btn btn-primary" download> <i class="fas fa-download"></i>Descaregar</a>
+                <a href="/graphic_designer/post_bockmaquetat/deleteimg/{{obj.id}}" class="btn btn-danger"> <i class="fas fa-trash"></i>Eliminar</a>
+              </div>
+            </div>
+          </div>
+
+
+                    {% endfor %}
+          </div>
+  </div>
+ </div>
+ </div>
+                  <br>
+                  <br>
+            {% if is_paginated %}
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                    </li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
+
+            {% else %}
+              <br>  <br>
+            <p class="text-center"> No hay imagenes   en este momento. </p>
+            <br>  <br>
+            {% endif %}
+
+                </div>
+              </div>
+
+
+
+        </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+
+
+{% block script %}
+
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+{% endblock %}

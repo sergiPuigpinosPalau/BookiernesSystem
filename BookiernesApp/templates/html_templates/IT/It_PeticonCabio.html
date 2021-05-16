@@ -30,41 +30,27 @@
     <div class="card-body login-card-body">
 
 
-      <p class="login-box-msg">Te damos la bienvenida al panel de administracion de Bookiernes</p>
-      <br/>
-      <form action="#" method="post">
+      <p class="login-box-msg">Enviar solictut para poder volver a entrar.</p>
+      <form action="{% url 'BookiernesApp:reset_password' %}" method="post">
         {% csrf_token %}
-        <div class="input-group mb-3">
-          <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
-          <div class="input-group-append">
-            <div class="input-group-text">
-                <samp class="fas fa-user"></samp>
-            </div>
-          </div>
-        </div>
-        <br/>
-        <div class="input-group mb-3">
-          <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-                <samp class="fas fa-lock"></samp>
-            </div>
-          </div>
-        </div>
-        <br/>
-        <div class="row">
-          <div class="col-8">
-            <p class="mb-1">
-                <a href="{% url 'BookiernesApp:reset_password_view' %}">He olvidado la contraseña</a>
-              </p>
-              <p class="mb-0">
-                <a href="#" class="text-center">Registrase</a>
-              </p>
-          </div>
+       <div class="form-group">
+                      <label >Nombre de usuario:</label>
+ <input type="text" name="username" class="form-control" id="username" maxlength="140" required="">
+                    </div>
+                    <div class="form-group">
+                      <label >Nombre de email:</label>
+ <input type="email" name="email" class="form-control" id="email" maxlength="255" required="">
+                    </div>
+        <div class="form-group">
+                      <label >Mesaje corto:</label>
+<textarea id="w3review" name="mesaje" rows="4" cols="43">
+ Hola, he olvidado la contraseña me puedes poner la contraseña por defecto.
+</textarea>
+                    </div>
           <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-          </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+
           <!-- /.col -->
         </div>
       </form>
