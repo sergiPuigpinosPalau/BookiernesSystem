@@ -80,7 +80,7 @@ class PublishBook(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         notification_type = 'presented'
-        content_notification = 'Se ha presentado el libro %(title)s '  % {'title': self.object.title} 
+        content_notification = 'S\'ha presentat el llibre %(title)s '  % {'title': self.object.title} 
         url = '/maineditor__books_presented_in_editorial/book_presented_detail/' + str(self.object.id)
         date_received = datetime.now()
         user_id = self.request.user.id
@@ -119,14 +119,14 @@ class Edit_Book(SuccessMessageMixin, UpdateView):
             context['notifications'] = notification
 
             if book.assigned_to == None:
-                raise Http404("I can't access this page.")
+                raise Http404("No puc accedir a aquesta pàgina.")
             context['book'] = book
             context['book_numbers'] = Book.objects.count()
             book_path = str(book.path).split("/")
             context['path'] = book_path[len(book_path) - 1]
             return context
         except:
-            raise Http404("I can't access this page.")
+            raise Http404("No puc accedir a aquesta pàgina.")
 
     def get_success_message(self, cleaned_data):
         return "El libro %(title)s se re-entrego corectamente. " % {'title': self.object.title}
@@ -134,7 +134,7 @@ class Edit_Book(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         notification_type = 'presented'
-        content_notification = 'El libro %(title)s se ha modifcado.'  % {'title': self.object.title} 
+        content_notification = 'El llibre %(title)s s\'ha modificat.'  % {'title': self.object.title} 
         url = '/maineditor__books_presented_in_editorial/book_presented_detail/' + str(self.object.id)+ '/assign_or_reject/'
         date_received = datetime.now()
         user_id = self.request.user.id
@@ -165,7 +165,7 @@ class Get_Books(TemplateView):
             context['book'] = Book.objects.get(Q(author_id=author) & Q(pk=self.kwargs['pk']))
             return context
         except:
-            raise Http404("I can't access this page.")
+            raise Http404("No puc accedir a aquesta pàgina.")
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -183,7 +183,7 @@ class Chat_Book(TemplateView):
             author = Writer.objects.get(user_id=self.request.user.id).id
             book = Book.objects.get(Q(author_id=author) & Q(pk=self.kwargs['pk']))
             if book.assigned_to == None and book.author != self.request.user.id:
-                raise Http404("I can't access this page.")
+                raise Http404("No puc accedir a aquesta pàgina.")
 
             context['book'] = book
             messages = Message.objects.filter(Q(book_id=book.id) & Q(
@@ -207,15 +207,15 @@ def post_chat(request, pk):
         destination_user_id = Book.objects.get(id=pk).assigned_to.user.id
 
         notification_type = 'message'
-        content_notification = 'Has recibido un mensaje.'
+        content_notification = 'Has rebut un missatge.'
 
         if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
             url = '/editor_message/get_book/' + book_id
         else:
-            raise Http404("I can't access this page.")
+            raise Http404("No puc accedir a aquesta pàgina.")
 
         if destination_user_id == None:
-            raise Http404("I can't access this page.")
+            raise Http404("No puc accedir a aquesta pàgina.")
         try:
             message = Message.objects.create(content=content, date_received=date_received, book_id=book_id,
                                              user_id=user_id, destination_user_id=destination_user_id)
@@ -228,12 +228,12 @@ def post_chat(request, pk):
                                                            destination_user_id=destination_user_id)
                 notification.save()
         except:
-            raise Http404("Sa producido un error a la bbdd.")
+            raise Http404("S'ha produït un error a la bbdd.")
 
         url = '/writer_message/get_book/' + pk
         return redirect(url)
     else:
-        raise Http404("I can't access this page.")
+        raise Http404("No puc accedir a aquesta pàgina.")
 
 
 @login_required
@@ -248,10 +248,10 @@ def writer_notification(request, pk):
             return redirect(url)
 
         except:
-           raise Http404("Sa producido un error a la bbdd.")
+           raise Http404("S'ha produït un error a la bbdd.")
 
     else:
-        raise Http404("I can't access this page.")
+        raise Http404("No puc accedir a aquesta pàgina.")
 
 
 @login_required
@@ -270,12 +270,12 @@ def deleteBook(request, pk):
             
             book.delete()
 
-            message = "El libro %(title)s se borro corectamente. " % {'title': book.title}
+            message = "El llibre %(title)s s'ha borrat correctament'. " % {'title': book.title}
             messages.add_message(request, constants.SUCCESS, message)
 
             return redirect(url )
 
         except:
-           raise Http404("Sa producido un error a la bbdd.")
+           raise Http404("S'ha produït un error a la bbdd.")
     else:
-        raise Http404("I can't access this page.")
+        raise Http404("No puc accedir a aquesta pàgina.")

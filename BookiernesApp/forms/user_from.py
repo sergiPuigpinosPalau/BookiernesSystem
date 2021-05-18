@@ -23,12 +23,12 @@ class FormularioUsuario(forms.ModelForm):
         if user == 0:
             return self.cleaned_data['username']
         else:
-            raise ValidationError('El usuario existe.')
+            raise ValidationError('L\' usuari ja existeix.')
 
     def clean_password(self):
         password= self.cleaned_data['password']
         if len(password) <=7:
-            raise ValidationError('La password tiene que tener 8 caracteres.')
+            raise ValidationError('La contrasenya ha de tenir mínim 8 caràcters.')
         else:
             return password
 
