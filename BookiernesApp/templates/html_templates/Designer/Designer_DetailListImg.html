@@ -26,9 +26,9 @@
       <div class="container-fluid">
 
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Solictudes de Imágenes para asignar</a></li>
-              <li class="breadcrumb-item active"><a href="/graphic_designer/get_petitionview/{{imagepetition.id}}"> Solictut {{imagepetition.title}} </a> </li>
-            <li class="breadcrumb-item active"> Les images de la solictut {{imagepetition.title}} </li>
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Sol·licituds d'Imatges per assignar</a></li>
+              <li class="breadcrumb-item active"><a href="/graphic_designer/get_petitionview/{{imagepetition.id}}"> Sol·licitud {{imagepetition.title}} </a> </li>
+            <li class="breadcrumb-item active"> Les Imatges de la Sol·licitud {{imagepetition.title}} </li>
         </ol>
 
 
@@ -42,7 +42,7 @@
 
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title"> Imágenes</h3>
+                  <h3 class="card-title"> Imatges</h3>
                 </div>
                 <!-- /.card-header -->
               <div class="card-body">
@@ -96,7 +96,7 @@
                 width="250px" height="250px"
               />
               <div class="card-body">
-                <a href="{{obj.get_img_path}}" class="btn btn-primary" download> <i class="fas fa-download"></i>Descaregar</a>
+                <a href="{{obj.get_img_path}}" class="btn btn-primary" download> <i class="fas fa-download"></i>Descarregar</a>
                 <a href="/graphic_designer/post_bockmaquetat/deleteimg/{{obj.id}}" class="btn btn-danger"> <i class="fas fa-trash"></i>Eliminar</a>
               </div>
             </div>
@@ -142,7 +142,7 @@
 
             {% else %}
               <br>  <br>
-            <p class="text-center"> No hay imagenes   en este momento. </p>
+            <p class="text-center"> No hi han imatges en aquest moment. </p>
             <br>  <br>
             {% endif %}
 

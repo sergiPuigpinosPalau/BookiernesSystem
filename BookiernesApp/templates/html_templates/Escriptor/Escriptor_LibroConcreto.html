@@ -25,7 +25,7 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Llibres Presentats</a></li>
               <li class="breadcrumb-item active">  {{book.title}} </li>
         </ol>
           
@@ -58,7 +58,7 @@
                               <strong> Estat:</strong><br><br>
                               <strong> Descripció:</strong><br><br>
                               {% if book.book_status == "rejected"  %}
-                              <strong> Motivo del rechazo:</strong><br>
+                              <strong> Motiu del rebuig:</strong><br>
                               {% endif  %}
                           </div>
                           <!-- /.col -->
@@ -132,7 +132,7 @@
                             </div>
                           </div>
                           <div class="col">  
-                              <strong> Aceptat </strong>
+                              <strong> Acceptat </strong>
                           </div>
                       </div>
 
@@ -198,7 +198,7 @@
                   {% if book.book_status == "rejected"  %}
                   <a href="{% url 'BookiernesApp:book_delete' book.id  %}"> 
                     <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;">
-                        <i class="fas fa-edit"></i> Borrar Libro
+                        <i class="fas fa-edit"></i> Borrar Llibre
                     </button> 
                 </a>  
 

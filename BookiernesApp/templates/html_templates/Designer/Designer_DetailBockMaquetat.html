@@ -25,8 +25,8 @@
 
         <ol class="breadcrumb float-sm-left">
 
-          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Libros para asignar una maquetacio</a></li>
-              <li class="breadcrumb-item active"> Libro maquetado {{book.title}} </li>
+          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Llibres per assigna'ls-hi una maquetació</a></li>
+              <li class="breadcrumb-item active"> Llibre maquetat {{book.title}} </li>
         </ol>
 
 
@@ -39,7 +39,7 @@
 
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Libro maquetado {{book.title}}</h3>
+                <h3 class="card-title"> Llibre maquetat {{book.title}}</h3>
               </div>
    <div class="row invoice-info p-3 mb-3">
                           <div class="col-sm-2 invoice-col">
@@ -48,7 +48,7 @@
                               <strong> Estat:</strong><br><br>
                               <strong> Descripció:</strong><br><br>
                               {% if book.book_status == "rejected"  %}
-                              <strong> Motivo del rechazo:</strong><br>
+                              <strong> Motiu del rebuig:</strong><br>
                               {% endif  %}
                           </div>
                           <!-- /.col -->
@@ -122,7 +122,7 @@
                             </div>
                           </div>
                           <div class="col">
-                              <strong> Aceptat </strong>
+                              <strong> Acceptat </strong>
                           </div>
                       </div>
 
@@ -149,7 +149,7 @@
                           </div>
                         </div>
                         <div class="col">
-                            <strong> Maquetacio </strong>
+                            <strong> Maquetació </strong>
                         </div>
                     </div>
 
@@ -171,14 +171,14 @@
 
                       <a href="/media/{{book.book_to_designed}}" download>
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                          <i class="fas fa-download"></i>  Descarregar el llibro
+                          <i class="fas fa-download"></i>  Descarregar el llibre
                         </button>
                     </a>
 
 <form action="{% url 'BookiernesApp:uploadbook_post' book.id %}" method="POST"  enctype="multipart/form-data">
      {% csrf_token %}
         <label class="btn btn-primary  float-right  " style="margin-right: 5px;">
-           <i class="fas fa-upload"></i>  Subir el llibre  maquetat
+           <i class="fas fa-upload"></i>  Pujar el llibre  maquetat
           <input type="file" style="display: none;" name="book_designed" onchange="form.submit()"  accept=".md" required>
         </label>
 </form>
@@ -186,7 +186,7 @@
                       {% if not book.book_designed %}
                            <a href="/media/book_designed/{{book.book_designed}}" download>
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                          <i class="fas fa-download"></i>  Descarregar el llibre  que sa de maquetat
+                          <i class="fas fa-download"></i>  Descarregar el llibre que s'ha de maquetar
                         </button>
                     </a>
                           {% endif  %}
@@ -199,7 +199,7 @@
 
                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
                                 data-toggle="modal" data-target="#modal-comet-dg">
-                            <i class="fas fa-comment-dots"></i> Comentari del diseñador grafico principal
+                            <i class="fas fa-comment-dots"></i> Comentari del dissenyador gràfic principal
                         </button>
 </div>
               </div>
@@ -213,7 +213,7 @@
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Comentari del diseñador grafico principal</h4>
+                                    <h4 class="modal-title">Comentari del dissenyador gràfic principal</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
 

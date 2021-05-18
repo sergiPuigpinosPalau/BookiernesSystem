@@ -210,7 +210,7 @@
                             <a href="{% url 'BookiernesApp:editor_image_petitions' %}" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
-                                    Sol·licituds d'imatge
+                                    Sol·licituds d'Imatge
                                 </p>
                             </a>
                         </li>
@@ -243,7 +243,7 @@
                             <a href="{% url 'BookiernesApp:create_user' %}" class="nav-link">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
-                                    Añadir Trabajador
+                                    Afegir Treballador
                                 </p>
                             </a>
                         </li>
@@ -251,7 +251,7 @@
                             <a href="{% url 'BookiernesApp:user_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Listado de Trabajadores
+                                    Llistat de Treballadors
 
                                          {% if obj_user_count > 0 and obj_user_count != None %}
                                         <span class="badge badge-info right">{{ obj_user_count }}</span>
@@ -267,7 +267,7 @@
                             <a href="{% url 'BookiernesApp:main_bockmaquetat_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Libros para asignar una maquetacio
+                                    Llibre per assignar-hi una maquetació
                                      {% if assignment_img_count > 0 and assignment_img_count != None %}
                                         <span class="badge badge-info right">{{ assignment_img_count }}</span>
                                     {% endif %}
@@ -278,7 +278,7 @@
                             <a href="{% url 'BookiernesApp:main_petitionview_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-camera-retro"></i>
                                 <p>
-                                    Solictudes de Imágenes para asignar
+                                    Sol·lictuds d'imatges pendents de ser assignades
 
                                          {% if assignment_BockMaquetat_count > 0 and assignment_BockMaquetat_count != None %}
                                         <span class="badge badge-info right">{{ assignment_BockMaquetat_count }}</span>
@@ -294,7 +294,7 @@
                             <a href="{% url 'BookiernesApp:bockmaquetat_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Libros para maquetar
+                                    Llibres per maquetar
                                      {% if assignment_img_count > 0 and assignment_img_count != None %}
                                         <span class="badge badge-info right">{{ assignment_img_count }}</span>
                                     {% endif %}
@@ -305,7 +305,7 @@
                             <a href="{% url 'BookiernesApp:petitionview_list' %}" class="nav-link">
                                 <i class="nav-icon fas fa-camera-retro"></i>
                                 <p>
-                                    Solictudes de Imágenes
+                                    Sol·licituds d'Imatges
 
                                          {% if assignment_BockMaquetat_count > 0 and assignment_BockMaquetat_count != None %}
                                         <span class="badge badge-info right">{{ assignment_BockMaquetat_count }}</span>

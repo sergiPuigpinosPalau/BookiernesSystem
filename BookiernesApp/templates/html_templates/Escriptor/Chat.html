@@ -27,7 +27,7 @@
         <ol class="breadcrumb float-sm-left">
              <!-- <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:writer_published_books' %}">Libros Presentados</a></li> -->
               <li class="breadcrumb-item active"> <a href="{% url 'BookiernesApp:books' book.id %}"> {{book.title}}</a> </li>
-              <li class="breadcrumb-item active">  Mensajes </li>
+              <li class="breadcrumb-item active">  Missatges  </li>
         </ol>
           
        
@@ -41,7 +41,7 @@
         
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Mensajes </h3>
+                  <h3 class="card-title"> Missatges </h3>
                 </div>
                 
 
@@ -109,9 +109,9 @@
                   <form action="{% url 'BookiernesApp:send_message' book.id %}" method="post">
                     {% csrf_token %}
                     <div class="input-group">
-                      <input type="text" name="content" placeholder="Escribir un mensaje" class="form-control">
+                      <input type="text" name="content" placeholder="Escriure un missatge" class="form-control">
                       <span class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Eviar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                       </span>
                     </div>
                   </form>

@@ -25,9 +25,9 @@
       <div class="container-fluid">
           
         <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Libros para asignar una maquetacio</a></li>
-              <li class="breadcrumb-item active"><a href="{% url 'BookiernesApp:bockmaquetat_view' book.id %}"> Libro maquetado {{book.title}}</a>  </li>
-            <li class="breadcrumb-item active">  Mensajes </li>
+              <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:bockmaquetat_list' %}">Llibres per assigna'ls-hi una maquetació</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'BookiernesApp:bockmaquetat_view' book.id %}"> Llibre maquetat {{book.title}}</a>  </li>
+            <li class="breadcrumb-item active">  Missatges </li>
         </ol>
           
        
@@ -41,7 +41,7 @@
         
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Mensajes </h3>
+                  <h3 class="card-title">Missatges </h3>
                 </div>
                 
 
@@ -109,7 +109,7 @@
                   <form action="{% url 'BookiernesApp:send_message_graphic_designer' book.id %}" method="post">
                     {% csrf_token %}
                     <div class="input-group">
-                      <input type="text" name="content" placeholder="Escribir un mensaje" class="form-control">
+                      <input type="text" name="content" placeholder="Escriure un missatge" class="form-control">
                       <span class="input-group-append">
                         <button type="submit" class="btn btn-primary">Eviar</button>
                       </span>

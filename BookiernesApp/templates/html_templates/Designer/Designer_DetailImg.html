@@ -28,8 +28,8 @@
 
         <ol class="breadcrumb float-sm-left">
 
-          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Solictudes de Imágenes para asignar</a></li>
-              <li class="breadcrumb-item active"> Solictut {{imagepetition.title}} </li>
+          <li class="breadcrumb-item"><a href="{% url 'BookiernesApp:petitionview_list' %}">Sol·licituds d'Imatges per assignar</a></li>
+              <li class="breadcrumb-item active"> Sol·licitud {{imagepetition.title}} </li>
         </ol>
 
 
@@ -42,7 +42,7 @@
 
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Solictut {{imagepetition.title}}</h3>
+                <h3 class="card-title">Sol·licitud {{imagepetition.title}}</h3>
               </div>
 
               <div class="row invoice-info p-3 mb-3">
@@ -68,13 +68,13 @@
 
                      <a href="{% url 'BookiernesApp:get_uploadimg_view' imagepetition.id %}">
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                            <i class="fas fa-eye"></i> Imagenes subidas
+                            <i class="fas fa-eye"></i> Imatges pujades
                         </button>
                     </a>
 
                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
                                 data-toggle="modal" data-target="#modal-comet-dg">
-                            <i class="fas fa-comment-dots"></i> Comentari del diseñador grafico principal
+                            <i class="fas fa-comment-dots"></i> Comentari del dissenyador gràfic principal
                         </button>
 </div>
 
@@ -108,7 +108,7 @@
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Comentari del diseñador grafico principal</h4>
+                                    <h4 class="modal-title">Comentari del dissenyador gràfic principal</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
 

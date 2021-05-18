@@ -30,21 +30,21 @@
     <div class="card-body login-card-body">
 
 
-      <p class="login-box-msg">Enviar solictut para poder volver a entrar.</p>
+      <p class="login-box-msg">Enviar sol·licitud per a poder tornar a entrar.</p>
       <form action="{% url 'BookiernesApp:reset_password' %}" method="post">
         {% csrf_token %}
        <div class="form-group">
-                      <label >Nombre de usuario:</label>
+                      <label >Nom d'usuari:</label>
  <input type="text" name="username" class="form-control" id="username" maxlength="140" required="">
                     </div>
                     <div class="form-group">
-                      <label >Nombre de email:</label>
+                      <label >Nom del correu electrònic:</label>
  <input type="email" name="email" class="form-control" id="email" maxlength="255" required="">
                     </div>
         <div class="form-group">
-                      <label >Mesaje corto:</label>
+                      <label >Missatge curt:</label>
 <textarea id="w3review" name="mesaje" rows="4" cols="43">
- Hola, he olvidado la contraseña me puedes poner la contraseña por defecto.
+ Hola, he oblidat la contrasenya em pots ficar la contrasenya per defecte.
 </textarea>
                     </div>
           <!-- /.col -->
