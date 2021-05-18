@@ -86,28 +86,28 @@
 
                   <div class="card-body">
                     <div class="form-group">
-                      <label >Ingrese el nombre de usuario</label>
+                      <label >Ingressi el nom d'usuari</label>
                         <input type="text" name="username" class="form-control" id="username"  required="">
                     </div>
                       <div class="form-group">
-                      <label >Ingrese el nombre</label>
+                      <label >Ingressi el nom</label>
                         <input type="text" name="first_name" class="form-control" id="first_name" required="">
                     </div>
                       <div class="form-group">
-                      <label >Ingrese el apelido</label>
+                      <label >Ingressi el cognom/s</label>
                         <input type="text" name="last_name" class="form-control" id="last_name"  required="">
                     </div>
                       <div class="form-group">
-                      <label >Ingrese el correo electrónico</label>
+                      <label >Ingressi el correu electrònic</label>
                         <input type="text" name="email" class="form-control" id="email" required="">
                     </div>
                     <div class="form-group">
-                      <label >Ingrese  el password</label>
+                      <label >Ingressi la contrasenya</label>
                         <input type="password" name="password" class="form-control" id="password" required="">
                     </div>
 
                       <div class="form-group">
-                      <label >Elegir el rol </label>
+                      <label >Seleccion el rol </label>
                         <select name="user_type" id="user_type" class="custom-select">
                               <option value="writer">Escritor</option>
                               <option value="editor">Editor</option>
@@ -148,7 +148,7 @@
 $('#user_type').change(function(){
   $( "#editor-input" ).remove("");
   if(($(this).val() == 'editor')  || ($(this).val() == 'main_editor') ){
-    $("#editor-input-div").append(" <div class='form-group' id='editor-input'><label >Elegir el tema</label><select name='theme' id='theme' class='custom-select'><option value='0'>Ninguno</option>{% for t in Theme %}<option value='{{t.id}}'>{{t.name}}</option>{% endfor %}</select></div>");
+    $("#editor-input-div").append(" <div class='form-group' id='editor-input'><label >Seleccioni el tema</label><select name='theme' id='theme' class='custom-select'><option value='0'>Ninguno</option>{% for t in Theme %}<option value='{{t.id}}'>{{t.name}}</option>{% endfor %}</select></div>");
   }else{
   	$( "#editor-input" ).remove("");
   }
