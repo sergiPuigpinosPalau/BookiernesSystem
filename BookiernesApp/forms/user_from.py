@@ -13,7 +13,7 @@ from BookiernesApp.models import User , Writer , Editor ,GraphicDesigner
 
 
 class FormularioUsuario(forms.ModelForm):
-    theme = forms.IntegerField()
+    #theme = forms.IntegerField()
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'user_type', 'password']
@@ -41,13 +41,14 @@ class FormularioUsuario(forms.ModelForm):
             user.save()
 
         if self.cleaned_data['user_type'] == "editor" or self.cleaned_data['user_type'] == "main_editor":
-            if self.cleaned_data['theme'] == "0":
-                editor=Editor(user_id=user.id)
-                editor.save()
-            else:
-                editor=Editor(user_id=user.id, assigned_theme_id=self.cleaned_data['theme'])
-                editor.save()
-
+            #if self.cleaned_data['theme'] == "0":
+            #    editor=Editor(user_id=user.id)
+            #    editor.save()
+            #else:
+            #    editor=Editor(user_id=user.id, assigned_theme_id=self.cleaned_data['theme'])
+            #    editor.save()
+            editor = Editor(user_id=user.id)
+            editor.save()
         elif self.cleaned_data['user_type'] == "main_graphic_designer" or self.cleaned_data['user_type'] == "graphic_designer":
             graphicDesigner=GraphicDesigner(user_id=user.id)
             graphicDesigner.save()
