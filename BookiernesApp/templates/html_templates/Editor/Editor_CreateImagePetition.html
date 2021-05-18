@@ -54,7 +54,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripció</label>
-                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                                <textarea  id="description" rows="3" name="description"></textarea>
+
                             </div>
                         </div>
                         <div class="card-footer">
@@ -68,7 +69,20 @@
     </div>
 {% endblock %}
 
+{% block script %}
+    <script>
 
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    </script>
+{% endblock %}
 
 
   

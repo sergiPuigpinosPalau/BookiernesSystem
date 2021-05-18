@@ -189,7 +189,7 @@
               </div>
 
 
-                <from action="{% url 'BookiernesApp:main_to_assign_graphicdesigner' %}" method="POST"  enctype="multipart/form-data" >
+                <form action="{% url 'BookiernesApp:main_to_assign_graphicdesigner' %}" method="post">
                         {% csrf_token %}
                     <input id="type" name="type" type="hidden" value="{{type}}">
                     <input id="pk" name="pk" type="hidden" value="{{book.id}}">
@@ -223,7 +223,7 @@
                        <div class="form-check">
 
 
-                          <input class="form-check-input" type="radio" name="graphic_designer" value="{{u.id}}">
+                          <input class="form-check-input" type="radio" name="graphic_designer" value="{{u.id}} " id="myRadio" required>
                           <label class="form-check-label">{{u.first_name}} {{u.last_name}} </label>
 
                         </div>
@@ -236,11 +236,11 @@
               </div>
 
                     <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Asignar</button>
+                    <button type="submit" class="btn btn-primary" value="Submit" onchange="form.submit()">Asignar</button>
                   </div>
 
 
-                </from>
+                </form>
 
               </div>
               <!-- /.card-body -->
@@ -251,5 +251,29 @@
 </section>
  </div>
    {% endblock %}
+
+
+
+{% block script %}
+<script>
+function myFunction() {
+  var x = document.getElementById("myRadio").required;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+    <script>
+
+        ClassicEditor
+            .create(document.querySelector('#disenador_coment'), {
+                toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    </script>
+{% endblock %}
 
 

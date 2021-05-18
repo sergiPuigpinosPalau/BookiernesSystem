@@ -92,6 +92,21 @@
   </div>
 {% endblock %}
 
+{% block script %}
+<script>
+
+    ClassicEditor
+      .create( document.querySelector( '#editor' ) , {
+          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
+        } )
+      .catch( error => {
+          console.error( error );
+      } );
+
+</script>
+
+{% endblock %}
+
 
 
 

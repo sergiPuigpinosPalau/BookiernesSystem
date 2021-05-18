@@ -232,3 +232,29 @@
     </div>
 {% endblock %}
 
+
+#aqui
+
+{% block script %}
+    <script>
+
+      ClassicEditor
+        .create(document.querySelector('#editor_asigna'), {
+            toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#editor_recasar'), {
+            toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+
+    </script>
+{% endblock %}
+

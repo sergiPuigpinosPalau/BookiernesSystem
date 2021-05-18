@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     {% block head %}
@@ -49,7 +50,7 @@
                             {% endif %}
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="../../../static/BookiernesApp/img/user1-128x128.jpg" alt="User Avatar"
+                            <img src="{{ user.get_img }}" alt="User Avatar"
                                  class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
@@ -151,7 +152,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="../../../static/BookiernesApp/img/logo_Bookiernes.png" alt="Bookiernes Logo"
+
+            <img src="{% static 'BookiernesApp/img/logo_Bookiernes.png' %}" alt="Bookiernes Logo"
                  class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Bookiernes</span>
         </a>
@@ -341,35 +343,6 @@
 
 
 
-<script>
-
-    ClassicEditor
-        .create(document.querySelector('#editor_asigna'), {
-            toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
-    ClassicEditor
-        .create(document.querySelector('#editor_recasar'), {
-            toolbar: {items: ['bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList']}
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
-    ClassicEditor
-      .create( document.querySelector( '#editor' ) , {
-          toolbar: { items: [ 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList' ] }
-        } )
-      .catch( error => {
-          console.error( error );
-      } );
-
-</script>
-
-{% load static %}
 
 <!-- jQuery -->
 <script src="{% static 'BookiernesApp/js/jquery.min.js' %}"></script>

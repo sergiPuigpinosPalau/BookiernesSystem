@@ -39,7 +39,7 @@ class User(AbstractUser):
         if self.path_profile_photo == None:
             return "../../../static/BookiernesApp/img/user-150x150.png"
         else:
-            return "../../../../media/profile_photo/" + str(self.path_profile_photo)
+            return  MEDIA_URL  +"/profile_photo/"+ str(self.path_profile_photo)
 
 
 
@@ -120,7 +120,6 @@ class ImagePetition(models.Model):
                                          related_name='graphic_designer_petition')
     title = models.CharField(null=True, max_length=255, blank=True)
     description = models.TextField(null=True, blank=True)
-    #images_attached = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True,  related_name='attached_images')
     date_received = models.DateField(null=True, blank=True)
     main_graphic_designer_comment=models.TextField(null=True, blank=True)
     date_received = models.DateField()
@@ -153,8 +152,8 @@ class Book(models.Model):
     designer_assigned_to = models.ForeignKey(GraphicDesigner, null=True, on_delete=models.PROTECT,
                                              related_name='designer_books_assigned',
                                              blank=True)
-    book_to_design = models.FileField(upload_to='book_to_design', null=True, blank=True)
-    book_designed = models.FileField(upload_to='book_designed', null=True, blank=True)
+    book_to_design = models.FileField(upload_to='book_to_design', null=True )
+    book_designed = models.FileField(upload_to='book_designed', null=True)
     cover_image = models.ForeignKey(Image, null=True, on_delete=models.PROTECT, blank=True)
     language = models.CharField(null=True, max_length=255, blank=True)
     number_of_pages = models.IntegerField(null=True, blank=True)

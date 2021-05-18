@@ -60,76 +60,73 @@ class AssignmentDetaliBockMaquetat(DetailView):
         return context
 
 
-def asignarGraphicDesigner(request, pk, type):
-    if pk != None and type !=None and type>=1 and type==0 :
-        if request.method == 'POST':
+def asignarGraphicDesigner(request):
 
-            notification_type = 'to_assign'
-            content_notification=""
-            url=""
-            date_received = datetime.now()
-            user_id = request.user.id
-            destination_user = ""
+    if request.method == 'POST':
 
+        notification_type = 'to_assign'
+        content_notification=""
+        url=""
+        date_received = datetime.now()
+        user_id = request.user.id
+        destination_user = GraphicDesigner.objects.get(user_id=int(request.POST["graphic_designer"])).user_id
+        url_redirect=""
 
-            graphic_designer = request.POST["graphic_designer"]
-            comment = request.POST["comment"]
-            pk = request.POST["pk"]
-            type = request.POST["type"]
+        graphic_designer = GraphicDesigner.objects.get(user_id=int(request.POST["graphic_designer"]))
+        comment = request.POST["comment"]
+        pk = request.POST["pk"]
+        type = request.POST["type"]
 
-            if type == 1 :
-                url_redirect='BookiernesApp:main_bockmaquetat_list'
-                book = Book.objects.get(id=pk)
+        if type == "1" :
+            url_redirect='BookiernesApp:main_bockmaquetat_list'
+            book = Book.objects.get(id=pk)
 
-                book.designer_assigned_to=graphic_designer
-                book.main_graphic_designer_comment=comment
-                book.save()
+            book.designer_assigned_to_id=graphic_designer
+            book.main_graphic_designer_comment=comment
+            book.save()
 
-                destination_user = Book.objects.get(id=pk).designer_assigned_to.user
-
-                notification_type = 'to_assign'
-                content_notification = 'Te he asignado el libro  %(title)s .' % {'title': book.title }
-                url = '/graphic_designer/bockmaquetat/'
-
-                message = "El libro maquetado %(title)s se asigno a %( username)s " % {'title': book.title, 'username': destination_user.first_name, }
-                messages.add_message(request, constants.SUCCESS, message)
-
-            elif type == 0 :
-                url_redirect = 'BookiernesApp:main_bockmaquetat_list'
-                img = ImagePetition.objects.get(id=pk)
-
-                img.designer_assigned_to = graphic_designer
-                img.main_graphic_designer_comment = comment
-                img.save()
-
-                destination_user = ImagePetition.objects.get(id=pk).editor.user
-
-                notification_type = 'to_assign'
-                content_notification = 'Te he asignado el la solicitut de imagenes %(title)s .' % {'title': img.title}
-                url = '/graphic_designer/petitionview/'
-
-                message = "La solicitut de imagenes %(title)s se asigno a %( username)s " % {'title': img.title,
-                                                                                       'username': destination_user.first_name, }
-                messages.add_message(request, constants.SUCCESS, message)
+            destination_user = Book.objects.get(id=pk).designer_assigned_to.user
 
 
-            if not Notification.objects.all().filter(notification_type=notification_type,
+            content_notification = 'Te he asignado el libro  %(title)s .' % {'title': book.title }
+            url = '/graphic_designer/bockmaquetat/'
+
+            message = "El libro maquetado %(title)s se asigno corectamente." % {'title': book.title }
+            messages.add_message(request, constants.SUCCESS, message)
+
+        elif type == "0" :
+            url_redirect = 'BookiernesApp:main_petitionview_list'
+            img = ImagePetition.objects.get(id=pk)
+
+            img.graphic_designer = graphic_designer
+            img.main_graphic_designer_comment = comment
+            img.save()
+
+            destination_user = ImagePetition.objects.get(id=pk).editor.user
+
+            content_notification = 'Te he asignado el la solicitut de imagenes %(title)s .' % {'title': img.title}
+            url = '/graphic_designer/petitionview/'
+
+            message = "La solicitut de imagenes %(title)s se asigno . " % {'title': img.title }
+            messages.add_message(request, constants.SUCCESS, message)
+
+
+        if not Notification.objects.all().filter(notification_type=notification_type,
                                                      destination_user_id__exact=destination_user.id,
                                                      user_id__exact=user_id, url__exact=url):
-                notification = Notification.objects.create(notification_type=notification_type,
+            notification = Notification.objects.create(notification_type=notification_type,
                                                            content=content_notification, url=url,
                                                            date_received=date_received, user_id=user_id,
                                                            destination_user_id=destination_user.id)
-                notification.save()
+            notification.save()
 
 
-            return redirect(url_redirect)
+        return redirect(url_redirect)
 
 
-        else:
-            raise Http404("I can't access this page.")
     else:
         raise Http404("I can't access this page.")
+
 
 
 # disenador
@@ -167,7 +164,7 @@ def uploadimg(request):
 
         notification_type = 'presented_img'
         content_notification = 'He subido las fotos de la solicitut de imagenes   %(title)s .' % {'title': obj_imagePetition}
-        url = '#'  # TODO poner la url del destino.
+        url = '/editor_image_petitions/image_petition_detail/'+id
 
         fs = FileSystemStorage()
         for f in files:
@@ -227,9 +224,9 @@ def uploadbook(request, pk):
 
             notification_type = 'presented_book_designed'
             content_notification = 'He realizado la maquetacion del libro  %(title)s .'% {'title': book.title}
-            url='#' #TODO poner la url del destino.
+            url='/editor_books_to_design/book_design_detail/' +pk
 
-            if book.book_designed == None:
+            if book.book_designed == None or book.book_designed=='':
                 fs = FileSystemStorage()
                 book.book_designed = book_designed.name
                 path = 'book_designed/' + str(book_designed.name)
@@ -368,7 +365,7 @@ def delete_img(request, pk):
             img.delete()
             message = "La imagen se borro. "
             messages.add_message(request, constants.SUCCESS, message)
-            url='/graphic_designer/uploadimg/viewimg/'+pk
+            url='/graphic_designer/petitionview/'
             return redirect(url)
 
         except:
