@@ -60,7 +60,7 @@ class ITCrateUser(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('BookiernesApp:user_list')
 
     def get_success_message(self, cleaned_data):
-        return "El usuario %(name)s se creo corectamente. " % {'name': self.object.username}
+        return "L'usuari %(name)s s'ha creat correctament. " % {'name': self.object.username}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,7 +81,7 @@ class ItPassword(TemplateView):
             context['obj_user'] = User.objects.get(id=self.kwargs['pk'])
             return context
         except:
-            raise Http404("I can't access this page.")
+            raise Http404("No puc accedir a aquesta pàgina.")
 
 
 @login_required
@@ -97,9 +97,9 @@ def postEditPass(request):
         obj_user = User.objects.get(id=id)
 
         if pass1 != pass2 or (len(pass1)<8 and len(pass2)<8):
-            message = "La contraseña debe tenr 8 caracteres y los dos capos debe ser iguales. "
+            message = "La contrasenya ha de tenir 8 caràcters i els dos camps han de ser iguals. "
         else:
-            message = "El usuario %(nom)s se le cabio la contraseña. " % {'nom': obj_user.username}
+            message = "A l'usuari %(nom)s se li ha canviat la contrasenya. " % {'nom': obj_user.username}
             ok = 1
 
 
@@ -115,7 +115,7 @@ def postEditPass(request):
             return redirect(url)
 
     else:
-        raise Http404("I can't access this page.")
+        raise Http404("No puc accedir a aqueta pàgina.")
 
 
 @method_decorator([login_required, it_required], name='dispatch')
@@ -137,10 +137,10 @@ def active_user(request, pk):
 
         if obj_user.is_active == 1:
             obj_user.is_active=0
-            message = "El usuario %(nom)s se desactivado corectamente. " % {'nom': obj_user.username}
+            message = "L'usuari %(nom)s s'ha desactivat correctament. " % {'nom': obj_user.username}
         else:
             obj_user.is_active = 1
-            message = "El usuario %(nom)s se activo corectamente. " % {'nom': obj_user.username}
+            message = "L'usuari %(nom)s s'ha activat correctament. " % {'nom': obj_user.username}
 
         obj_user.save()
 
@@ -150,7 +150,7 @@ def active_user(request, pk):
         return redirect(url)
 
     except:
-        raise Http404("I can't access this page.")
+        raise Http404("No puc accedir a aquesta pàgina")
 
 
 

@@ -88,10 +88,10 @@ def asignarGraphicDesigner(request):
             destination_user = Book.objects.get(id=pk).designer_assigned_to.user
 
 
-            content_notification = 'Te he asignado el libro  %(title)s .' % {'title': book.title }
+            content_notification = 'T\'ha assignat el llibre %(title)s .' % {'title': book.title }
             url = '/graphic_designer/bockmaquetat/'
 
-            message = "El libro maquetado %(title)s se asigno corectamente." % {'title': book.title }
+            message = "El llibre maquetat %(title)s s'ha assignat correctament'." % {'title': book.title }
             messages.add_message(request, constants.SUCCESS, message)
 
         elif type == "0" :

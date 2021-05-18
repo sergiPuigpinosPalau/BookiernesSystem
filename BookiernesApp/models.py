@@ -11,7 +11,7 @@ from BookiernesSystem.settings import STATIC_URL, MEDIA_URL
 
 
 class User(AbstractUser):
-    USER_TYPE_CHOICES = [('writer', 'Escritor'), ('editor', 'Editor'), ('main_editor', 'Editor principal'),
+    USER_TYPE_CHOICES = [('writer', 'Escriptor'), ('editor', 'Editor'), ('main_editor', 'Editor principal'),
                          ('main_graphic_designer', 'Main Graphic Designer'), ('graphic_designer', 'Graphic Designer'),
                          ('it', 'IT'), ('subscribed_reader', 'Lector Subscrit')]
     user_type = models.CharField(
@@ -31,9 +31,9 @@ class User(AbstractUser):
 
     def get_activated(self):
         if self.is_active == True:
-            return "Activado"
+            return "Activat"
         else:
-            return "Desactivado"
+            return "Desactivat"
 
     def get_img(self):
         if self.path_profile_photo == None:
@@ -136,8 +136,8 @@ class Image(models.Model):
 # TODO comprobar blanks
 class Book(models.Model):
     BOOK_STATUSES = [('presented', 'Presentat'), ('revised', 'Revisat'), ('modifying', 'Modificant'),
-                     ('accepted', 'Aceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat'),
-                     ('designing', 'Maquetacio'),
+                     ('accepted', 'Acceptat'), ('rejected', 'Rebutjat'), ('published', 'Publicat'),
+                     ('designing', 'Maquetació'),
                      ('new_version', 'New Version')]
     title = models.CharField(null=True, max_length=255, blank=True)
     author = models.ForeignKey(Writer, null=True, on_delete=models.PROTECT, blank=True)
@@ -174,8 +174,8 @@ class Notification(models.Model):
     destination_user = models.ForeignKey(User, null=True, on_delete=models.PROTECT,
                                          related_name='destination_user_notifications')
     date_received = models.DateField()
-    NOTIFICATION_CHOICES = [('modification', 'Modificacio'), ('message', 'Missatge'), ('presented', 'Presentat'),
-                            ('assigned', 'Assignat'),('presented_img', 'Imagen '),('presented_book_designed', 'Maquetat')]
+    NOTIFICATION_CHOICES = [('modification', 'Modificació'), ('message', 'Missatge'), ('presented', 'Presentat'),
+                            ('assigned', 'Assignat'),('presented_img', 'Imatge'),('presented_book_designed', 'Maquetat')]
     content = models.CharField(max_length=255)
     notification_type = models.CharField(max_length=255, choices=NOTIFICATION_CHOICES)
     url = models.CharField(max_length=255)
