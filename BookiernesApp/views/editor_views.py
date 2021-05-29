@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, FormView, CreateView
 from django.views.generic import TemplateView
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
@@ -50,6 +50,20 @@ class EditorBookDetail(DetailView):
         data_json = json.loads(response.content)
         context['test'] = data_json['translatedText']
         return context
+
+
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorTranslatedBookCreate(SuccessMessageMixin, TemplateView):
+    template_name = 'html_templates/Editor/Editor_TranslateBook.html'
+
+
+def autocomplete_TranslateBook(request):
+    if "term" in request.GET:
+        bookstqr = Book.objects.filter(title__istartswith=request.GET.get('term'))
+        book_list = list()
+        for book in bookstqr:
+            book_list.append(book.title)
+        return JsonResponse(book_list, safe=False)
 
 
 @method_decorator([login_required, editor_required], name='dispatch')

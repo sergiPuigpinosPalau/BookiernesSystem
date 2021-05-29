@@ -70,6 +70,8 @@ urlpatterns = [
     path('editor_image_petitions', EditorImagePetitions.as_view(), name='editor_image_petitions'),
     path('editor_image_petitions/image_petition_detail/<int:pk>/', EditorImagePetitionDetail.as_view(), name='image_petition_detail'),
     path('editor_image_petitions/new_petiton', EditorImagePetitionsCreate.as_view(), name='editor_image_petition_create'),
+    path('editor_translate_book', EditorTranslatedBookCreate.as_view(), name='editor_translate_book'),
+    path('editor_translate_book/autocomplete', autocomplete_TranslateBook, name='autocomplete_book_translate'),
 
     # main editor urls
     # TODO create date_presented attribute to sort books

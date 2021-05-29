@@ -6,6 +6,16 @@ from django.core.exceptions import ValidationError
 from BookiernesApp.models import *
 
 
+# class TranslatedBookForm(forms.ModelForm):
+#     class Meta:
+#         model = Book
+#         fields = ('book_title',)
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['book_title'].queryset = Book.objects.all()
+
+
 class SendImagePetition(forms.ModelForm):
     class Meta:
         model = ImagePetition
