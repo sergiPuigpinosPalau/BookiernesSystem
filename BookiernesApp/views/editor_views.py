@@ -1,3 +1,5 @@
+import json
+import requests
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
@@ -17,6 +19,7 @@ from BookiernesApp.models import *
 from BookiernesApp.decorators import *
 from BookiernesApp.models import Book, User, Writer, Notification, Message
 import datetime
+from translate import Translator
 
 
 @method_decorator([login_required, editor_required], name='dispatch')
@@ -31,14 +34,22 @@ class EditorBookDetail(DetailView):
     model = Book
     template_name = 'html_templates/Editor/Editor_DetailBookToRevise.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     book = self.object
-    #     if book.new_book_version:
-    #         context['latest_book'] = book.new_book_version
-    #     else:
-    #         context['latest_book'] = book
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        import os
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, '../../README.md')
+        f = open(file_path)
+        text = f.read()
+        url = "http://192.168.56.1:5000/translate"
+        payload = {"q": text, "source": "en", "target": "es"}
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        data_json = json.loads(response.content)
+        context['test'] = data_json['translatedText']
+        return context
 
 
 @method_decorator([login_required, editor_required], name='dispatch')
