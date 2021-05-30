@@ -26,7 +26,7 @@
 
     <script>
         $(function () {
-            $("#Book_titles").autocomplete({
+            $("#id_book_title").autocomplete({
                 source: '{% url "BookiernesApp:autocomplete_book_translate" %}'
             });
         });
@@ -63,20 +63,37 @@
                     <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div style="margin: 20px">
-                            <div class="form-group">
-                                <div class="ui-widget">
-                                    <label for="Book_titles">Choose Book: </label>
-                                    <input id="Book_titles">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Descripció</label>
-                                <textarea id="description" rows="3" name="description"></textarea>
+{#                            <div class="form-group">#}
+{#                                <div class="ui-widget">#}
+{#                                    <label for="Book_titles">Choose Book: </label>#}
+{#                                    <input id="Book_titles">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>#}
+{#                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">#}
+{#                                    <option selected>Elegeix idioma del llibre...</option>#}
+{#                                    {% for langauge_key, language in language_options.items %}#}
+{#                                        <option value={{ langauge_key }}>{{ language_options|get_item:langauge_key }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>#}
+{#                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">#}
+{#                                    <option selected>Elegeix idioma al qual es vol traduir el llibre...</option>#}
+{#                                    {% for langauge_key, language in language_options.items %}#}
+{#                                        <option value={{ langauge_key }}>{{ language_options|get_item:langauge_key }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </div>#}
 
-                            </div>
+
+                            {{ form.as_table }}
+
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary">Traduir</button>
                         </div>
                     </form>
                 </div>

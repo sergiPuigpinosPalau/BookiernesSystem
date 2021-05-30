@@ -1,6 +1,7 @@
 import json
 import requests
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.files.base import ContentFile
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -13,13 +14,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from datetime import datetime
 
 from BookiernesApp.decorators import editor_required, book_in_revision
-from BookiernesApp.forms import SendBookToDesign, SendImagePetition
+from BookiernesApp.forms import SendBookToDesign, SendImagePetition, TranslatedBookForm
 
 from BookiernesApp.models import *
 from BookiernesApp.decorators import *
 from BookiernesApp.models import Book, User, Writer, Notification, Message
 import datetime
-from translate import Translator
+
+from BookiernesSystem.settings import MEDIA_ROOT
 
 
 @method_decorator([login_required, editor_required], name='dispatch')
@@ -34,27 +36,51 @@ class EditorBookDetail(DetailView):
     model = Book
     template_name = 'html_templates/Editor/Editor_DetailBookToRevise.html'
 
+
+@method_decorator([login_required, editor_required], name='dispatch')
+class EditorTranslatedBookCreate(SuccessMessageMixin, FormView):
+    template_name = 'html_templates/Editor/Editor_TranslateBook.html'
+    form_class = TranslatedBookForm
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # import os
+        # module_dir = os.path.dirname(__file__)  # get current directory
+        # file_path = os.path.join(module_dir, '../../README.md')
+        # f = open(file_path)
+        # text = f.read()
+        # url = "http://192.168.56.1:5000/translate"
+        # payload = {"q": text, "source": "en", "target": "es"}
+        # headers = {
+        #     'Content-Type': 'application/x-www-form-urlencoded'
+        # }
+        # response = requests.request("POST", url, headers=headers, data=payload)
+        # data_json = json.loads(response.content)
+        # context['test'] = data_json['translatedText']
+        #context['language_options'] = {'en': 'English', 'es': 'Spanish'}
+        return context
+
+    def form_valid(self, form):
+        translated_book = Book.objects.get(title=form.cleaned_data['book_title'])
+        translated_book.id = None
+        translated_book.title = form.cleaned_data['book_title'] + dict(form.LANGUAGE_CHOICES)[form.cleaned_data['target_language']]
+        #Translate
         import os
-        module_dir = os.path.dirname(__file__)  # get current directory
-        file_path = os.path.join(module_dir, '../../README.md')
+        #module_dir = os.path.abspath(os.path.dirname(__name__))  # get current directory
+        file_path = os.path.join(MEDIA_ROOT, translated_book.path.__str__())
         f = open(file_path)
         text = f.read()
         url = "http://192.168.56.1:5000/translate"
-        payload = {"q": text, "source": "en", "target": "es"}
+        payload = {"q": text, "source": form.cleaned_data['source_language'], "target": form.cleaned_data['target_language']}
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         data_json = json.loads(response.content)
-        context['test'] = data_json['translatedText']
-        return context
+        self.license_file.save(translated_book.title, ContentFile(data_json['translatedText']))
+        #translated_book.save()
+        return super(EditorTranslatedBookCreate, self).form_valid(form)
 
-
-@method_decorator([login_required, editor_required], name='dispatch')
-class EditorTranslatedBookCreate(SuccessMessageMixin, TemplateView):
-    template_name = 'html_templates/Editor/Editor_TranslateBook.html'
 
 
 def autocomplete_TranslateBook(request):
@@ -182,10 +208,10 @@ def editor_post_chat(request, pk):
         notification_type = 'message'
         content_notification = 'Has recibido un mensaje.'
 
-        #if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
+        # if User.objects.get(id=destination_user_id).user_type == "editor" or User.objects.get(id=destination_user_id).user_type == "main_editor":
         url = '/writer_message/get_book/' + book_id
-        #else:
-            #raise Http404("I can't access this page.")
+        # else:
+        # raise Http404("I can't access this page.")
         try:
             message = Message.objects.create(content=content, date_received=date_received, book_id=book_id,
                                              user_id=user_id, destination_user_id=destination_user_id)

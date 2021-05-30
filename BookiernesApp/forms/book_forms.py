@@ -6,14 +6,20 @@ from django.core.exceptions import ValidationError
 from BookiernesApp.models import *
 
 
-# class TranslatedBookForm(forms.ModelForm):
-#     class Meta:
-#         model = Book
-#         fields = ('book_title',)
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['book_title'].queryset = Book.objects.all()
+
+
+class TranslatedBookForm(forms.Form):
+        LANGUAGE_CHOICES = [
+            ('en', 'English'),
+            ('es', 'Spanish'),
+        ]
+        book_title = forms.CharField(label='Llibre a traduir')
+        source_language = forms.CharField(label='Elegeix idioma del llibre \n',
+                                         widget=forms.Select(choices=LANGUAGE_CHOICES))
+        target_language = forms.CharField(label='Elegeix idioma al qual es vol traduir el llibre \n',
+                                          widget=forms.Select(choices=LANGUAGE_CHOICES))
+
+
 
 
 class SendImagePetition(forms.ModelForm):
