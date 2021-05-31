@@ -214,6 +214,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{% url 'BookiernesApp:editor_translate_book' %}" class="nav-link">
+                                <i class="nav-icon fas fa-table"></i>
+                                <p>
+                                    Traduir Llibres
+                                </p>
+                            </a>
+                        </li>
                     {% endif %}
                     {% if  user.user_type == 'writer' %}
                         <li class="nav-item">

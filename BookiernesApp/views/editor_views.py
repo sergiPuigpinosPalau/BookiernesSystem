@@ -1,26 +1,22 @@
+import datetime
 import json
-import requests
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.files.base import ContentFile
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView, FormView, CreateView
-from django.views.generic import TemplateView
-from django.http import Http404, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from django.contrib.messages.views import SuccessMessageMixin
 from datetime import datetime
 
-from BookiernesApp.decorators import editor_required, book_in_revision
-from BookiernesApp.forms import SendBookToDesign, SendImagePetition, TranslatedBookForm
+import requests
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.files.base import ContentFile
+from django.http import Http404, JsonResponse
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, DetailView, UpdateView, FormView, CreateView
+from django.views.generic import TemplateView
 
-from BookiernesApp.models import *
 from BookiernesApp.decorators import *
-from BookiernesApp.models import Book, User, Writer, Notification, Message
-import datetime
-
+from BookiernesApp.forms import SendBookToDesign, SendImagePetition, TranslatedBookForm
+from BookiernesApp.models import *
+from BookiernesApp.models import Book, Notification, Message
 from BookiernesSystem.settings import MEDIA_ROOT
 
 
@@ -42,50 +38,57 @@ class EditorTranslatedBookCreate(SuccessMessageMixin, FormView):
     template_name = 'html_templates/Editor/Editor_TranslateBook.html'
     form_class = TranslatedBookForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # import os
-        # module_dir = os.path.dirname(__file__)  # get current directory
-        # file_path = os.path.join(module_dir, '../../README.md')
-        # f = open(file_path)
-        # text = f.read()
-        # url = "http://192.168.56.1:5000/translate"
-        # payload = {"q": text, "source": "en", "target": "es"}
-        # headers = {
-        #     'Content-Type': 'application/x-www-form-urlencoded'
-        # }
-        # response = requests.request("POST", url, headers=headers, data=payload)
-        # data_json = json.loads(response.content)
-        # context['test'] = data_json['translatedText']
-        #context['language_options'] = {'en': 'English', 'es': 'Spanish'}
-        return context
+    def get_form_kwargs(self):
+        kw = super(EditorTranslatedBookCreate, self).get_form_kwargs()
+        kw['request'] = self.request
+        return kw
+
+    def get_success_message(self, cleaned_data):
+        return "Llibre traduit correctament"
+
+    def get_success_url(self, **kwargs):
+        return reverse('BookiernesApp:editor_books_to_design')
 
     def form_valid(self, form):
+        # Translate
+        import os
         translated_book = Book.objects.get(title=form.cleaned_data['book_title'])
         translated_book.id = None
-        translated_book.title = form.cleaned_data['book_title'] + dict(form.LANGUAGE_CHOICES)[form.cleaned_data['target_language']]
-        #Translate
-        import os
-        #module_dir = os.path.abspath(os.path.dirname(__name__))  # get current directory
-        file_path = os.path.join(MEDIA_ROOT, translated_book.path.__str__())
+        translated_book.title = form.cleaned_data['book_title'] + " (" + dict(form.LANGUAGE_CHOICES)[
+            form.cleaned_data['target_language']] + ")"
+        # Choose the correct path depending on whether or not the book has been published
+        if translated_book.book_designed:
+            if translated_book.book_status == "published":
+                translated_book.book_status = "designing"
+            file_path = os.path.join(MEDIA_ROOT, translated_book.book_designed.__str__())
+        else:
+            file_path = os.path.join(MEDIA_ROOT, translated_book.path.__str__())
+        # Open file, read and translate it
         f = open(file_path)
         text = f.read()
         url = "http://192.168.56.1:5000/translate"
-        payload = {"q": text, "source": form.cleaned_data['source_language'], "target": form.cleaned_data['target_language']}
+        payload = {"q": text, "source": form.cleaned_data['source_language'],
+                   "target": form.cleaned_data['target_language']}
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         data_json = json.loads(response.content)
-        self.license_file.save(translated_book.title, ContentFile(data_json['translatedText']))
-        #translated_book.save()
+        # Choose the correct path depending on whether or not the book has been published and save it
+        if translated_book.book_designed:
+            translated_book.book_designed.save(translated_book.title + ".md", ContentFile(data_json['translatedText']))
+        else:
+            translated_book.path.save(translated_book.title + ".md", ContentFile(data_json['translatedText']))
         return super(EditorTranslatedBookCreate, self).form_valid(form)
 
 
-
+@login_required
+@editor_required
 def autocomplete_TranslateBook(request):
     if "term" in request.GET:
-        bookstqr = Book.objects.filter(title__istartswith=request.GET.get('term'))
+        bookstqr = Book.objects.filter(
+            Q(title__istartswith=request.GET.get('term')) & Q(assigned_to__user=request.user) & (
+                        Q(book_status="accepted") | Q(book_status="designing") | Q(book_status="published")))
         book_list = list()
         for book in bookstqr:
             book_list.append(book.title)
