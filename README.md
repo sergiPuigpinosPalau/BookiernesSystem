@@ -31,6 +31,12 @@ This are the commands to save the requirements:
 ```
   freeze > requirements.txt
 ```
+
+In case you need to make use of the translation feature, you'll need to install Docker and insert the next command into your command line.
+```
+docker run -ti --rm -p 5000:5000 libretranslate/libretranslate --load-only es,en
+```
+That's because we use [LibreTranslate](https://github.com/uav4geo/LibreTranslate) to make our translations, so go check them out for more information about the translation tool used in this project.
 ## Teachers
 The teachers who have guided this project are:
 - [Aitor Corchero Rodríguez](https://github.com/aolite)
