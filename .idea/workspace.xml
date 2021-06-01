@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c2fd19b3-24ed-4014-addf-c0ec99cb8227" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/BookiernesSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BookiernesSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookiernesApp/static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone-amd-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/BookiernesApp/static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone-amd-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookiernesApp/static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone.js" beforeDir="false" afterPath="$PROJECT_DIR$/BookiernesApp/static/BookiernesApp/js/dropzone-5.7.0/dist/dropzone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookiernesApp/templates/html_templates/Designer/Designer_DetailBockMaquetat.html" beforeDir="false" afterPath="$PROJECT_DIR$/BookiernesApp/templates/html_templates/Designer/Designer_DetailBockMaquetat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookiernesApp/templates/html_templates/Editor/Editor_DetailBookToDesign.html" beforeDir="false" afterPath="$PROJECT_DIR$/BookiernesApp/templates/html_templates/Editor/Editor_DetailBookToDesign.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tL7gLLdsFgyqqeq0ExlgbVykfF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c2fd19b3-24ed-4014-addf-c0ec99cb8227" name="Default Changelist" comment="" />
+      <created>1622536626684</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622536626684</updated>
+      <workItem from="1622536628197" duration="10149000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
