@@ -1,0 +1,110 @@
+{% extends "html_templates/Blocks/Base.html" %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bookiernes</title>
+   <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/all.min.css">
+    <!--  iconas fas -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+{% endblock %}
+
+{% block content_read %}
+
+
+
+<div class="content-wrapper">
+    <br>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"> Llibre <small>{{ book.title }}</small></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <!-- Descaregar libro -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+
+
+           <img
+                src="{{book.get_cover_img_path}}"
+                class="card-img-top"
+                alt="{{obj.title}}"
+                width="250px" height="325px"
+              />
+
+              </div>
+            </div>
+
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">Dades de el llibre</h5>
+              </div>
+              <div class="card-body">
+               <p>Títol: {{ book.title }}</p>
+            <p>Categoria: {{ book.title }}</p>
+            <p>Autor: {{book.author.user.first_name}} {{book.author.user.last_name}}</p>
+            <p>Idioma: {{ book.language }}</p>
+            <p>Editor: Bookiernes</p>
+            <p>Nº de pàgines: {{ book.number_of_pages }}</p>
+            <p>ISBN: {{ book.ISBN }}</p>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.col-md-6 -->
+            <div class="col-lg-12">
+                 <div class="card ">
+              <div class="card-header">
+                <h5 class="card-title m-0">Descricion de el llibre</h5>
+              </div>
+              <div class="card-body">
+
+               {{ book.description | safe }}
+              </div>
+            </div>
+
+            </div>
+
+              <div class="col-lg-12">
+                 <div class="card ">
+              <div class="card-header">
+                <h5 class="card-title m-0">Mostra de el llibre</h5>
+              </div>
+              <div class="card-body">
+
+
+              </div>
+            </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+{% endblock %}

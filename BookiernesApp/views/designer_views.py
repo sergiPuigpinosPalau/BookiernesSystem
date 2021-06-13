@@ -150,40 +150,36 @@ class DetaliImg(DetailView):
     template_name = 'html_templates/Designer/Designer_DetailImg.html'
 
 def uploadimg(request):
-
     if request.method == 'POST':
 
         files = [request.FILES.get('file[%d]' % i)
                  for i in range(0, len(request.FILES))]
 
         id = request.POST['id']
-        obj_imagePetition=ImagePetition.objects.get(id=id).title
+        obj_imagePetition = ImagePetition.objects.get(id=id).title
         date_received = datetime.now()
         user_id = request.user.id
-        destination_user_id = Book.objects.get(id=id).assigned_to.user.id
+        # destination_user_id = Book.objects.get(id=id).assigned_to.user.id
 
         notification_type = 'presented_img'
-        content_notification = 'He subido las fotos de la solicitut de imagenes   %(title)s .' % {'title': obj_imagePetition}
-        url = '/editor_image_petitions/image_petition_detail/'+id
+        content_notification = 'He subido las fotos de la solicitut de imagenes  %(title)s .' % {
+            'title': obj_imagePetition}
+        url = '/editor_image_petitions/image_petition_detail/' + id
 
         fs = FileSystemStorage()
         for f in files:
             path = 'images/' + str(f.name)
             fs.save(path, f)
-            image = Image(path=f.name, petition_id = id )
+            image = Image(path=f.name, petition_id=id)
             image.save()
 
-        message = "La Fotos de la Solictudes de Imágenes %(title)s se subio todas corectamente. " % {'title': obj_imagePetition}
+        message = "La Fotos de la Solictudes de Imágenes %(title)s se subio todas corectamente " % {
+            'title': obj_imagePetition}
         messages.add_message(request, constants.SUCCESS, message)
 
-        if not Notification.objects.all().filter(notification_type=notification_type,
-                                                 destination_user_id__exact=destination_user_id, user_id__exact=user_id,
-                                                 url__exact=url):
-            notification = Notification.objects.create(notification_type=notification_type,
-                                                       content=content_notification, url=url,
-                                                       date_received=date_received, user_id=user_id,
-                                                       destination_user_id=destination_user_id)
-            notification.save()
+        # if not Notification.objects.all().filter(notification_type=notification_type,destination_user_id__exact=destination_user_id, user_id__exact=user_id,url__exact=url):
+        # notification = Notification.objects.create(notification_type=notification_type,content=content_notification, url=url,date_received=date_received, user_id=user_id,destination_user_id=destination_user_id)
+        # notification.save()
 
         return redirect('BookiernesApp:bockmaquetat_list')
 
@@ -192,6 +188,7 @@ def uploadimg(request):
         return response
     else:
         raise Http404("I can't access this page.")
+
 
 
 class ListBockMaquetat(ListView):

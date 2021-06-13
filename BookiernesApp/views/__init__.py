@@ -4,3 +4,4 @@ from .maineditor_views import *
 from .editor_views import *
 from .it_views import *
 from .designer_views import *
+from .readers_views import *

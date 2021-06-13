@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../static/BookiernesApp/css/all.min.css">
+  <!-- iconas fas -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../static/BookiernesApp/css/adminlte.min.css">
+</head>
+
+
+
+<body class="hold-transition layout-top-nav">
+<div class="content-wrapper">
+<br>
+
+
+      <section class="content">
+
+        <div class="container-fluid">
+<div class="login-logo">
+
+    <div class="text-center">
+        <samp class="fas fa-book" height="90" alt="Logo Bookiernes"></samp>
+
+    <h2>Bookiernes</h2>
+    </div>
+  </div>
+             <div class="card " >
+              <div class="card-header">
+                  <h3 class="card-title">Registra una nova subscripció</h3>
+              </div>
+
+
+                    {% if form.errors %}
+
+               {% for field in form %}
+                    {% if field.errors %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-danger ">
+                    <div class="card-header">
+                      <h3 class="card-title">Èxit</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                       {{ field.errors|striptags }}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>{% endif %}
+                {% endfor %}
+
+                {% endif %}
+
+                  <form action=""  method="POST"  >
+                  {% csrf_token %}
+
+               <div class="row">
+    <div class="col-sm">
+       <div class="card-body">
+                    <div class="form-group">
+                      <label >Ingressi el nom d'usuari</label>
+                        <input type="text" name="username" class="form-control" id="username"  required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingressi el nom</label>
+                        <input type="text" name="first_name" class="form-control" id="first_name" required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingressi el cognom/s</label>
+                        <input type="text" name="last_name" class="form-control" id="last_name"  required="">
+                    </div>
+                      <div class="form-group">
+                      <label >Ingressi el correu electrònic</label>
+                        <input type="text" name="email" class="form-control" id="email" required="">
+                    </div>
+
+         </div>
+    </div>
+    <div class="col-sm">
+       <div class="card-body">
+            <div class="form-group">
+                      <label >Ingressi la contrasenya</label>
+                        <input type="password" name="password" class="form-control" id="password" required="">
+                    </div>
+            <div class="form-group">
+                      <label >Repeteixi la contrasenya</label>
+                        <input type="password" name="password2" class="form-control" id="password2" required="">
+                    </div>
+            <div class="form-group">
+                      <label >Ingressi el nombre de la tarjeta</label>
+                        <input type="text" name="card_namber" class="form-control" id="card_namber" required="">
+                    </div>
+
+            <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+                      <label >MM/AA</label>
+                        <input type="text" name="mm_aa" class="form-control" id="mm_aa" required="">
+                    </div>
+    </div>
+    <div class="col-sm">
+       <div class="form-group">
+                      <label >CVV</label>
+                        <input type="text" name="CVV" class="form-control" id="CVV" required="">
+                    </div>
+            </div>
+    </div>
+                  </div>
+
+    </div>
+    </div>
+
+
+      <div class="card-body">
+          <div class="row">
+    <div class="col-sm">
+
+                      <a href="/accounts/login/" class="text-center">Ja tinc un compte </a>
+    </div>
+    <div class="col-sm">
+       <div >
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+    </div>
+
+  </div>
+          </div>
+
+
+      </form>
+
+
+        </div>
+            </div>
+          </section>
+
+ </div>
+
+
+<!-- jQuery -->
+<script src="../../static/BookiernesApp/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../static/BookiernesApp/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../static/BookiernesApp/js/adminlte.min.js"></script>
+
+</body>
+</html>

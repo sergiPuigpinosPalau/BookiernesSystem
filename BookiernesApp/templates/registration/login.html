@@ -32,6 +32,35 @@
 
       <p class="login-box-msg">Et donem la benvinguda al panel d'administració de Bookiernes.</p>
       <br/>
+       {% if messages %}
+
+                {% for message in messages %}
+                <br>
+                <div class="container">
+                <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="card card-success ">
+                    <div class="card-header">
+                      <h3 class="card-title">Èxit</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {{message}}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+
+                {% endif %}
       <form action="#" method="post">
         {% csrf_token %}
         <div class="input-group mb-3">
@@ -54,11 +83,11 @@
         <br/>
         <div class="row">
           <div class="col-8">
-            <p class="mb-1">
+            <p class="mb-0">
                 <a href="{% url 'BookiernesApp:reset_password_view' %}">He oblidat la contrasenya.</a>
               </p>
               <p class="mb-0">
-                <a href="#" class="text-center">Registrar-se</a>
+                <a href="{% url 'BookiernesApp:register_readers' %}" class="text-center">Registrar-se</a>
               </p>
           </div>
           <!-- /.col -->
@@ -67,6 +96,9 @@
           </div>
           <!-- /.col -->
         </div>
+        <p class="text-center">
+                <a href="{% url 'BookiernesApp:landing_page' %}" class="text-center">Pàgina principal</a>
+              </p>
       </form>
 
 

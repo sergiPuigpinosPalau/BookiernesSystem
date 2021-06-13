@@ -168,6 +168,9 @@ class Book(models.Model):
     def __unicode__(self):
         return self.description
 
+    def get_cover_img_path(self):
+        return  MEDIA_URL  +"/images/"+ str(self.cover_image.path)
+
 
 class Notification(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.PROTECT, related_name='user_notifications')

@@ -19,3 +19,6 @@ udl12345
 
 testGraphicDesigner
 udl12345
+
+testReader
+udl12345

@@ -53,7 +53,7 @@ urlpatterns = [
 
 
 
-    path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path('', SignUpView.as_view(), name='signup'),
     # writer
 
     # editor urls
@@ -119,6 +119,12 @@ urlpatterns = [
     url(r'^graphic_designer_message/post_book/(?P<pk>\d+)/send/$', graphic_designer_post_chat, name='send_message_graphic_designer'),
 
 
+
+
+    #lector
+    url(r'^landing_page/$', Landing_page_List.as_view(), name='landing_page'),
+    url(r'^get_book/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='get_book'),
+    url(r'^register_readers/$', RegisterReaders.as_view(), name='register_readers'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

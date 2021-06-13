@@ -6,6 +6,141 @@
     {% endblock %}
 </head>
 
+
+ {% if  request.user.is_authenticated == False or user.user_type == 'subscribed_reader'  %}
+
+
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid justify-content-between">
+    <!-- Left elements -->
+
+    <ul class="navbar-nav d-flex">
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'BookiernesApp:landing_page' %}">
+          <span> Inici </span>
+        </a>
+      </li>
+      <!-- Brand -->
+
+
+    </ul>
+    <!-- Left elements -->
+
+
+
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+
+
+      {% if request.user.is_authenticated %}
+
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-center" href="{% url 'BookiernesApp:landing_page' %}">
+          <strong class="d-none d-sm-block ms-1">{{user.username}}</strong>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-center" href="/des_logarse/">
+          <strong class="d-none d-sm-block ms-1">Sortir</strong>
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-center" href="/accounts/login/">
+          <strong class="d-none d-sm-block ms-1">Logarse / Registrar </strong>
+        </a>
+      </li>
+      {% endif %}
+
+
+    </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+    {% block content_read %}
+    {% endblock %}
+
+    <footer class="bg-dark text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+    </section>
+    <!-- Section: Social media -->
+
+      <div class="row ">
+
+        <!-- Grid column -->
+        <div class="col-md-6">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Información legal
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Condiciones de uso</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Política de protección de datos</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Política de cookies</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+        <div class="col-md-6">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> C/ de Jaume II, 69, 25001 Lleida</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@bookiernes.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 973 70 27 00</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">Bookiernes.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+    </div>
+ {% else %}
+
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -340,6 +475,14 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+ {% endif %}
+
+
+
+
+
+
 
 
 
