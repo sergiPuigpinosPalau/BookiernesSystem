@@ -1,11 +1,19 @@
+from xhtml2pdf import pisa
+
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from BookiernesApp.models import Book, Theme, Writer
 
 
 from BookiernesApp.forms import FromUserReader
+import subprocess
+from BookiernesSystem.settings import STATIC_URL, MEDIA_URL, BASE_DIR
+
+import markdown
+import pdfkit
 
 class Landing_page_List(ListView):
     template_name = 'html_templates/Lector/landing_page.html'
@@ -38,4 +46,27 @@ class RegisterReaders(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Compte creat. "
+
+
+def dowload_pdf(request):
+
+    input_filename = './media/book/README_7JM1xWb.md'
+
+    f = open(input_filename, 'r')
+    text_md = f.read()
+    f.close()
+    text_html = markdown.markdown(text_md)
+    file = open('./media/tmp/test.pdf', "w+b")
+    pisaStatus = pisa.CreatePDF(text_html.encode('utf-8'), dest=file,
+                                encoding='utf-8')
+
+    file.seek(0)
+    pdf = file.read()
+    file.close()
+    return HttpResponse(pdf, 'application/pdf')
+
+
+
+
+
 

@@ -40,7 +40,7 @@ The teachers who have guided this project are:
 
 ## Authors
 This project have been developed by:
-- [Tiberiu Paiu](https://github.com/sergiPuigpinosPalau)
+- [Tiberiu Paiu asasfasfasf](https://github.com/sergiPuigpinosPalau)
 - [Roger Larriba Baudilio](https://github.com/sergiPuigpinosPalau)
 - [José Ramón Noguero de Llano](https://github.com/sergiPuigpinosPalau)
 - [Sergi Puigpinós Palau](https://github.com/sergiPuigpinosPalau)
