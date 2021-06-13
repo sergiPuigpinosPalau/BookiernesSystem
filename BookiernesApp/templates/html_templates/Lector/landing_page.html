@@ -3,6 +3,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bookiernes</title>
+
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,7 +19,27 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../../static/BookiernesApp/css/adminlte.min.css">
+
+
+
+<script>
+        jQuery(document).ready(function($) {
+            $("#search_text").autocomplete({
+                source: "/autocomplete/book_autocomplete/",
+                minLength: 5,
+                open: function(){
+                    setTimeout(function () {
+                        $('.ui-autocomplete').css('z-index', 99);
+                    }, 0);
+                }
+              });
+        });
+
+
+</script>
+
 {% endblock %}
+
 
 {% block content_read %}
 
@@ -26,17 +51,21 @@
 
         <div class="container-fluid">
 
-            <form>
+        <form  action="/landing_page_search_from/" method="GET">
+                 {% csrf_token %}
+
                 <div class="row">
                     <div class="col-md-9 offset-md-1">
 
                                 <div class="form-group">
                             <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg" placeholder="lIBRO" >
+
+                                <input type="search" name="search_text" class="form-control form-control-lg" placeholder="lIBRO" >
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-lg btn-default">
                                         <i class="fa fa-search"></i>
                                     </button>
+
                                 </div>
                             </div>
                         </div>
@@ -75,10 +104,10 @@
                 <div class="direct-chat-messages" style=" height: 55vh;">
 
                     {% for writer in writers %}
-                    <a><p><img src="{{ writer.user.get_img }} " alt="User Avatar"
+                    <a href="/landing_page_search/1/{{writer.id}}"><p><img src="{{ writer.user.get_img }} " alt="User Avatar"
                                  class="img-size-50 mr-3 img-circle"> {{writer.user.first_name}} {{writer.user.last_name}} <span class="badge badge-primary navbar-badge"></span> </p>
 
-                    </a> <hr>
+                    </a>  <hr>
                     {% endfor%}
                 </div>
              </div>
@@ -95,7 +124,7 @@
 
                 <div class="direct-chat-messages" style=" height: 55vh;">
                     {% for theme in themes %}
-                    <a><p> {{theme.name}}  </p></a> <hr>
+                    <a href="/landing_page_search/2/{{theme.id}}" ><p> {{theme.name}}  </p></a> <hr>
                     {% endfor%}
                 </div>
              </div>

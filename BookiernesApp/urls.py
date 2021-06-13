@@ -123,6 +123,10 @@ urlpatterns = [
 
     #lector
     url(r'^landing_page/$', Landing_page_List.as_view(), name='landing_page'),
+    url(r'^landing_page_search/(?P<type>\d+)/(?P<pk>\d+)/$', Landing_page_search.as_view(), name='landing_page_search'),
+    url(r'^landing_page_search_from/$', Landing_page_search_from.as_view(), name='landing_page_search_from'),
+    url(r'^autocomplete/book_autocomplete/$' , book_autocomplete , name='book_autocomplete'),
+
     url(r'^get_book/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='get_book'),
     url(r'^register_readers/$', RegisterReaders.as_view(), name='register_readers'),
     url(r'^dowload_pdf/(?P<pk>\d+)/$', dowload_pdf, name='dowload_pdf'),

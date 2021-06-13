@@ -1,9 +1,12 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
-from xhtml2pdf import pisa
+
 
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
@@ -16,8 +19,13 @@ from BookiernesApp.forms import FromUserReader
 import subprocess
 from BookiernesSystem.settings import STATIC_URL, MEDIA_URL, BASE_DIR
 
+# para insatalar
 import markdown
-import pdfkit
+from xhtml2pdf import pisa
+
+import simplejson as json
+from django.http import HttpResponse
+
 
 class Landing_page_List(ListView):
     template_name = 'html_templates/Lector/landing_page.html'
@@ -26,15 +34,61 @@ class Landing_page_List(ListView):
 
     def get_queryset(self):
         try:
+
             return Book.objects.filter( book_status = "presented")
+
         except:
             return 0
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["themes"]= Theme.objects.all()
-        context["writers"]= Writer.objects.all()
+        context["themes"] = Theme.objects.all()
+        context["writers"] = Writer.objects.all()
         return context
+
+
+class Landing_page_search(ListView):
+    template_name = 'html_templates/Lector/landing_page.html'
+    model = Book
+    paginate_by = 6
+
+    def get_queryset(self):
+        try:
+            if  self.kwargs['type'] == "1":
+                return Book.objects.filter(Q(book_status="presented") & Q(author_id=self.kwargs['pk']))
+            elif  self.kwargs['type'] == "2":
+                return Book.objects.filter(Q(book_status="presented") & Q(theme_id=self.kwargs['pk']))
+
+        except:
+            return 0
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["themes"] = Theme.objects.all()
+        context["writers"] = Writer.objects.all()
+        return context
+
+
+class Landing_page_search_from(ListView):
+    template_name = 'html_templates/Lector/landing_page.html'
+    model = Book
+    paginate_by = 6
+
+    def get_queryset(self):
+        try:
+            return Book.objects.filter(Q(book_status="presented") & Q(title__icontains=self.request.GET.get('search_text') ) )
+            #elif  self.kwargs['type'] == "2": //TODO busacr idomas
+            #    return Book.objects.filter(Q(book_status="presented") & Q(theme_id=self.kwargs['pk']))
+
+        except:
+            return 0
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["themes"] = Theme.objects.all()
+        context["writers"] = Writer.objects.all()
+        return context
+
 
 
 class AssignmentDetaliImg(DetailView):
@@ -50,6 +104,20 @@ class RegisterReaders(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Compte creat. "
+
+
+def book_autocomplete(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '').capitalize()
+        search_qs = Book.objects.filter(title__icontains=q)
+        results = []
+        for r in search_qs:
+            results.append(r.FIELD)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
 
 @login_required
 @subscribed_reader_required
@@ -73,8 +141,7 @@ def dowload_pdf(request ,pk):
             pdf = file.read()
             file.close()
 
-            fs = FileSystemStorage()
-            fs.delete(str(archivo))
+
 
             return HttpResponse(pdf, 'application/pdf')
         except:

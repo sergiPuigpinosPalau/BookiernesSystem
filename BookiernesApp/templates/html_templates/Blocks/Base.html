@@ -38,16 +38,55 @@
 
       {% if request.user.is_authenticated %}
 
-      <li class="nav-item me-3 me-lg-1">
-        <a class="nav-link d-sm-flex align-items-sm-center" href="{% url 'BookiernesApp:landing_page' %}">
-          <strong class="d-none d-sm-block ms-1">{{user.username}}</strong>
-        </a>
-      </li>
-      <li class="nav-item me-3 me-lg-1">
-        <a class="nav-link d-sm-flex align-items-sm-center" href="/des_logarse/">
-          <strong class="d-none d-sm-block ms-1">Sortir</strong>
-        </a>
-      </li>
+      <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    {{ user.first_name }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-lg">
+
+                    <a href="#" class="dropdown-item">
+
+                        <div class="media">
+                            <img src="{{ user.get_img }} " alt="User Avatar"
+                                 class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </h3>
+                                <p class="text-sm">{{ user.get_user_type_name }} </p>
+                            </div>
+                        </div>
+
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown">
+
+                        <div class="media ">
+                            <i class="fas fa-user-edit mr-1"></i>
+                            <div class="media-body ">
+                                <h3 class="dropdown-item-title ">
+                                    Modificar les dades d'usuari
+                                </h3>
+                            </div>
+                        </div>
+
+                    </a>
+
+                    <a href="{% url 'BookiernesApp:logout' %}" class="dropdown-item">
+
+                        <div class="media">
+                            <i class="fas fa-sign-out-alt mr-1"></i>
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Log Out
+                                </h3>
+                            </div>
+                        </div>
+
+                    </a>
+
+                </div>
+            </li>
       {% else %}
       <li class="nav-item me-3 me-lg-1">
         <a class="nav-link d-sm-flex align-items-sm-center" href="/accounts/login/">
