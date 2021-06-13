@@ -125,7 +125,7 @@ urlpatterns = [
     url(r'^landing_page/$', Landing_page_List.as_view(), name='landing_page'),
     url(r'^get_book/(?P<pk>\d+)/$', AssignmentDetaliImg.as_view(), name='get_book'),
     url(r'^register_readers/$', RegisterReaders.as_view(), name='register_readers'),
-    url(r'^dowload_pdf/$', dowload_pdf, name='dowload_pdf'),
+    url(r'^dowload_pdf/(?P<pk>\d+)/$', dowload_pdf, name='dowload_pdf'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

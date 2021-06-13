@@ -26,11 +26,17 @@
     <div class="content-header">
       <div class="container">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-11">
             <h1 class="m-0"> Llibre <small>{{ book.title }}</small></h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
-            <!-- Descaregar libro -->
+          <div class="col-sm-1">
+
+              {% if user.is_authenticated or user.user_type == 'subscribed_reader'  %}
+            <a href="{% url 'BookiernesApp:dowload_pdf' book.id %}" class="link-light">
+                                <i class="nav-icon fas fa-file-pdf fa-3x  text-secondary"></i>
+                {% endif %}
+      </a>
+
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -88,7 +94,7 @@
             </div>
 
             </div>
-
+{% if user.is_authenticated == False  %}
               <div class="col-lg-12">
                  <div class="card ">
               <div class="card-header">
@@ -101,6 +107,7 @@
             </div>
 
             </div>
+     {% endif %}
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

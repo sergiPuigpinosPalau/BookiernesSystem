@@ -1,10 +1,14 @@
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
 from xhtml2pdf import pisa
 
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
+
+from BookiernesApp.decorators import subscribed_reader_required
 from BookiernesApp.models import Book, Theme, Writer
 
 
@@ -47,24 +51,37 @@ class RegisterReaders(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "Compte creat. "
 
+@login_required
+@subscribed_reader_required
+def dowload_pdf(request ,pk):
+    if pk != None:
+        try:
+            filename = Book.objects.get(id=pk).book_designed
 
-def dowload_pdf(request):
+            input_filename = './media/book_designed/'+str(filename)
 
-    input_filename = './media/book/README_7JM1xWb.md'
+            f = open(input_filename, 'r')
+            text_md = f.read()
+            f.close()
+            text_html = markdown.markdown(text_md)
+            archivo='./media/tmp/pdf_'+request.user.username+'_'+str(filename)+'_fin.pdf'
+            file = open(str(archivo), "w+b")
+            pisaStatus = pisa.CreatePDF(text_html.encode('utf-8'), dest=file,
+                                        encoding='utf-8')
 
-    f = open(input_filename, 'r')
-    text_md = f.read()
-    f.close()
-    text_html = markdown.markdown(text_md)
-    file = open('./media/tmp/test.pdf', "w+b")
-    pisaStatus = pisa.CreatePDF(text_html.encode('utf-8'), dest=file,
-                                encoding='utf-8')
+            file.seek(0)
+            pdf = file.read()
+            file.close()
 
-    file.seek(0)
-    pdf = file.read()
-    file.close()
-    return HttpResponse(pdf, 'application/pdf')
+            fs = FileSystemStorage()
+            fs.delete(str(archivo))
 
+            return HttpResponse(pdf, 'application/pdf')
+        except:
+            raise Http404("Sa producido un error a descaregar el pdf .")
+
+    else:
+        raise Http404("I can't access this page.")
 
 
 

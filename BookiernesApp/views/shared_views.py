@@ -24,6 +24,9 @@ def mainView(request):
         return redirect('BookiernesApp:main_petitionview_list')
     elif user.user_type == 'graphic_designer':
         return redirect('BookiernesApp:petitionview_list')
+    elif user.user_type == 'subscribed_reader':
+        return redirect('BookiernesApp:landing_page')
+
 
 
 class SignUpView(CreateView):

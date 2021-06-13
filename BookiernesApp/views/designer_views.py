@@ -207,7 +207,6 @@ class DetaliBockMaquetat(DetailView):
     model = Book
     template_name = 'html_templates/Designer/Designer_DetailBockMaquetat.html'
 
-
 def uploadbook(request, pk):
     if pk != None:
         if request.method == 'POST':
@@ -216,7 +215,7 @@ def uploadbook(request, pk):
             book = Book.objects.get(id=pk)
 
             date_received = datetime.now()
-            user_id = request.user.id
+            user_id = GraphicDesigner.objects.get(user_id=int(request.user.id)).user_id
             destination_user_id = Book.objects.get(id=pk).assigned_to.user.id
 
             notification_type = 'presented_book_designed'
@@ -253,6 +252,7 @@ def uploadbook(request, pk):
             raise Http404("I can't access this page.")
     else:
         raise Http404("I can't access this page.")
+
 
 
 def designer_notification(request, pk):
