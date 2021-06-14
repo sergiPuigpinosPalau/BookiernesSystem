@@ -158,6 +158,7 @@ class Book(models.Model):
     language = models.CharField(null=True, max_length=255, blank=True)
     number_of_pages = models.IntegerField(null=True, blank=True)
     ISBN = models.CharField(null=True, max_length=13, blank=True)
+    #date_presented = models.DateField(null=True, blank=True)
 
     # ed = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT, related_name='books_themes', blank=True)
     # new_book_version = models.OneToOneField("self", null=True, blank=True, on_delete=models.CASCADE)

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.utils.dateparse import parse_datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView, ListView
 from django.shortcuts import render, redirect
@@ -24,18 +25,34 @@ from BookiernesApp.models import Book, User, Writer, Notification, Message
 from BookiernesApp.forms.book_forms import *
 
 
+import random
+
+
+
 @method_decorator([login_required, writer_required], name='dispatch')
 class PublishedBooks(ListView):
     template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
-    paginate_by = 3
+    paginate_by = 5
 
     
     def get_queryset(self):
         try:
-            return Book.objects.filter( author_id= Writer.objects.get(user_id=self.request.user.id).id )
+            #books = Book.objects.filter(Q(author_id=Writer.objects.get(user_id=self.request.user.id).id) & Q(assigned_to__isnull=True))
+            #for book in books:
+
+
+                #date_object = datetime.strptime(book.main_editor_comment, '%m-%d-%Y').date()
+                #data_actual= datetime.now()
+
+                #data_final = data_actual - data
+                #book.main_editor_comment= "2 dias"
+
+                #book.save()
+
+            return Book.objects.filter(Q(author_id=Writer.objects.get(user_id=self.request.user.id).id))
         except:
             return 0
-    
+
 
 class SerchBooks(ListView):
     template_name = 'html_templates/Escriptor/Escriptor_LibrosPresentados.html'
@@ -47,8 +64,11 @@ class SerchBooks(ListView):
      
 
 
+def generarIBSN(IBSN):
+    for i in range(10):
+        IBSN=IBSN+""+ str(random.randrange(9))
 
-    
+    return IBSN
 
 
 @method_decorator([login_required, writer_required], name='dispatch')
@@ -85,7 +105,22 @@ class PublishBook(SuccessMessageMixin, CreateView):
         date_received = datetime.now()
         user_id = self.request.user.id
         destination_user_id =  User.objects.get(user_type='main_editor').id
-        
+        self.object.language='Catalán'
+        self.object.save()
+
+        while True:
+            res_IBSN=generarIBSN(IBSN="")
+            if Book.objects.filter(ISBN=res_IBSN).count() == 0:
+                self.object.ISBN = res_IBSN
+                self.object.save()
+                break
+
+        self.object.main_editor_comment=" 1 dia"
+        self.object.save()
+
+
+
+
         notification = Notification.objects.create(notification_type=notification_type,
                                                        content=content_notification, url=url,
                                                        date_received=date_received, user_id=user_id,
