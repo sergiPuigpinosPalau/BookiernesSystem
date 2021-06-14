@@ -61,7 +61,7 @@
                             {% for book in user.editor_profile.get_presented_books %}
                                 <tr>
                                     <td>{{ book.title }}</td>
-                                    <td> {{ book.author }}</td>
+                                    <td>  {{  book.author.user.first_name }} {{  book.author.user.last_name }}</td>
                                     <td> {{ book.theme }}</td>
                                     <td><a href="{% url 'BookiernesApp:maineditor_book_presented_detail' book.id %}"><i
                                             class="nav-icon fas fa-cogs"></i></a>
